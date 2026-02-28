@@ -53,9 +53,9 @@ export default function Topbar({ children }: TopbarProps) {
         {children}
 
         {/* AI status */}
-        <div className="topbar-pill" style={{ gap: 6, cursor: "default" }}>
-          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--orange)", boxShadow: "0 0 6px var(--mint-glow)", display: "inline-block" }} />
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.06em" }}>AI ONLINE</span>
+        <div className="topbar-pill" style={{ gap: 6, cursor: "default", background: "var(--mistral-gradient)" }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "white", boxShadow: "0 0 6px rgba(255, 112, 0, 0.3)", display: "inline-block" }} />
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.06em", color: "white" }}>MISTRAL AI</span>
         </div>
 
         {/* Notifications */}

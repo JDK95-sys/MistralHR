@@ -1,4 +1,4 @@
-import Mistral from "@mistralai/mistralai";
+import { Mistral } from "@mistralai/mistralai";
 
 const mistral = new Mistral({ apiKey: process.env.MISTRAL_API_KEY! });
 
@@ -7,7 +7,7 @@ export async function generateEmbedding(text: string): Promise<number[]> {
     model: "mistral-embed",
     inputs: [text],
   });
-  return response.data[0].embedding;
+  return response.data[0].embedding!;
 }
 
 export async function generateEmbeddingsBatch(
@@ -17,7 +17,7 @@ export async function generateEmbeddingsBatch(
     model: "mistral-embed",
     inputs: texts,
   });
-  return response.data.map((d: { embedding: number[] }) => d.embedding);
+  return response.data.map((d) => d.embedding!);
 }
 
 export function formatEmbedding(embedding: number[]): string {

@@ -26,12 +26,14 @@ export interface Policy {
   id: string;
   title: string;
   description: string;
+  desc?: string;
   countries: string[];
   topic: PolicyTopic;
   icon: string;
   updatedAt: string;
   legalRefs: string[];
   content: string;
+  ring?: string;
 }
 
 export const policies: Policy[] = [
@@ -40,6 +42,7 @@ export const policies: Policy[] = [
     id: "fr-annual-leave",
     title: "Congés Payés — France",
     description: "5 semaines de congés payés légaux (30 jours ouvrables). Acquisition: 2,5 jours/mois.",
+    desc: "5 semaines de congés payés légaux (30 jours ouvrables). Acquisition: 2,5 jours/mois.",
     countries: ["France"],
     topic: "leave",
     icon: "🏖️",
@@ -54,11 +57,13 @@ export const policies: Policy[] = [
 Période légale de prise : 1er mai – 31 octobre. Le congé principal doit être d'au moins 12 jours ouvrables consécutifs sur cette période.
 
 Congé non pris : ne peut être payé en cours de contrat. La Loi du 22 avril 2024 permet le report des congés en cas d'arrêt maladie (transposition Dir. UE 2019/1158).`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
   {
     id: "fr-sick-leave",
     title: "Arrêt Maladie — France",
     description: "Maintien de salaire 90 jours via subrogation. Zéro délai de carence.",
+    desc: "Maintien de salaire 90 jours via subrogation. Zéro délai de carence.",
     countries: ["France"],
     topic: "leave",
     icon: "🏥",
@@ -72,11 +77,13 @@ Congé non pris : ne peut être payé en cours de contrat. La Loi du 22 avril 20
 Délai de carence IJSS (3 jours) supprimé par accord d'entreprise : le salarié perçoit son salaire dès le 1er jour d'arrêt.
 
 Au-delà de 90 jours : indemnités IJSS + contrat prévoyance collectif (niveau de remplacement défini dans l'accord de prévoyance).`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
   {
     id: "fr-holidays",
     title: "Jours Fériés — France",
     description: "11 jours fériés légaux (L3133-1). Tous chômés avec maintien de salaire.",
+    desc: "11 jours fériés légaux (L3133-1). Tous chômés avec maintien de salaire.",
     countries: ["France"],
     topic: "leave",
     icon: "🗓️",
@@ -85,6 +92,7 @@ Au-delà de 90 jours : indemnités IJSS + contrat prévoyance collectif (niveau 
     content: `11 jours fériés légaux : 1er jan, Lundi de Pâques, 1er mai (seul obligatoirement chômé), 8 mai, Ascension, Lundi de Pentecôte, 14 juillet, 15 août, 1er nov, 11 nov, 25 déc.
 
 La société chôme l'ensemble des 11 jours fériés avec maintien de salaire. Si un jour férié coïncide avec un jour de RTT ou congé planifié, un jour de remplacement est accordé.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — MOBILITY ─────────────────────────────────────
@@ -92,6 +100,7 @@ La société chôme l'ensemble des 11 jours fériés avec maintien de salaire. S
     id: "fr-mobility",
     title: "Mobilité Globale & Locale — France",
     description: "Processus de transfert interne, détachement international et relocation.",
+    desc: "Processus de transfert interne, détachement international et relocation.",
     countries: ["France"],
     topic: "mobility",
     icon: "✈️",
@@ -105,6 +114,7 @@ La société chôme l'ensemble des 11 jours fériés avec maintien de salaire. S
 Détachement international : pour les missions > 3 mois, un avenant de détachement précise la durée, le maintien du contrat français, les conditions de rémunération et la couverture sociale. La France reste compétente pour la sécurité sociale (règlement UE 883/2004 intra-UE).
 
 Comment démarrer : contacter HR Mobility (hr-mobility@mistralhr.demo) → ouverture d'un dossier → validation manager + Finance → avenant signé → briefing RH destination → logistique relocation (si applicable, budget plafonné selon politique interne).`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — TAX ──────────────────────────────────────────
@@ -112,6 +122,7 @@ Comment démarrer : contacter HR Mobility (hr-mobility@mistralhr.demo) → ouver
     id: "fr-tax",
     title: "Fiscalité Locale — France",
     description: "Impôt sur le revenu, prélèvement à la source et cotisations sociales salariales.",
+    desc: "Impôt sur le revenu, prélèvement à la source et cotisations sociales salariales.",
     countries: ["France"],
     topic: "tax",
     icon: "🧾",
@@ -133,6 +144,7 @@ Barème IR 2024 (revenus 2023) :
 Cotisations sociales salariales (approximatif) : ~22% du salaire brut (assurance maladie, retraite de base CNAV, retraite complémentaire AGIRC-ARRCO, chômage, CSG/CRDS).
 
 À noter : la CSG (9,2%) et la CRDS (0,5%) s'appliquent sur 98,25% du salaire brut.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — HEALTH ───────────────────────────────────────
@@ -140,6 +152,7 @@ Cotisations sociales salariales (approximatif) : ~22% du salaire brut (assurance
     id: "fr-health",
     title: "Mutuelle & Prévoyance — France",
     description: "Couverture santé complémentaire obligatoire et prévoyance collective.",
+    desc: "Couverture santé complémentaire obligatoire et prévoyance collective.",
     countries: ["France"],
     topic: "health",
     icon: "🩺",
@@ -158,6 +171,7 @@ Niveaux de couverture :
 Prévoyance : accord de prévoyance collectif couvrant incapacité de travail, invalidité, décès. Taux de remplacement et délais de carence définis dans l'accord (disponible sur l'intranet RH).
 
 Portabilité : en cas de départ, la couverture santé et prévoyance est maintenue pendant la période de chômage (max 12 mois) via le mécanisme de portabilité (L911-8 CSS).`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — PREMIUMS ─────────────────────────────────────
@@ -165,6 +179,7 @@ Portabilité : en cas de départ, la couverture santé et prévoyance est mainte
     id: "fr-premiums",
     title: "Primes & Avantages — France",
     description: "Titre-restaurant, transport, intéressement, PEE, retraite supplémentaire, prime home office.",
+    desc: "Titre-restaurant, transport, intéressement, PEE, retraite supplémentaire, prime home office.",
     countries: ["France"],
     topic: "premiums",
     icon: "💶",
@@ -185,6 +200,7 @@ PEE / PERCO : Plan d'Épargne Entreprise (abondement employeur) et PERCO/PER Col
 Actions société : plan d'actionnariat salarié annuel (conditions et prix préférentiel publiés lors de chaque ouverture).
 
 Prime home office : indemnité télétravail fixée par accord d'entreprise (montant exact sur intranet).`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — WORKSITE ─────────────────────────────────────
@@ -192,6 +208,7 @@ Prime home office : indemnité télétravail fixée par accord d'entreprise (mon
     id: "fr-worksite",
     title: "Télétravail & Conditions de Travail — France",
     description: "Modalités remote/hybride/présentiel. Accord télétravail France.",
+    desc: "Modalités remote/hybride/présentiel. Accord télétravail France.",
     countries: ["France"],
     topic: "worksite",
     icon: "🏠",
@@ -209,6 +226,7 @@ Accord télétravail : jusqu'à 3 jours de télétravail par semaine pour les po
 Durée du travail : 35h/semaine légale (L3121-27). Heures supplémentaires : +25% pour les 8 premières, +50% au-delà. Cadres au forfait jours : 218j/an max (L3121-64).
 
 Sécurité informatique : connexion VPN obligatoire en télétravail.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — ONBOARDING ───────────────────────────────────
@@ -216,6 +234,7 @@ Sécurité informatique : connexion VPN obligatoire en télétravail.`,
     id: "fr-onboarding",
     title: "Onboarding & Offboarding — France",
     description: "Processus d'intégration, IT setup, politique PC/logiciels et procédure de départ.",
+    desc: "Processus d'intégration, IT setup, politique PC/logiciels et procédure de départ.",
     countries: ["France"],
     topic: "onboarding",
     icon: "🚀",
@@ -244,6 +263,7 @@ Offboarding :
 - Restitution matériel sous 5 jours ouvrés après départ
 - Accès systèmes révoqués le jour du départ (automatique via AD)
 - Solde de tout compte remis lors du dernier jour`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — COMPENSATION ─────────────────────────────────
@@ -251,6 +271,7 @@ Offboarding :
     id: "fr-pay-transparency",
     title: "Pay Transparency — France",
     description: "Égalité salariale et reporting sur l'écart femmes-hommes (EU Dir. 2023/970).",
+    desc: "Égalité salariale et reporting sur l'écart femmes-hommes (EU Dir. 2023/970).",
     countries: ["France"],
     topic: "compensation",
     icon: "⚖️",
@@ -264,6 +285,7 @@ Offboarding :
 Index Égalité Professionnelle : publication annuelle avant le 1er mars pour toute entreprise ≥ 50 salariés.
 
 EU Dir. 2023/970 (applicable 2026) : droit individuel à l'information salariale, interdiction des clauses de confidentialité sur salaires, obligation de reporting public par genre et catégorie.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── BELGIUM — LEAVE ───────────────────────────────────────
@@ -271,6 +293,7 @@ EU Dir. 2023/970 (applicable 2026) : droit individuel à l'information salariale
     id: "be-annual-leave",
     title: "Congé Annuel — Belgique",
     description: "20 jours légaux (4 semaines) pour temps plein 38h. Pécule double ~92% salaire mensuel.",
+    desc: "20 jours légaux (4 semaines) pour temps plein 38h. Pécule double ~92% salaire mensuel.",
     countries: ["Belgium"],
     topic: "leave",
     icon: "🏖️",
@@ -288,11 +311,13 @@ Pécule double : ~92% du salaire mensuel brut, versé par l'employeur annuelleme
 Pour les ouvriers : pécule géré par les Caisses de Vacances (paiement direct au travailleur).
 
 Report en cas de maladie : autorisé par la Loi du 17 juillet 2023 (transposition Dir. UE 2019/1158) — report possible jusqu'à 24 mois.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
   {
     id: "be-sick-leave",
     title: "Arrêt Maladie — Belgique",
     description: "Salaire garanti 30 jours (Art. 52 Loi 3 juillet 1978), puis indemnités INAMI.",
+    desc: "Salaire garanti 30 jours (Art. 52 Loi 3 juillet 1978), puis indemnités INAMI.",
     countries: ["Belgium"],
     topic: "leave",
     icon: "🏥",
@@ -310,11 +335,13 @@ Phase 2 — INAMI (à partir du 31ème jour) :
 - Invalidité (> 1 an) : 65% (isolé/chef de famille) ou 40% (cohabitant)
 
 Prévoyance complémentaire : complément aux indemnités INAMI.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
   {
     id: "be-holidays",
     title: "Jours Fériés — Belgique",
     description: "10 jours fériés nationaux légaux. Jour de remplacement si férié = dimanche.",
+    desc: "10 jours fériés nationaux légaux. Jour de remplacement si férié = dimanche.",
     countries: ["Belgium"],
     topic: "leave",
     icon: "🗓️",
@@ -325,6 +352,7 @@ Prévoyance complémentaire : complément aux indemnités INAMI.`,
 Si un férié tombe un dimanche ou jour non travaillé : un jour de remplacement est accordé, à fixer par accord employeur/délégués.
 
 Tous les fériés sont rémunérés. La société octroie les 10 jours à tous les collaborateurs avec maintien de salaire.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── BELGIUM — MOBILITY ────────────────────────────────────
@@ -332,6 +360,7 @@ Tous les fériés sont rémunérés. La société octroie les 10 jours à tous l
     id: "be-mobility",
     title: "Mobilité Globale & Locale — Belgique",
     description: "Mutation interne, détachement UE/hors-UE, relocation et clause de mobilité.",
+    desc: "Mutation interne, détachement UE/hors-UE, relocation et clause de mobilité.",
     countries: ["Belgium"],
     topic: "mobility",
     icon: "✈️",
@@ -348,6 +377,7 @@ Détachement international : pour missions > 3 mois hors Belgique, avenant de d�
 Comment démarrer : contacter HR Mobility BE (hr-be@mistralhr.demo) → dossier de mobilité → validation manager + Legal → avenant → brief destination → support relocation.
 
 Split payroll (missions longues) : possible selon la durée et le pays d'accueil — à analyser avec le Payroll Manager.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── BELGIUM — TAX ─────────────────────────────────────────
@@ -355,6 +385,7 @@ Split payroll (missions longues) : possible selon la durée et le pays d'accueil
     id: "be-tax",
     title: "Fiscalité Locale — Belgique",
     description: "IPP, précompte professionnel, cotisations ONSS (13,07% salariales).",
+    desc: "IPP, précompte professionnel, cotisations ONSS (13,07% salariales).",
     countries: ["Belgium"],
     topic: "tax",
     icon: "🧾",
@@ -376,6 +407,7 @@ Précompte professionnel : retenu mensuellement par l'employeur sur base des bar
 Cotisations ONSS salariales : 13,07% du salaire brut (sécurité sociale — pension, chômage, soins de santé, allocations familiales).
 
 Avantages de toute nature (ATN) : voiture de société, GSM, PC privé imposés sur base forfaitaire (barèmes SPF Finances).`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── BELGIUM — HEALTH ──────────────────────────────────────
@@ -396,6 +428,8 @@ Avantages de toute nature (ATN) : voiture de société, GSM, PC privé imposés 
 Assurance hospitalisation collective : couverture des frais hospitaliers (chambre individuelle ou double selon option), honoraires médecins au-delà des tarifs INAMI, soins avant/après hospitalisation (30/60 jours selon police).
 
 Portabilité : maintien de la couverture hospitalisation possible après départ (conversion en police individuelle, sans questionnaire médical, dans les 30 jours suivant la fin du contrat).`,
+    desc: "Assurance hospitalisation collective + mutualité légale INAMI. Couverture collective.",
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── BELGIUM — PREMIUMS ────────────────────────────────────
@@ -423,6 +457,8 @@ Pension complémentaire (2e pilier — LPC 2003) : plan de pension de groupe, co
 Actions société : plan d'actionnariat salarié (même programme que FR).
 
 Intervention home office : indemnité forfaitaire nette 151,70€/mois maximum (plafond ONSS 2024) pour les télétravailleurs structurels (> 5 jours/mois à domicile).`,
+    desc: "Chèques-repas, transport, participation bénéfices, pension complémentaire, prime home office.",
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── BELGIUM — WORKSITE ────────────────────────────────────
@@ -448,6 +484,8 @@ Loi Travail Faisable (2017) : droit au crédit-temps, annualisation possible, tr
 Droit à la déconnexion : obligation légale depuis 2022 pour entreprises >20 salariés — charte interne.
 
 Intervention home office : 151,70€/mois max (plafond ONSS 2024) pour télétravailleurs structurels.`,
+    desc: "Accord collectif télétravail, 38h/semaine, flexibilité et droit à la déconnexion (Belgique).",
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── BELGIUM — ONBOARDING ──────────────────────────────────
@@ -455,6 +493,7 @@ Intervention home office : 151,70€/mois max (plafond ONSS 2024) pour télétra
     id: "be-onboarding",
     title: "Onboarding & Offboarding — Belgique",
     description: "Intégration J1-J90, politique IT/PC, procédure de départ et solde de tout compte.",
+    desc: "Intégration J1-J90, politique IT/PC, procédure de départ et solde de tout compte.",
     countries: ["Belgium"],
     topic: "onboarding",
     icon: "🚀",
@@ -480,6 +519,7 @@ Offboarding — délais de préavis (Loi Statut Unique, Art. 37/2) :
 - Par tranche de 6 mois supplémentaires : +1 semaine (jusqu'à 5 ans), puis +3 sem./année entamée
 - Restitution matériel dans les 3 jours ouvrés suivant le départ
 - Documents remis : certificat de travail + formulaire C4 (chômage) + attestation pension`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── BELGIUM — COMPENSATION ────────────────────────────────
@@ -487,6 +527,7 @@ Offboarding — délais de préavis (Loi Statut Unique, Art. 37/2) :
     id: "be-pay-transparency",
     title: "Pay Transparency — Belgique",
     description: "Égalité salariale (Loi 22 avril 2012) et EU Dir. 2023/970.",
+    desc: "Égalité salariale (Loi 22 avril 2012) et EU Dir. 2023/970.",
     countries: ["Belgium"],
     topic: "compensation",
     icon: "⚖️",
@@ -502,5 +543,22 @@ EU Dir. 2023/970 (transposition requise avant juin 2026) : droit individuel à l
 Période d'essai : abolie depuis le 1er janvier 2014 (Loi du 26 décembre 2013, Statut Unique). Tout CDI démarre sans période probatoire. Préavis calculé dès le 1er jour sur ancienneté totale.
 
 Contrôle : Institut pour l'Égalité des Femmes et des Hommes + Inspection sociale.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 ];
+
+export const francePolicies: Policy[] = policies.filter((p) =>
+  p.countries.includes("France")
+);
+
+export const belgiumPolicies: Policy[] = policies.filter((p) =>
+  p.countries.includes("Belgium")
+);
+
+export function getPoliciesForCountry(country: string): Policy[] {
+  const COUNTRY_POLICIES: Record<string, Policy[]> = {
+    France: francePolicies,
+    Belgium: belgiumPolicies,
+  };
+  return COUNTRY_POLICIES[country] ?? [];
+}

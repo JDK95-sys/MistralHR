@@ -10,7 +10,7 @@
  */
 
 import { Pool } from "pg";
-import { policies } from "../lib/policies-data";
+import { getPoliciesForCountry, SUPPORTED_COUNTRIES } from "../lib/policies";
 import { generateEmbedding, formatEmbedding } from "../lib/rag/embeddings";
 
 const pool = new Pool({
@@ -20,6 +20,8 @@ const pool = new Pool({
 
 async function seed() {
   const client = await pool.connect();
+  const policies = SUPPORTED_COUNTRIES.flatMap(c => getPoliciesForCountry(c));
+  
   try {
     await client.query("BEGIN");
 
@@ -30,7 +32,7 @@ async function seed() {
     );
 
     for (const policy of policies) {
-      const country = policy.countries[0] ?? "GLOBAL";
+      const country = policy.country;
       const language = country === "France" ? "fr" : "nl";
 
       // Insert parent document record

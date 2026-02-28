@@ -1,14 +1,30 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
+import MistralMark from "@/components/icons/MistralMark";
 
-export default function LoginPage() {
+const AUTH_ERROR_MESSAGES: Record<string, string> = {
+  Configuration: "There is a server configuration problem. Please contact your administrator.",
+  AccessDenied: "You do not have permission to sign in.",
+  Verification: "The sign-in link is no longer valid. Please request a new one.",
+  Default: "An error occurred during sign in. Please try again.",
+};
+
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const urlError = searchParams.get("error");
+    if (urlError) {
+      setError(AUTH_ERROR_MESSAGES[urlError] ?? AUTH_ERROR_MESSAGES.Default);
+    }
+  }, [searchParams]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -50,34 +66,16 @@ export default function LoginPage() {
       <div className="w-full max-w-sm" style={{ position: "relative", zIndex: 1 }}>
         {/* Logo / wordmark */}
         <div className="flex items-center gap-3 mb-8 justify-center">
-          {/* Mistral pixel-M SVG */}
-          <svg width="48" height="36" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Row 1: cols 1,2 and 6,7 */}
-            <rect x="0"  y="0"  width="5" height="5" fill="#FFD800" />
-            <rect x="6"  y="0"  width="5" height="5" fill="#FFD800" />
-            <rect x="33" y="0"  width="5" height="5" fill="#FA500F" />
-            <rect x="39" y="0"  width="5" height="5" fill="#E10500" />
-            {/* Row 2: cols 1,2,3 and 5,6,7 */}
-            <rect x="0"  y="6"  width="5" height="5" fill="#FFD800" />
-            <rect x="6"  y="6"  width="5" height="5" fill="#FFD800" />
-            <rect x="13" y="6"  width="5" height="5" fill="#FF8205" />
-            <rect x="26" y="6"  width="5" height="5" fill="#FA500F" />
-            <rect x="33" y="6"  width="5" height="5" fill="#FA500F" />
-            <rect x="39" y="6"  width="5" height="5" fill="#E10500" />
-            {/* Row 3: cols 1,3,4,5,7 */}
-            <rect x="0"  y="13" width="5" height="5" fill="#FFD800" />
-            <rect x="13" y="13" width="5" height="5" fill="#FF8205" />
-            <rect x="20" y="13" width="5" height="5" fill="#FF8205" />
-            <rect x="26" y="13" width="5" height="5" fill="#FA500F" />
-            <rect x="39" y="13" width="5" height="5" fill="#E10500" />
-            {/* Row 4: cols 1,4,7 */}
-            <rect x="0"  y="20" width="5" height="5" fill="#FFD800" />
-            <rect x="20" y="20" width="5" height="5" fill="#FF8205" />
-            <rect x="39" y="20" width="5" height="5" fill="#E10500" />
-            {/* Row 5: cols 1,7 */}
-            <rect x="0"  y="27" width="5" height="5" fill="#FFD800" />
-            <rect x="39" y="27" width="5" height="5" fill="#E10500" />
-          </svg>
+          <div
+            className="flex items-center justify-center rounded-xl flex-shrink-0"
+            style={{
+              width: 40,
+              height: 40,
+              background: "linear-gradient(135deg, #FF7000, #FF9A40)",
+            }}
+          >
+            <MistralMark size={20} strokeWidth={2.8} />
+          </div>
           <div>
             <div
               className="font-bold leading-tight"
@@ -86,7 +84,7 @@ export default function LoginPage() {
               MistralHR
             </div>
             <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 1 }}>
-              HR Policy Assistant · France &amp; Belgium
+              Powered by Mistral AI · FR &amp; BE
             </div>
           </div>
         </div>
@@ -95,19 +93,19 @@ export default function LoginPage() {
         <div
           className="rounded-2xl p-8"
           style={{
-            background: "linear-gradient(180deg, #FFFFFF 0%, #FFFDF5 100%)",
-            border: "1px solid #E9E2CB",
-            boxShadow: "var(--shadow-md)",
+            background: "var(--card)",
+            border: "1px solid var(--border)",
+            boxShadow: "var(--mistral-shadow)",
           }}
         >
           <h1
             className="font-bold mb-1"
             style={{ fontSize: 20, letterSpacing: "-0.025em", color: "var(--text-primary)" }}
           >
-            Sign in
+            Sign in to MistralHR
           </h1>
           <p className="mb-6" style={{ fontSize: 13, color: "var(--text-muted)" }}>
-            Access your HR policy assistant
+            Powered by Mistral AI · Secure and compliant
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -246,10 +244,20 @@ export default function LoginPage() {
             <br />
             jan.peeters@mistralhr.demo <span style={{ color: "var(--text-muted)" }}>(Belgium)</span>
             <br />
-            Password: <span style={{ fontFamily: "var(--font-mono)" }}>demo1234</span>
+            Password: <span style={{ fontFamily: "var(--font-mono)" }}>hackathon2025</span>
+            <br />
+            <span style={{ fontSize: 10, color: "var(--text-muted)" }}>Powered by Mistral AI</span>
           </p>
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }} />}>
+      <LoginForm />
+    </Suspense>
   );
 }

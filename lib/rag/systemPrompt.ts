@@ -1,5 +1,11 @@
 import type { Session } from "next-auth";
 
+// ─── Country to language mapping ─────────────────────────────────────
+const COUNTRY_LANGUAGES: Record<string, string> = {
+  France: "fr",
+  Belgium: "fr/nl",
+};
+
 // ─── Build the system prompt ───────────────────────────────────────
 // This is injected on every chat request.
 // It tells the assistant exactly who it is, what it has access to,
@@ -11,7 +17,7 @@ export function buildSystemPrompt(
 ): string {
   const user = session.user;
   const country = user.country ?? "Unknown";
-  const language = user.preferredLanguage ?? "en";
+  const language = COUNTRY_LANGUAGES[country] ?? "en";
   const today = new Date().toLocaleDateString("en-GB", {
     day: "numeric",
     month: "long",

@@ -6,11 +6,17 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "HR Assistant",
-    template: "%s | HR Assistant",
+    default: "MistralHR",
+    template: "%s | MistralHR",
   },
   description:
-    "Your intelligent HR hub — policies, jobs, analytics, and AI across 20+ countries.",
+    "MistralHR — AI-powered HR platform by Mistral AI. Policies, benefits and HR assistance across 20+ countries.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+  },
   robots: {
     index: false, // Internal tool — never index
     follow: false,
@@ -24,7 +30,15 @@ export default async function RootLayout({
 }) {
   // Fetch session server-side and pass to provider
   // This avoids the loading flash on initial render
-  const session = await getServerSession(authOptions);
+  let session = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch (error) {
+    // Auth may fail if NEXTAUTH_SECRET is missing or misconfigured.
+    // Gracefully fall back to no session — downstream pages/layouts
+    // will redirect to /login when they see session === null.
+    console.error("[RootLayout] Failed to fetch server session:", error);
+  }
 
   return (
     <html lang="en" suppressHydrationWarning>

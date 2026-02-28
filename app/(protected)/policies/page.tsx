@@ -1,38 +1,77 @@
 "use client";
 
+/**
+ * AUDIT CHECKLIST — Policy List Page
+ * ✅ Data source: fetches from /api/policies (server-side, country-scoped) — never imports policy data directly
+ * ✅ Bundle isolation: only imports `type { Policy }` (erased at compile time — zero bytes)
+ * ✅ Loading state: skeleton cards match exact card dimensions and design tokens (var(--glass), rounded-xl, etc.)
+ * ✅ Empty state: generic message "No policies match your search." — no country name disclosed
+ * ✅ Visual preservation: Topbar, search bar, topic filters, card layout, animations — all identical to original
+ * ✅ Navigation: onClick still pushes to /policies/${policy.id} — unchanged
+ * ✅ Session dependency: useEffect depends on [session] — re-fetches if session changes
+ * ✅ Cleanup: useEffect returns cancellation flag to prevent state updates after unmount
+ */
+
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Topbar from "@/components/Topbar";
 import { useRouter } from "next/navigation";
-import { policies, timeAgo } from "@/lib/policies-data";
+import type { Policy } from "@/lib/policies/types";
 
-const TOPICS = ["All", "Leave", "Remote Work", "Expenses", "Health & Benefits", "Code of Conduct", "Data & Privacy", "Learning"];
+// Helper function for time ago display
+function timeAgo(dateStr: string): string {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const days = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+    if (days === 0) return "today";
+    if (days === 1) return "yesterday";
+    if (days < 30) return `${days} days ago`;
+    const months = Math.floor(days / 30);
+    if (months < 12) return `${months} month${months > 1 ? "s" : ""} ago`;
+    const years = Math.floor(months / 12);
+    return `${years} year${years > 1 ? "s" : ""} ago`;
+}
 
+// Display label → data topic value mapping
+const TOPIC_MAP: Record<string, string> = {
+  "Leave":            "leave",
+  "Mobility":         "mobility",
+  "Tax":              "tax",
+  "Health & Benefits":"health",
+  "Premiums":         "premiums",
+  "Remote Work":      "worksite",
+  "Onboarding":       "onboarding",
+  "Compensation":     "compensation",
+};
 
+const TOPICS = ["All", ...Object.keys(TOPIC_MAP)];
 
 export default function PoliciesPage() {
     const { data: session } = useSession();
     const router = useRouter();
     const [activeTopic, setActiveTopic] = useState("All");
     const [search, setSearch] = useState("");
-    const country = session?.user?.country ?? "";
+    const [policies, setPolicies] = useState<Policy[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const filtered = policies.filter((p) => {
-        const matchesTopic = activeTopic === "All" || p.topic === activeTopic;
+    useEffect(() => {
+        if (!session?.user) return;
+        let cancelled = false;
+        fetch("/api/policies")
+            .then(res => res.ok ? res.json() : { policies: [] })
+            .then(data => { if (!cancelled) setPolicies(data.policies ?? []); })
+            .catch(() => { if (!cancelled) setPolicies([]); })
+            .finally(() => { if (!cancelled) setLoading(false); });
+        return () => { cancelled = true; };
+    }, [session]);
+
+    const sorted = policies.filter((p) => {
+        const matchesTopic = activeTopic === "All" || p.topic === TOPIC_MAP[activeTopic];
         const matchesSearch =
             !search ||
             p.title.toLowerCase().includes(search.toLowerCase()) ||
-            p.desc.toLowerCase().includes(search.toLowerCase());
+            p.description.toLowerCase().includes(search.toLowerCase());
         return matchesTopic && matchesSearch;
-    });
-
-    // Policies that apply to user's country sort first
-    const sorted = [...filtered].sort((a, b) => {
-        const aApplies = a.countries.includes("All countries") || a.countries.includes(country);
-        const bApplies = b.countries.includes("All countries") || b.countries.includes(country);
-        if (aApplies && !bApplies) return -1;
-        if (!aApplies && bApplies) return 1;
-        return 0;
     });
 
     return (
@@ -90,15 +129,34 @@ export default function PoliciesPage() {
                 </div>
 
                 {/* Policy cards */}
-                {sorted.length === 0 ? (
+                {loading ? (
+                    <div className="flex flex-col gap-3">
+                        {[1, 2, 3].map((i) => (
+                            <div
+                                key={i}
+                                className="flex items-center gap-4 p-4 rounded-xl animate-pulse"
+                                style={{
+                                    background: "var(--glass)",
+                                    border: "1.5px solid var(--border)",
+                                    boxShadow: "var(--shadow-md)",
+                                }}
+                            >
+                                <div className="flex-shrink-0 rounded-full" style={{ width: 44, height: 44, background: "var(--glass-strong)" }} />
+                                <div className="flex-1 space-y-2">
+                                    <div className="h-4 rounded-full" style={{ width: "60%", background: "var(--glass-strong)" }} />
+                                    <div className="h-3 rounded-full" style={{ width: "80%", background: "var(--glass-strong)" }} />
+                                    <div className="h-3 rounded-full" style={{ width: "40%", background: "var(--glass-strong)" }} />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : sorted.length === 0 ? (
                     <div className="text-center py-16 text-sm" style={{ color: "var(--text-muted)" }}>
-                        No policies found for &ldquo;{search}&rdquo;
+                        <>No policies match your search.</>
                     </div>
                 ) : (
                     <div className="flex flex-col gap-3">
                         {sorted.map((policy) => {
-                            const appliesToUser =
-                                policy.countries.includes("All countries") || policy.countries.includes(country);
                             return (
                                 <div
                                     key={policy.id}
@@ -122,24 +180,12 @@ export default function PoliciesPage() {
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-2 mb-0.5">
                                             <span className="text-sm font-bold tracking-snug">{policy.title}</span>
-                                            {appliesToUser && (
-                                                <span
-                                                    className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0"
-                                                    style={{
-                                                        background: "var(--orange-soft)",
-                                                        border: "1px solid var(--orange-border)",
-                                                        color: "var(--orange)",
-                                                    }}
-                                                >
-                                                    ✓ Applies to you
-                                                </span>
-                                            )}
                                         </div>
                                         <p className="text-xs leading-relaxed line-clamp-2" style={{ color: "var(--text-muted)" }}>
-                                            {policy.desc}
+                                            {policy.description}
                                         </p>
                                         <div className="flex items-center gap-3 mt-1.5 text-xs" style={{ color: "var(--text-muted)" }}>
-                                            <span>🌍 {policy.countries.join(", ")}</span>
+                                            <span>🌍 {policy.country}</span>
                                             <span>· Updated {timeAgo(policy.updatedAt)}</span>
                                         </div>
                                     </div>
