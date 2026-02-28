@@ -1031,7 +1031,7 @@ html, body {
 
 .hover-card:hover {
   border-color: var(--border-strong) !important;
-  background: var(--bg) !important;
+  background: var(--bg-card-hover) !important;
 }
 
 .hover-tool-card {
