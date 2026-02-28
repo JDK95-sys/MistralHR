@@ -46,9 +46,24 @@ function LoginForm() {
   return (
     <div
       className="min-h-screen flex items-center justify-center p-4"
-      style={{ background: "var(--bg)", fontFamily: "var(--font-sans)" }}
+      style={{ background: "#FFFAEB", fontFamily: "var(--font-sans)", position: "relative", overflow: "hidden" }}
     >
-      <div className="w-full max-w-sm">
+      {/* Decorative radial-gradient orb — top right */}
+      <div
+        style={{
+          position: "absolute",
+          top: -80,
+          right: -80,
+          width: 400,
+          height: 400,
+          background: "radial-gradient(circle, rgba(255,130,5,0.15) 0%, rgba(255,175,0,0.08) 40%, transparent 70%)",
+          borderRadius: "50%",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+
+      <div className="w-full max-w-sm" style={{ position: "relative", zIndex: 1 }}>
         {/* Logo / wordmark */}
         <div className="flex items-center gap-3 mb-8 justify-center">
           <div
@@ -64,7 +79,7 @@ function LoginForm() {
           <div>
             <div
               className="font-bold leading-tight"
-              style={{ fontSize: 17, letterSpacing: "-0.025em", color: "var(--text-primary)" }}
+              style={{ fontSize: 20, letterSpacing: "-0.03em", color: "var(--text-primary)" }}
             >
               MistralHR
             </div>
@@ -185,6 +200,12 @@ function LoginForm() {
                 fontFamily: "var(--font-sans)",
                 letterSpacing: "-0.01em",
               }}
+              onMouseEnter={(e) => {
+                if (!loading) e.currentTarget.style.background = "linear-gradient(90deg, #FF8205, #FFAF00)";
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) e.currentTarget.style.background = "var(--orange)";
+              }}
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -211,11 +232,11 @@ function LoginForm() {
         <div
           className="mt-4 px-4 py-3 rounded-xl text-center"
           style={{
-            background: "var(--orange-soft)",
-            border: "1px solid var(--orange-border)",
+            background: "#FFF0C3",
+            border: "1px solid #E9E2CB",
           }}
         >
-          <p style={{ fontSize: 11.5, color: "var(--orange)", fontWeight: 600, marginBottom: 4 }}>
+          <p style={{ fontSize: 11.5, color: "#FA500F", fontWeight: 600, marginBottom: 4 }}>
             Demo credentials
           </p>
           <p style={{ fontSize: 11, color: "var(--text-secondary)", lineHeight: 1.6 }}>

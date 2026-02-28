@@ -43,7 +43,7 @@ const markdownComponents: Components = {
     <h2 style={{ fontSize: 15, fontWeight: 800, marginBottom: 6, marginTop: 14, color: "var(--text-primary)", letterSpacing: "-0.01em" }}>{children}</h2>
   ),
   h3: ({ children }) => (
-    <h3 style={{ fontSize: 13, fontWeight: 700, marginBottom: 4, marginTop: 10, color: "var(--sage)" }}>{children}</h3>
+    <h3 style={{ fontSize: 13, fontWeight: 700, marginBottom: 4, marginTop: 10, color: "var(--orange)" }}>{children}</h3>
   ),
   p: ({ children }) => (
     <p style={{ marginBottom: 10, lineHeight: 1.7, fontSize: 13.5, color: "var(--text-secondary)" }}>{children}</p>
@@ -78,8 +78,8 @@ const markdownComponents: Components = {
           width: 18,
           height: 18,
           borderRadius: isOrdered ? 6 : "50%",
-          background: isOrdered ? "var(--mint-10)" : "var(--mint-10)",
-          color: "var(--sage)",
+          background: "var(--orange-soft)",
+          color: "var(--orange)",
           fontSize: 10,
           fontWeight: 700,
           display: "flex",
@@ -138,8 +138,8 @@ const markdownComponents: Components = {
     if (isInline) {
       return (
         <code style={{
-          background: "var(--mint-10)",
-          color: "var(--sage)",
+          background: "var(--orange-soft)",
+          color: "var(--orange)",
           padding: "2px 6px",
           borderRadius: 6,
           fontSize: 12,
@@ -171,15 +171,15 @@ const markdownComponents: Components = {
   ),
   a: ({ children, href }) => (
     <a href={href} target="_blank" rel="noopener noreferrer" style={{
-      color: "var(--sage)",
+      color: "var(--orange)",
       fontWeight: 600,
       textDecoration: "none",
-      borderBottom: "1.5px solid var(--mint)",
+      borderBottom: "1.5px solid var(--orange)",
     }}>{children}</a>
   ),
   blockquote: ({ children }) => (
     <blockquote style={{
-      borderLeft: "3px solid var(--mint)",
+      borderLeft: "3px solid var(--orange)",
       paddingLeft: 14,
       margin: "10px 0",
       color: "var(--text-muted)",
@@ -486,7 +486,7 @@ export default function ChatPage() {
               {input.length > MAX_MESSAGE_LENGTH * 0.8 && (
                 <span
                   className="text-xs flex-shrink-0 ml-3"
-                  style={{ color: input.length >= MAX_MESSAGE_LENGTH ? "var(--rhubarb)" : "var(--text-muted)" }}
+                  style={{ color: input.length >= MAX_MESSAGE_LENGTH ? "#E10500" : "var(--text-muted)" }}
                 >
                   {input.length}/{MAX_MESSAGE_LENGTH}
                 </span>

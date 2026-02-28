@@ -71,7 +71,7 @@ export default function Topbar({ children }: TopbarProps) {
               top: 5, right: 6,
               width: 6, height: 6,
               borderRadius: "50%",
-              background: "var(--rhubarb)",
+              background: "#E10500",
               border: "1.5px solid var(--surface-solid)",
             }}
           />

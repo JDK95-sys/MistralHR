@@ -9,23 +9,23 @@ module.exports = {
     extend: {
       colors: {
         orange: {
-          DEFAULT: "#FF7000",
-          hover: "#E56300",
-          soft: "rgba(255, 112, 0, 0.08)",
-          border: "rgba(255, 112, 0, 0.25)",
+          DEFAULT: "#FF8205",
+          hover: "#FA500F",
+          soft: "rgba(255, 130, 5, 0.08)",
+          border: "rgba(255, 130, 5, 0.25)",
         },
         sidebar: {
-          DEFAULT: "#1C1C1E",
+          DEFAULT: "#1E1E1E",
           hover: "#2C2C2E",
           border: "rgba(255,255,255,0.06)",
           text: "#8A8A8E",
           "text-active": "#FFFFFF",
         },
         content: {
-          bg: "#FAFAF9",
+          bg: "#FFFAEB",
           card: "#FFFFFF",
-          border: "#E8E8E6",
-          "border-strong": "#D0D0CE",
+          border: "#E9E2CB",
+          "border-strong": "#D5CCAC",
         },
         text: {
           primary: "#1A1A1A",
@@ -34,8 +34,8 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ["DM Sans", "system-ui", "sans-serif"],
-        mono: ["DM Mono", "monospace"],
+        sans: ["Arial", "Helvetica Neue", "Helvetica", "sans-serif"],
+        mono: ["Courier New", "Courier", "monospace"],
       },
       borderRadius: {
         sm: "6px",
@@ -48,7 +48,7 @@ module.exports = {
         sm: "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
         md: "0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04)",
         lg: "0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.04)",
-        orange: "0 4px 14px rgba(255,112,0,0.25)",
+        orange: "0 4px 14px rgba(255,130,5,0.25)",
       },
     },
   },
