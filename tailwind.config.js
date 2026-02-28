@@ -24,8 +24,8 @@ module.exports = {
         content: {
           bg: "#1C1C1E",
           card: "#2C2C2E",
-          border: "rgba(255,255,255,0.10)",
-          "border-strong": "rgba(255,255,255,0.15)",
+          border: "rgba(255, 255, 255, 0.10)",
+          "border-strong": "rgba(255, 255, 255, 0.15)",
         },
         text: {
           primary: "#F5F5F5",
