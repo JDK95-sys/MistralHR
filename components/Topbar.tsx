@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Bell } from "lucide-react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 // ─── Page title map ────────────────────────────────────────────────
 const PAGE_TITLES: Record<string, string> = {
@@ -27,6 +28,18 @@ const COUNTRY_FLAGS: Record<string, string> = {
   Poland: "🇵🇱", Spain: "🇪🇸", UK: "🇬🇧", India: "🇮🇳",
 };
 
+// ─── Coming-soon popover ───────────────────────────────────────────
+function ComingSoonPopover({ label }: { label: string }) {
+  return (
+    <div className="topbar-popover" role="status">
+      <span style={{ fontSize: 13, fontWeight: 500, color: "var(--text-primary)" }}>
+        {label}
+      </span>
+      <span style={{ fontSize: 11, color: "var(--text-muted)" }}>Coming soon</span>
+    </div>
+  );
+}
+
 interface TopbarProps {
   children?: React.ReactNode;
 }
@@ -43,8 +56,37 @@ export default function Topbar({ children }: TopbarProps) {
     setTimeout(() => setNotifToast(false), 2500);
   };
 
+  const [openPopover, setOpenPopover] = useState<string | null>(null);
+  const topbarRef = useRef<HTMLElement>(null);
+
+  const toggle = useCallback((id: string) => {
+    setOpenPopover((prev) => (prev === id ? null : id));
+  }, []);
+
+  // Close on outside click
+  useEffect(() => {
+    if (!openPopover) return;
+    function handleClick(e: MouseEvent) {
+      if (topbarRef.current && !topbarRef.current.contains(e.target as Node)) {
+        setOpenPopover(null);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [openPopover]);
+
+  // Close on Escape
+  useEffect(() => {
+    if (!openPopover) return;
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpenPopover(null);
+    }
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [openPopover]);
+
   return (
-    <header className="topbar">
+    <header className="topbar" ref={topbarRef}>
       <h1 className="topbar-title">{title}</h1>
 
       <div className="topbar-actions">
