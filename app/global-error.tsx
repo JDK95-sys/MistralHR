@@ -1,10 +1,5 @@
 "use client";
 
-/**
- * Global error boundary — catches unhandled errors in the root layout.
- * In production, React omits the real message and provides a `digest`
- * property instead. We log both so they surface in observability tools.
- */
 export default function GlobalError({
   error,
   reset,
@@ -12,49 +7,59 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  console.error(
-    "[GlobalError]",
-    error.message,
-    error.digest ? `(digest: ${error.digest})` : ""
-  );
-
   return (
     <html lang="en">
       <body
         style={{
+          margin: 0,
+          fontFamily: "'DM Sans', system-ui, sans-serif",
+          background: "#FAFAF9",
+          color: "#1A1A1A",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           minHeight: "100vh",
-          fontFamily: "system-ui, sans-serif",
-          background: "#FAFAF9",
-          color: "#1C1C1E",
         }}
       >
-        <div style={{ textAlign: "center", maxWidth: 480, padding: 24 }}>
-          <h1 style={{ fontSize: 24, marginBottom: 8 }}>
+        <div style={{ textAlign: "center", maxWidth: 420, padding: 24 }}>
+          <div
+            style={{
+              width: 56,
+              height: 56,
+              borderRadius: 14,
+              background: "#FF7000",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0 auto 20px",
+              fontSize: 24,
+              color: "#fff",
+            }}
+          >
+            ⚠️
+          </div>
+          <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, letterSpacing: "-0.02em" }}>
             Something went wrong
           </h1>
-          <p style={{ color: "#666", marginBottom: 24 }}>
-            An unexpected error occurred. Please try again or contact your
-            administrator if the problem persists.
-            {error.digest && (
-              <span style={{ display: "block", marginTop: 8, fontSize: 13, color: "#777" }}>
-                Reference: {error.digest}
-              </span>
-            )}
+          <p style={{ fontSize: 14, color: "#6B6B6B", marginBottom: 4, lineHeight: 1.6 }}>
+            An unexpected error occurred. Our team has been notified.
           </p>
+          {error.digest && (
+            <p style={{ fontSize: 12, color: "#9A9A9A", marginBottom: 20, fontFamily: "'DM Mono', monospace" }}>
+              Error ID: {error.digest}
+            </p>
+          )}
           <button
             onClick={reset}
             style={{
               padding: "10px 24px",
-              background: "#FF7000",
-              color: "white",
+              borderRadius: 9999,
               border: "none",
-              borderRadius: 8,
+              background: "#FF7000",
+              color: "#fff",
+              fontSize: 14,
+              fontWeight: 600,
               cursor: "pointer",
-              fontSize: 15,
-              fontWeight: 500,
             }}
           >
             Try again
