@@ -12,6 +12,21 @@ export async function register() {
   // Initialization hook — runs once on server start.
   // Use this to set up external error-reporting SDKs (e.g., Sentry)
   // when adding a third-party service in the future.
+
+  const hasMistralKey = !!process.env.MISTRAL_API_KEY;
+  const hasDb = !!process.env.DATABASE_URL;
+
+  if (!hasMistralKey) {
+    console.warn(
+      "[MistralHR] MISTRAL_API_KEY is not set. " +
+      "The chat API will run in demo mode with static canned responses. " +
+      "Set MISTRAL_API_KEY in .env.local (development) or your hosting platform's " +
+      "environment variables (Vercel/Railway/Azure) to enable AI-powered chat."
+    );
+  } else {
+    const mode = hasDb ? "full RAG mode (Mistral + DB)" : "Mistral-only mode (no DB)";
+    console.info(`[MistralHR] MISTRAL_API_KEY detected — starting in ${mode}.`);
+  }
 }
 
 export async function onRequestError(

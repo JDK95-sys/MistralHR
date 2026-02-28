@@ -259,6 +259,42 @@ npm run dev
 # → http://localhost:3000
 ```
 
+The server will log the active mode on startup:
+```
+[MistralHR] MISTRAL_API_KEY detected — starting in full RAG mode (Mistral + DB).
+```
+If `MISTRAL_API_KEY` is missing you will see:
+```
+[MistralHR] MISTRAL_API_KEY is not set. The chat API will run in demo mode …
+```
+
+---
+
+## MISTRAL_API_KEY Integration Reference
+
+`MISTRAL_API_KEY` is the single key that unlocks AI capabilities in MistralHR. Here is where it is consumed:
+
+| File | When | Purpose |
+|---|---|---|
+| `instrumentation.ts` | Server startup (once) | Validates key presence; logs the active runtime mode |
+| `lib/rag/embeddings.ts` | Module init | Initialises the Mistral SDK; throws a clear error if key is absent |
+| `app/api/chat/route.ts` | Every `/api/chat` POST | Drives Modes 1 & 2 (full RAG and Mistral-only); falls back to demo when key is absent |
+| `scripts/seed-policies.ts` | Manual seed run | Exits early with a helpful message if key or `DATABASE_URL` is missing |
+
+**Runtime behaviour without the key:**
+- Server startup logs a warning (via `instrumentation.ts`).
+- Chat API (`app/api/chat/route.ts`) silently falls back to Mode 3 — static demo responses, no Mistral calls.
+- Seed script exits immediately with an actionable error message.
+
+**Where to set the key:**
+
+| Environment | How |
+|---|---|
+| Local development | `.env.local` — `MISTRAL_API_KEY=<key>` |
+| Vercel | Dashboard → Settings → Environment Variables |
+| Railway | Project settings → Variables |
+| Azure App Service | Configuration → Application settings |
+
 ---
 
 ## Demo Accounts
