@@ -27,7 +27,15 @@ export default async function RootLayout({
 }) {
   // Fetch session server-side and pass to provider
   // This avoids the loading flash on initial render
-  const session = await getServerSession(authOptions);
+  let session = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch {
+    // Auth may fail if NEXTAUTH_SECRET is missing or misconfigured.
+    // Gracefully fall back to no session — downstream pages/layouts
+    // will redirect to /login when they see session === null.
+    console.error("[RootLayout] Failed to fetch server session");
+  }
 
   return (
     <html lang="en" suppressHydrationWarning>

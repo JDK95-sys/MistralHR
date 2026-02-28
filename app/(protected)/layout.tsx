@@ -13,7 +13,13 @@ export default async function ProtectedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
+  let session = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch {
+    // If session check fails, redirect to login as a safety measure
+    console.error("[ProtectedLayout] Failed to fetch server session");
+  }
 
   if (!session) {
     redirect("/login");

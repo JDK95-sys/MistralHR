@@ -6,7 +6,13 @@ import { authOptions } from "@/lib/auth";
 // → authenticated users go to the HR chat homepage
 // → unauthenticated users go to login (middleware handles this too)
 export default async function RootPage() {
-  const session = await getServerSession(authOptions);
+  let session = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch {
+    // If session check fails, treat as unauthenticated
+    console.error("[RootPage] Failed to fetch server session");
+  }
 
   if (session) {
     redirect("/chat");
