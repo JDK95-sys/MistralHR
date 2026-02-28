@@ -16,3 +16,13 @@ declare module "next-auth" {
     };
   }
 }
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id?: string;
+    country?: string;
+    department?: string;
+    jobTitle?: string;
+    portalRole?: string;
+  }
+}
