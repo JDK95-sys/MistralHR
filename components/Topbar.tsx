@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { Bell } from "lucide-react";
 
 // ─── Page title map ────────────────────────────────────────────────
@@ -35,6 +36,12 @@ export default function Topbar({ children }: TopbarProps) {
   const pathname = usePathname();
   const title = getPageTitle(pathname);
   const country = session?.user?.country;
+  const [notifToast, setNotifToast] = useState(false);
+
+  const handleNotifClick = () => {
+    setNotifToast(true);
+    setTimeout(() => setNotifToast(false), 2500);
+  };
 
   return (
     <header className="topbar">
@@ -59,23 +66,48 @@ export default function Topbar({ children }: TopbarProps) {
         </div>
 
         {/* Notifications */}
-        <button
-          className="topbar-pill"
-          aria-label="Notifications"
-          style={{ padding: "6px 10px", position: "relative" }}
-        >
-          <Bell size={15} />
-          <span
-            style={{
-              position: "absolute",
-              top: 5, right: 6,
-              width: 6, height: 6,
-              borderRadius: "50%",
-              background: "#E10500",
-              border: "1.5px solid var(--surface-solid)",
-            }}
-          />
-        </button>
+        <div style={{ position: "relative" }}>
+          <button
+            className="topbar-pill"
+            aria-label="Notifications"
+            onClick={handleNotifClick}
+            style={{ padding: "6px 10px", position: "relative" }}
+          >
+            <Bell size={15} />
+            <span
+              style={{
+                position: "absolute",
+                top: 5, right: 6,
+                width: 6, height: 6,
+                borderRadius: "50%",
+                background: "#E10500",
+                border: "1.5px solid var(--surface-solid)",
+              }}
+            />
+          </button>
+          {notifToast && (
+            <div
+              className="animate-fade-in"
+              style={{
+                position: "absolute",
+                top: "calc(100% + 8px)",
+                right: 0,
+                whiteSpace: "nowrap",
+                padding: "8px 14px",
+                borderRadius: "var(--radius-md)",
+                background: "var(--card)",
+                border: "1px solid var(--border)",
+                boxShadow: "var(--shadow-md)",
+                fontSize: 12,
+                fontWeight: 500,
+                color: "var(--text-secondary)",
+                zIndex: 50,
+              }}
+            >
+              🔔 Notifications coming soon
+            </div>
+          )}
+        </div>
       </div>
     </header>
   );

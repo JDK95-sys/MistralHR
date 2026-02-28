@@ -11,7 +11,7 @@ module.exports = {
         orange: {
           DEFAULT: "#FF8205",
           hover: "#FA500F",
-          soft: "rgba(255, 130, 5, 0.08)",
+          soft: "rgba(255, 130, 5, 0.12)",
           border: "rgba(255, 130, 5, 0.25)",
         },
         sidebar: {
@@ -22,15 +22,15 @@ module.exports = {
           "text-active": "#FFFFFF",
         },
         content: {
-          bg: "#FFFAEB",
-          card: "#FFFFFF",
-          border: "#E9E2CB",
-          "border-strong": "#D5CCAC",
+          bg: "#1A1A1C",
+          card: "#242426",
+          border: "#333336",
+          "border-strong": "#444448",
         },
         text: {
-          primary: "#1A1A1A",
-          secondary: "#6B6B6B",
-          muted: "#9A9A9A",
+          primary: "#F0F0F0",
+          secondary: "#B0B0B4",
+          muted: "#707074",
         },
       },
       fontFamily: {
@@ -45,9 +45,9 @@ module.exports = {
         "2xl": "28px",
       },
       boxShadow: {
-        sm: "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
-        md: "0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04)",
-        lg: "0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.04)",
+        sm: "0 1px 3px rgba(0,0,0,0.20), 0 1px 2px rgba(0,0,0,0.14)",
+        md: "0 4px 12px rgba(0,0,0,0.24), 0 2px 4px rgba(0,0,0,0.14)",
+        lg: "0 12px 32px rgba(0,0,0,0.28), 0 4px 8px rgba(0,0,0,0.14)",
         orange: "0 4px 14px rgba(255,130,5,0.25)",
       },
     },
