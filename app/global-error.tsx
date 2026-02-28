@@ -1,5 +1,7 @@
 "use client";
 
+import "./globals.css";
+
 export default function GlobalError({
   error,
   reset,
@@ -27,7 +29,7 @@ export default function GlobalError({
               width: 56,
               height: 56,
               borderRadius: 14,
-              background: "#FF7000",
+              background: "var(--orange)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -55,7 +57,7 @@ export default function GlobalError({
               padding: "10px 24px",
               borderRadius: 9999,
               border: "none",
-              background: "#FF7000",
+              background: "var(--orange)",
               color: "#fff",
               fontSize: 14,
               fontWeight: 600,
