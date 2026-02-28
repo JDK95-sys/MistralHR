@@ -39,7 +39,7 @@ export default function GlobalError({
             An unexpected error occurred. Please try again or contact your
             administrator if the problem persists.
             {error.digest && (
-              <span style={{ display: "block", marginTop: 8, fontSize: 13, color: "#999" }}>
+              <span style={{ display: "block", marginTop: 8, fontSize: 13, color: "#777" }}>
                 Reference: {error.digest}
               </span>
             )}

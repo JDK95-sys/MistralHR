@@ -36,7 +36,7 @@ export default function Error({
           An error occurred while loading this page. Please try again or
           navigate back.
           {error.digest && (
-            <span style={{ display: "block", marginTop: 8, fontSize: 13, color: "#999" }}>
+            <span style={{ display: "block", marginTop: 8, fontSize: 13, color: "#777" }}>
               Reference: {error.digest}
             </span>
           )}
