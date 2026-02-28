@@ -37,13 +37,16 @@ MistralHR is an internal HR portal for employees in **France** and **Belgium**, 
 
 | Layer | Technology |
 |---|---|
-| Framework | Next.js 14 (App Router) |
-| Auth | NextAuth.js — Credentials only (no Azure AD) |
-| AI — Chat | **Mistral `open-mistral-nemo`** |
-| AI — Embeddings | **Mistral `mistral-embed` (1024 dims)** |
-| Database | PostgreSQL + pgvector |
-| Styling | Tailwind CSS |
-| Language | TypeScript |
+| AI — Chat | [![Mistral](https://img.shields.io/badge/Mistral-open--mistral--nemo-FF7000?logo=mistralai&logoColor=white)](https://mistral.ai) |
+| AI — Embeddings | [![Mistral](https://img.shields.io/badge/Mistral-mistral--embed-FF7000?logo=mistralai&logoColor=white)](https://mistral.ai) |
+| Framework | [![Next.js](https://img.shields.io/badge/Next.js-14_App_Router-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org) |
+| Auth | [![NextAuth](https://img.shields.io/badge/NextAuth.js-Credentials-purple)](https://next-auth.js.org) |
+| Database | [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-pgvector-4169E1?logo=postgresql&logoColor=white)](https://github.com/pgvector/pgvector) |
+| Styling | [![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3.4-38BDF8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com) |
+| Language | [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org) |
+| Icons | Lucide React |
+| Doc Parsing | pdf-parse, mammoth, xlsx |
+| Markdown | react-markdown + remark-gfm |
 
 ---
 
@@ -51,11 +54,13 @@ MistralHR is an internal HR portal for employees in **France** and **Belgium**, 
 
 ### Prerequisites
 
-- Node.js 18.17+
-- PostgreSQL with the `pgvector` extension
-- A [Mistral API key](https://console.mistral.ai/)
+| Requirement | Version | Notes |
+|---|---|---|
+| Node.js | ≥ 18.17 | [nodejs.org](https://nodejs.org) |
+| PostgreSQL | ≥ 15 + pgvector | [pgvector install](https://github.com/pgvector/pgvector) |
+| Mistral API Key | — | [console.mistral.ai](https://console.mistral.ai) |
 
-### 1. Clone & install
+### Step 1 — Clone & Install
 
 ```bash
 git clone https://github.com/JDK95-sys/MistralHR.git
@@ -63,38 +68,56 @@ cd MistralHR
 npm install
 ```
 
-### 2. Configure environment
+### Step 2 — Configure Environment
 
 ```bash
 cp .env.example .env.local
 ```
 
-Edit `.env.local`:
+Edit `.env.local` with your values:
 
-```
+**Auth**
+```env
 NEXTAUTH_SECRET=<run: openssl rand -base64 32>
 NEXTAUTH_URL=http://localhost:3000
-
-DATABASE_URL=postgresql://user:password@localhost:5432/mistralhr
-
-MISTRAL_API_KEY=<your Mistral API key>
-
-AUTH_PASSWORD=demo1234
+AUTH_PASSWORD=hackathon2025
 ```
 
-### 3. Set up the database
+**Database**
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/mistralhr
+```
+
+**Mistral AI**
+```env
+MISTRAL_API_KEY=<your Mistral API key from console.mistral.ai>
+```
+
+> **💡 Runtime Modes:**
+> - **Full mode** — `MISTRAL_API_KEY` + `DATABASE_URL` set: full RAG chat with embeddings and vector search.
+> - **Mistral-only mode** — `MISTRAL_API_KEY` set, no `DATABASE_URL`: chat works but without policy retrieval.
+> - **Demo mode** — neither set: app runs with static demo responses, no API calls.
+
+### Step 3 — Set Up Database
 
 ```bash
-# Enable pgvector
+# Enable pgvector extension
 psql $DATABASE_URL -c "CREATE EXTENSION IF NOT EXISTS vector;"
 
 # Create tables
 psql $DATABASE_URL -f db/schema.sql
 ```
 
-### 4. Seed policies
+Expected output:
+```
+CREATE EXTENSION
+CREATE TABLE
+CREATE INDEX
+```
 
-This generates Mistral embeddings for all 18 FR/BE policies and stores them in the database for RAG chat.
+### Step 4 — Seed Policies with Mistral Embeddings
+
+This generates `mistral-embed` embeddings for all 18 FR/BE policies and stores them in PostgreSQL for RAG chat.
 
 ```bash
 npx ts-node --project tsconfig.json scripts/seed-policies.ts
@@ -104,11 +127,26 @@ Expected output:
 ```
 ✓ Seeded: Congés Payés — France
 ✓ Seeded: Arrêt Maladie — France
-...
+✓ Seeded: Jours Fériés — France
+✓ Seeded: Mobilité Internationale — France
+✓ Seeded: Impôt sur le Revenu — France
+✓ Seeded: Mutuelle Santé — France
+✓ Seeded: Tickets Restaurant & Transport — France
+✓ Seeded: Intéressement & Participation — France
+✓ Seeded: Télétravail — France
+✓ Seeded: Transparence Salariale — France
+✓ Seeded: Jaarlijks Verlof — Belgium
+✓ Seeded: Ziekteverlof — Belgium
+✓ Seeded: Feestdagen — Belgium
+✓ Seeded: Internationale Mobiliteit — Belgium
+✓ Seeded: Personenbelasting — Belgium
+✓ Seeded: Hospitalisatieverzekering — Belgium
+✓ Seeded: Maaltijdcheques & Transport — Belgium
+✓ Seeded: Thuiswerk — Belgium
 ✅ All 18 policies seeded successfully.
 ```
 
-### 5. Run
+### Step 5 — Run
 
 ```bash
 npm run dev
@@ -121,8 +159,35 @@ npm run dev
 
 | Email | Password | Country | Role |
 |---|---|---|---|
-| alice.martin@mistralhr.demo | hackathon2025 | France | Employee |
-| jan.peeters@mistralhr.demo | hackathon2025 | Belgium | HR Business Partner |
+| alice.martin@mistralhr.demo | `hackathon2025` | 🇫🇷 France | Employee |
+| jan.peeters@mistralhr.demo | `hackathon2025` | 🇧🇪 Belgium | HR Business Partner |
+
+---
+
+## Adding Screenshots
+
+1. Run the app with `npm run dev`
+2. Take screenshots of the following pages:
+   - **Login** — `http://localhost:3000/login`
+   - **Chat** — `http://localhost:3000/chat`
+   - **Policies** — `http://localhost:3000/policies`
+   - **Tutorial** — `http://localhost:3000/tutorial`
+3. Save them to the `docs/screenshots/` directory:
+
+```bash
+mkdir -p docs/screenshots
+# Copy your screenshots here:
+#   docs/screenshots/login.png
+#   docs/screenshots/chat.png
+#   docs/screenshots/policies.png
+#   docs/screenshots/tutorial.png
+
+git add docs/screenshots/
+git commit -m "docs: add app screenshots"
+git push
+```
+
+The README screenshot references will automatically display once the images are committed.
 
 ---
 
@@ -131,129 +196,94 @@ npm run dev
 ```
 MistralHR/
 ├── app/
-│   ├── (protected)/
-│   │   ├── layout.tsx          # Authenticated shell with sidebar
-│   │   ├── chat/               # Mistral RAG chat interface
-│   │   └── policies/
-│   │       ├── page.tsx        # Policy library (filter by country/topic)
-│   │       └── [id]/page.tsx   # Policy detail with legal references
+│   ├── page.tsx                    # Root redirect
+│   ├── layout.tsx                  # Root layout
+│   ├── globals.css                 # Global styles (dark theme)
+│   ├── login/
+│   │   └── page.tsx                # Credentials login form
 │   ├── api/
-│   │   ├── auth/               # NextAuth endpoints
-│   │   └── chat/route.ts       # Mistral streaming chat API
-│   └── login/page.tsx          # Credentials login form
+│   │   ├── auth/                   # NextAuth endpoints
+│   │   └── chat/
+│   │       └── route.ts            # Mistral streaming chat API
+│   └── (protected)/
+│       ├── layout.tsx              # Authenticated shell with sidebar
+│       ├── chat/                   # Mistral RAG chat interface
+│       ├── policies/
+│       │   ├── page.tsx            # Policy library (filter by country/topic)
+│       │   └── [id]/page.tsx       # Policy detail with legal references
+│       └── tutorial/               # Guided onboarding tutorial
 ├── components/
-│   ├── Sidebar.tsx             # Nav: Chat + Policies only
-│   └── Topbar.tsx              # Page header
+│   ├── Sidebar.tsx                 # Nav: Chat + Policies
+│   └── Topbar.tsx                  # Page header
 ├── lib/
-│   ├── auth.ts                 # NextAuth credentials config
-│   ├── db.ts                   # PostgreSQL pool
-│   ├── policies-data.ts        # 18 FR/BE statutory policies
+│   ├── auth.ts                     # NextAuth credentials config
+│   ├── policies-data.ts            # 18 FR/BE statutory policies
 │   └── rag/
-│       ├── embeddings.ts       # Mistral mistral-embed
-│       ├── vectorSearch.ts     # pgvector similarity search
-│       ├── systemPrompt.ts     # Chat system prompt
-│       ├── chunker.ts          # Document text splitting
-│       └── ingest.ts           # Document ingestion pipeline
+│       ├── embeddings.ts           # Mistral mistral-embed
+│       ├── vectorSearch.ts         # pgvector similarity search
+│       ├── systemPrompt.ts         # Chat system prompt
+│       ├── chunker.ts              # Document text splitting
+│       └── ingest.ts               # Document ingestion pipeline
 ├── db/
-│   ├── schema.sql              # PostgreSQL schema (pgvector 1024 dims)
+│   ├── schema.sql                  # PostgreSQL schema (pgvector 1024 dims)
 │   └── migrations/
-│       └── 001-mistral-embeddings.sql  # Migrate from 1536 → 1024 dims
+│       └── 001-mistral-embeddings.sql
 ├── scripts/
-│   └── seed-policies.ts        # Seed FR/BE policies with Mistral embeddings
-├── docs/plans/
-│   └── 2026-02-28-stripped-hr-portal.md  # Implementation plan
-└── middleware.ts               # Route protection (NextAuth)
+│   └── seed-policies.ts            # Seed FR/BE policies with Mistral embeddings
+├── docs/
+│   └── screenshots/                # App screenshots for README
+└── middleware.ts                   # Route protection (NextAuth)
 ```
 
 ---
 
-## How the RAG Chat Works
+## Deployment
 
-```
-User question
-     │
-     ▼
-Generate embedding (mistral-embed)
-     │
-     ▼
-Vector search in PostgreSQL (pgvector cosine similarity)
-Returns top 6 most relevant policy chunks for the user's country
-     │
-     ▼
-Build context from chunks + user profile (country, department, role)
-     │
-     ▼
-Stream response from open-mistral-nemo
-     │
-     ▼
-Citations surfaced from source chunks
-```
+### Vercel (Recommended)
 
-The assistant answers **only from retrieved documents** — it will not hallucinate policy details not in the database. **Powered by Mistral AI**.
+1. Push this repository to GitHub.
+2. Import the project in [Vercel](https://vercel.com).
+3. Set the following environment variables in the Vercel dashboard:
+   - `NEXTAUTH_SECRET`
+   - `NEXTAUTH_URL` (your Vercel deployment URL)
+   - `MISTRAL_API_KEY`
+   - `DATABASE_URL` (a hosted PostgreSQL instance with pgvector, e.g. Neon or Supabase)
+4. Click **Deploy**.
 
----
+### Azure App Service
 
-## Policy Legal References
-
-All policies reference real statutory sources:
-
-**France:** Code du Travail (L1221-19, L1226-1, L3121-27, L3133-1, L3141-3, L3221-1+), EU Directive 2023/970, ANI Télétravail 2020, CCN Syntec
-
-**Belgium:** Loi du 26 déc. 2013 (Statut Unique), Loi du 22 avril 2012, Loi du 3 juillet 1978, Loi du 28 juin 1971, CCT n°85, EU Directive 2023/970, ONSS/INAMI regulations
-
----
-
-## If You Already Have a Database with OpenAI Embeddings
-
-Run the migration to switch from 1536 → 1024 dimensions, then re-seed:
+This repo includes a `web.config` for IIS/Azure App Service compatibility.
 
 ```bash
-psql $DATABASE_URL -f db/migrations/001-mistral-embeddings.sql
-npx ts-node --project tsconfig.json scripts/seed-policies.ts
+npm run build
+# Set environment variables in Azure App Service → Configuration → Application settings
+# Deploy via GitHub Actions, Azure DevOps, or zip deploy
 ```
 
----
-
-## Environment Variables
-
-| Variable | Description |
-|---|---|
-| `NEXTAUTH_SECRET` | Random secret for JWT signing (`openssl rand -base64 32`) |
-| `NEXTAUTH_URL` | Base URL of the app (e.g. `http://localhost:3000`) |
-| `DATABASE_URL` | PostgreSQL connection string |
-| `MISTRAL_API_KEY` | Mistral API key from console.mistral.ai |
-| `AUTH_PASSWORD` | Shared password for demo accounts (default: `hackathon2025`) |
+Set the same environment variables (`NEXTAUTH_SECRET`, `NEXTAUTH_URL`, `MISTRAL_API_KEY`, `DATABASE_URL`) in the Azure App Service configuration panel.
 
 ---
 
-## Deploying to Vercel
+## Contributing
 
-### Setting Up Environment Variables in Vercel
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Commit your changes: `git commit -m 'feat: add my feature'`
+4. Push to the branch: `git push origin feature/my-feature`
+5. Open a Pull Request
 
-For the AI chat to work properly in production, you need to configure environment variables in Vercel:
+---
 
-1. Go to your [Vercel Dashboard](https://vercel.com/dashboard)
-2. Select your MistralHR project
-3. Go to **Settings** → **Environment Variables**
-4. Add the following variables:
+## License
 
-| Variable | Value | Environment |
-|---|---|---|
-| `NEXTAUTH_SECRET` | Run `openssl rand -base64 32` and paste the output | Production, Preview, Development |
-| `NEXTAUTH_URL` | Your Vercel deployment URL (e.g., `https://mistralhr.vercel.app`) | Production |
-| `MISTRAL_API_KEY` | Your Mistral API key from [console.mistral.ai](https://console.mistral.ai/) | Production, Preview |
-| `DATABASE_URL` | Your PostgreSQL connection string (with pgvector) | Production |
-| `AUTH_PASSWORD` | Password for demo accounts | Production |
+Built for the **Mistral AI Hackathon**. This is an internal demo tool — not intended for production use without further security review.
 
-### Important Notes
+---
 
-- **Without `MISTRAL_API_KEY`**: The app runs in demo mode with pre-written responses. These responses are country-aware but limited in scope.
-- **With `MISTRAL_API_KEY` but without `DATABASE_URL`**: The app uses Mistral AI for chat but without RAG (no policy document retrieval).
-- **With both `MISTRAL_API_KEY` and `DATABASE_URL`**: Full RAG-powered chat with policy retrieval from your seeded documents.
+<div align="center">
 
-### Getting a Mistral API Key
+Built with 🧡 and **Mistral AI**
 
-1. Create an account at [console.mistral.ai](https://console.mistral.ai/)
-2. Navigate to **API Keys**
-3. Create a new API key
-4. Copy and paste into Vercel's environment variables
+*Next.js · TypeScript · PostgreSQL + pgvector · NextAuth.js · Tailwind CSS*
+
+</div>

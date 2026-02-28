@@ -7,11 +7,7 @@ export async function generateEmbedding(text: string): Promise<number[]> {
     model: "mistral-embed",
     inputs: [text],
   });
-  const embedding = response.data[0]?.embedding;
-  if (!embedding) {
-    throw new Error("Failed to generate embedding");
-  }
-  return embedding;
+  return response.data[0].embedding!;
 }
 
 export async function generateEmbeddingsBatch(
@@ -21,12 +17,7 @@ export async function generateEmbeddingsBatch(
     model: "mistral-embed",
     inputs: texts,
   });
-  return response.data.map((d) => {
-    if (!d.embedding) {
-      throw new Error("Failed to generate embedding for batch item");
-    }
-    return d.embedding;
-  });
+  return response.data.map((d) => d.embedding!);
 }
 
 export function formatEmbedding(embedding: number[]): string {

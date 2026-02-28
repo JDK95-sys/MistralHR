@@ -17,18 +17,6 @@ const steps: Step[] = [
         target: ".nav-policies",
         content: "In the Policy Library, you can browse all company regulations. They open directly in the app now!",
     },
-    {
-        target: ".nav-jobs",
-        content: "Check the Job Board to see internal opportunities and boost your career.",
-    },
-    {
-        target: ".nav-analytics",
-        content: "People Analytics provides insights on workforce data (available to specific roles).",
-    },
-    {
-        target: ".nav-tools",
-        content: "HR Tools contains useful utilities for HR professionals and employees.",
-    },
 ];
 
 export default function TutorialClient() {

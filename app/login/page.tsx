@@ -1,15 +1,30 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect, Suspense } from "react";
 import MistralMark from "@/components/icons/MistralMark";
 
-export default function LoginPage() {
+const AUTH_ERROR_MESSAGES: Record<string, string> = {
+  Configuration: "There is a server configuration problem. Please contact your administrator.",
+  AccessDenied: "You do not have permission to sign in.",
+  Verification: "The sign-in link is no longer valid. Please request a new one.",
+  Default: "An error occurred during sign in. Please try again.",
+};
+
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const urlError = searchParams.get("error");
+    if (urlError) {
+      setError(AUTH_ERROR_MESSAGES[urlError] ?? AUTH_ERROR_MESSAGES.Default);
+    }
+  }, [searchParams]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -215,5 +230,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }} />}>
+      <LoginForm />
+    </Suspense>
   );
 }

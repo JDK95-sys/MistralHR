@@ -20,9 +20,19 @@ function timeAgo(dateStr: string): string {
     return `${years} year${years > 1 ? "s" : ""} ago`;
 }
 
-const TOPICS = ["All", "Leave", "Remote Work", "Expenses", "Health & Benefits", "Code of Conduct", "Data & Privacy", "Learning"];
+// Display label → data topic value mapping
+const TOPIC_MAP: Record<string, string> = {
+  "Leave":            "leave",
+  "Mobility":         "mobility",
+  "Tax":              "tax",
+  "Health & Benefits":"health",
+  "Premiums":         "premiums",
+  "Remote Work":      "worksite",
+  "Onboarding":       "onboarding",
+  "Compensation":     "compensation",
+};
 
-
+const TOPICS = ["All", ...Object.keys(TOPIC_MAP)];
 
 export default function PoliciesPage() {
     const { data: session } = useSession();
@@ -31,16 +41,12 @@ export default function PoliciesPage() {
     const [search, setSearch] = useState("");
     const country = session?.user?.country ?? "";
 
-    // Get only policies for the user's country
-    const countryPolicies = getPoliciesForCountry(country);
-
-    const searchLower = search.toLowerCase();
-    const filtered = countryPolicies.filter((p) => {
-        const matchesTopic = activeTopic === "All" || p.topic === activeTopic;
+    const filtered = policies.filter((p) => {
+        const matchesTopic = activeTopic === "All" || p.topic === TOPIC_MAP[activeTopic];
         const matchesSearch =
             !search ||
-            p.title.toLowerCase().includes(searchLower) ||
-            p.description.toLowerCase().includes(searchLower);
+            p.title.toLowerCase().includes(search.toLowerCase()) ||
+            p.description.toLowerCase().includes(search.toLowerCase());
         return matchesTopic && matchesSearch;
     });
 

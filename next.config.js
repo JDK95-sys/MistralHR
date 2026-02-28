@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Output as standalone for Azure App Service Docker deployment
-  output: "standalone",
+  // Standalone output is only needed for Docker/Azure App Service.
+  // Vercel manages its own output format, so we skip it there.
+  ...(process.env.VERCEL ? {} : { output: "standalone" }),
 
   // Allow Azure AD profile images
   images: {
@@ -20,10 +21,22 @@ const nextConfig = {
   // Strict mode for better dev experience
   reactStrictMode: true,
 
-  // Custom headers for security
+  // Custom headers for security & instrumentation
   experimental: {
+    instrumentationHook: true,
     optimizePackageImports: ['lucide-react'],
     serverActions: true,
+  },
+  async redirects() {
+    return [
+      // Browsers always request /favicon.ico; redirect to the SVG variant
+      // to avoid a 404 in the browser console.
+      {
+        source: "/favicon.ico",
+        destination: "/favicon.svg",
+        permanent: false,
+      },
+    ];
   },
   async headers() {
     return [
