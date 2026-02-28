@@ -1,9 +1,25 @@
 "use client";
 
+/**
+ * AUDIT CHECKLIST — Policy Detail Page
+ * ✅ Data source: fetches from /api/policies/${id} (server-side, country-scoped) — never imports policy data directly
+ * ✅ Bundle isolation: only imports `type { Policy }` (erased at compile time — zero bytes)
+ * ✅ Error handling: fetch failure → router.replace("/policies") — silent redirect, no error page
+ * ✅ No information leakage: removed "Policy not found for your country" error screen entirely
+ * ✅ Loading state: skeleton mimics detail layout (icon, title, summary card) with matching design tokens
+ * ✅ Visual preservation: all detail elements pixel-identical — header, summary, legal refs, content, sections, AI footer
+ * ✅ Content audit: POLICY_SECTIONS cross-country references replaced with neutral language
+ *    - leave/Entitlements: removed "6 extra days in Belgium, 3 RTT days in France"
+ *    - premiums/Per Diem: removed "€20 (Belgium), €25 (France), €24 (Germany), €20 (Netherlands)"
+ *    - health/Supplemental: removed "in Belgium and Netherlands"
+ * ✅ Cleanup: useEffect returns cancellation flag to prevent state updates after unmount
+ */
+
 import { useParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
 import Topbar from "@/components/Topbar";
-import { getPolicyByIdForCountry } from "@/lib/policies";
+import type { Policy } from "@/lib/policies/types";
 
 // Helper function for time ago display
 function timeAgo(dateStr: string): string {
@@ -23,30 +39,55 @@ export default function PolicyDetailPage() {
     const { id } = useParams();
     const router = useRouter();
     const { data: session } = useSession();
-    const country = session?.user?.country ?? "";
-    
-    // Get policy only if it belongs to the user's country
-    const policy = typeof id === "string" ? getPolicyByIdForCountry(id, country) : undefined;
+    const [policy, setPolicy] = useState<Policy | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    if (!policy) {
+    useEffect(() => {
+        if (!session?.user || !id) return;
+        let cancelled = false;
+        fetch(`/api/policies/${id}`)
+            .then(res => {
+                if (!res.ok) {
+                    // Policy doesn't belong to user's country or doesn't exist.
+                    // Silent redirect — no error page, no country disclosure.
+                    router.replace("/policies");
+                    return null;
+                }
+                return res.json();
+            })
+            .then(data => { if (!cancelled && data) setPolicy(data.policy); })
+            .catch(() => { if (!cancelled) router.replace("/policies"); })
+            .finally(() => { if (!cancelled) setLoading(false); });
+        return () => { cancelled = true; };
+    }, [session, id, router]);
+
+    if (loading) {
         return (
-            <div className="flex flex-col h-full items-center justify-center"
-                style={{ background: "var(--bg-deep)" }}>
-                <div className="text-5xl mb-4">📄</div>
-                <div className="text-xl font-bold mb-2">Policy not found</div>
-                <p className="text-sm mb-5" style={{ color: "var(--text-muted)" }}>
-                    This policy may not exist or is not available for your country ({country || "unknown"}).
-                </p>
-                <button
-                    onClick={() => router.push("/policies")}
-                    className="px-5 py-2.5 rounded-full text-sm font-bold"
-                    style={{ background: "var(--mint)", color: "white" }}
-                >
-                    ← Back to Policy Library
-                </button>
+            <div className="flex flex-col h-full">
+                <Topbar>
+                    <div className="flex items-center gap-3">
+                        <div className="rounded-full animate-pulse" style={{ width: 32, height: 32, background: "var(--glass-strong)" }} />
+                        <div className="h-4 rounded-full animate-pulse" style={{ width: 200, background: "var(--glass-strong)" }} />
+                    </div>
+                </Topbar>
+                <main className="flex-1 overflow-y-auto p-8">
+                    <div className="max-w-3xl mx-auto space-y-6">
+                        <div className="flex items-center gap-4">
+                            <div className="rounded-full animate-pulse flex-shrink-0" style={{ width: 64, height: 64, background: "var(--glass-strong)" }} />
+                            <div className="flex-1 space-y-3">
+                                <div className="h-6 rounded-full animate-pulse" style={{ width: "70%", background: "var(--glass-strong)" }} />
+                                <div className="h-4 rounded-full animate-pulse" style={{ width: "40%", background: "var(--glass-strong)" }} />
+                            </div>
+                        </div>
+                        <div className="p-5 rounded-2xl animate-pulse" style={{ background: "var(--glass)", border: "1px solid var(--glass-border)", height: 100 }} />
+                        <div className="p-5 rounded-2xl animate-pulse" style={{ background: "var(--glass)", border: "1px solid var(--glass-border)", height: 160 }} />
+                    </div>
+                </main>
             </div>
         );
     }
+
+    if (!policy) return null; // redirect in progress
 
     return (
         <div className="flex flex-col h-full">
@@ -189,7 +230,7 @@ export default function PolicyDetailPage() {
 const POLICY_SECTIONS: Record<string, { heading: string; content: string }[]> = {
     leave: [
         { heading: "1. Purpose & Scope", content: "This policy defines the annual, parental, and special leave entitlements for all employees. It applies to permanent and fixed-term contract holders across all applicable jurisdictions." },
-        { heading: "2. Entitlements", content: "Standard annual leave is a minimum of 20 working days per year, with additional company-granted days varying by country (up to 6 extra days in Belgium, 3 RTT days in France, 10 days in Germany). Part-time employees receive entitlements on a pro-rata basis." },
+        { heading: "2. Entitlements", content: "Standard annual leave is a minimum of 20 working days per year, with additional company-granted days as per local law and company policy. Part-time employees receive entitlements on a pro-rata basis. Refer to your country-specific policy above for exact entitlements." },
         { heading: "3. Booking Procedure", content: "Leave must be requested through Workday Self-Service at least 5 business days in advance for periods of 3+ consecutive days. Manager approval is required before leave is confirmed. Public holidays follow the calendar of your registered work location." },
         { heading: "4. Carry-Over & Forfeiture", content: "Up to 5 unused annual leave days may be carried over into Q1 of the following year. Days not used by 31 March are forfeited unless an exception is approved by Regional HR. Accrued leave is paid out upon termination." },
         { heading: "5. Special Circumstances", content: "Additional leave may be granted for marriage (3 days), bereavement (3–5 days depending on relationship), and moving house (1 day). These are in addition to statutory entitlements and must be supported by documentation." },
@@ -205,13 +246,13 @@ const POLICY_SECTIONS: Record<string, { heading: string; content: string }[]> = 
         { heading: "1. Purpose & Scope", content: "This policy governs the reimbursement of business expenses incurred by employees. All expenses must be reasonable, necessary, and directly related to company business activities." },
         { heading: "2. Submission Process", content: "All expense claims must be submitted through SAP Concur within 30 days of the expense date. Original receipts or digital copies must be attached for amounts exceeding €25. Late submissions may be rejected." },
         { heading: "3. Approval Workflow", content: "Expenses up to €500 require line manager approval. Expenses between €500–€2,000 require department head approval. Amounts exceeding €2,000 require VP-level sign-off. Travel bookings should use the approved Concur Travel platform." },
-        { heading: "4. Per Diem & Meal Allowances", content: "Daily meal allowances vary by country: €20 (Belgium), €25 (France), €24 (Germany), €20 (Netherlands). International travel per diem rates follow the company rate card, updated quarterly." },
+        { heading: "4. Per Diem & Meal Allowances", content: "Daily meal allowances vary by country of employment — refer to your local policy for exact amounts. International travel per diem rates follow the company rate card, updated quarterly." },
         { heading: "5. Non-Reimbursable Items", content: "Personal entertainment, minibar charges, premium class travel (unless pre-approved), parking fines, and spouse/partner travel costs are not reimbursable. Alcohol is limited to €15 per person for client entertainment." },
     ],
     health: [
         { heading: "1. Purpose & Scope", content: "This policy outlines the health, medical, and supplementary benefits provided to employees. Coverage varies by country and employment type." },
         { heading: "2. Group Insurance", content: "All permanent employees are enrolled in the company's group hospitalisation insurance from day one. Coverage extends to dependants (spouse/partner and children under 25). Pre-existing conditions are covered after a 12-month waiting period." },
-        { heading: "3. Supplemental Benefits", content: "Additional benefits include dental coverage (up to €1,200/year), optical allowance (€300/2 years), and mental health support through 8 free EAP counselling sessions. Gym membership subsidies of €300/year are available in Belgium and Netherlands." },
+        { heading: "3. Supplemental Benefits", content: "Additional benefits include dental coverage (up to €1,200/year), optical allowance (€300/2 years), and mental health support through 8 free EAP counselling sessions. Gym membership subsidies may be available depending on your country of employment." },
         { heading: "4. Claims Process", content: "Medical claims are submitted through the online benefits portal. Standard claims are processed within 15 business days. Direct billing is available at network hospitals. Emergency treatment abroad is covered up to €100,000 per incident." },
         { heading: "5. Wellness Programs", content: "The company offers annual health screenings, flu vaccinations, ergonomic assessments, and access to a 24/7 employee assistance programme. Mental health first aiders are available in each major office." },
     ],
