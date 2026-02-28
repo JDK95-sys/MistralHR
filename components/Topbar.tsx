@@ -50,7 +50,10 @@ export default function Topbar({ children }: TopbarProps) {
       <div className="topbar-actions">
         {/* Country context */}
         {country && (
-          <div className="topbar-pill">
+          <div
+            className="topbar-pill topbar-pill--static"
+            title="Current country context"
+          >
             <span>{COUNTRY_FLAGS[country] ?? "🌍"}</span>
             {country}
           </div>
@@ -60,54 +63,35 @@ export default function Topbar({ children }: TopbarProps) {
         {children}
 
         {/* AI status */}
-        <div className="topbar-pill" style={{ gap: 6, cursor: "default", background: "var(--mistral-gradient)" }}>
+        <div
+          className="topbar-pill topbar-pill--static"
+          title="Mistral AI — connected"
+          style={{ gap: 6, background: "var(--mistral-gradient)", borderColor: "transparent" }}
+        >
           <span style={{ width: 6, height: 6, borderRadius: "50%", background: "white", boxShadow: "0 0 6px rgba(255, 112, 0, 0.3)", display: "inline-block" }} />
           <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.06em", color: "white" }}>MISTRAL AI</span>
         </div>
 
         {/* Notifications */}
-        <div style={{ position: "relative" }}>
-          <button
-            className="topbar-pill"
-            aria-label="Notifications"
-            onClick={handleNotifClick}
-            style={{ padding: "6px 10px", position: "relative" }}
-          >
-            <Bell size={15} />
-            <span
-              style={{
-                position: "absolute",
-                top: 5, right: 6,
-                width: 6, height: 6,
-                borderRadius: "50%",
-                background: "#E10500",
-                border: "1.5px solid var(--surface-solid)",
-              }}
-            />
-          </button>
-          {notifToast && (
-            <div
-              className="animate-fade-in"
-              style={{
-                position: "absolute",
-                top: "calc(100% + 8px)",
-                right: 0,
-                whiteSpace: "nowrap",
-                padding: "8px 14px",
-                borderRadius: "var(--radius-md)",
-                background: "var(--card)",
-                border: "1px solid var(--border)",
-                boxShadow: "var(--shadow-md)",
-                fontSize: 12,
-                fontWeight: 500,
-                color: "var(--text-secondary)",
-                zIndex: 50,
-              }}
-            >
-              🔔 Notifications coming soon
-            </div>
-          )}
-        </div>
+        <button
+          className="topbar-pill"
+          aria-label="Notifications"
+          title="Notifications — coming soon"
+          disabled
+          style={{ padding: "6px 10px", position: "relative" }}
+        >
+          <Bell size={15} />
+          <span
+            style={{
+              position: "absolute",
+              top: 5, right: 6,
+              width: 6, height: 6,
+              borderRadius: "50%",
+              background: "#E10500",
+              border: "1.5px solid var(--surface-solid)",
+            }}
+          />
+        </button>
       </div>
     </header>
   );
