@@ -481,7 +481,7 @@ export default function ChatPage() {
             </div>
             <div className="flex items-center justify-between mt-2.5">
               <p className="chat-disclaimer" style={{ marginTop: 0 }}>
-                🔒 Based on official Worldline HR documents · EU AI Act compliant · Verify decisions with your HRBP
+                🔒 Based on official HR documents · EU AI Act compliant · Verify decisions with your HRBP
               </p>
               {input.length > MAX_MESSAGE_LENGTH * 0.8 && (
                 <span

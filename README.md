@@ -1,6 +1,6 @@
-# MistralHR — Worldline HR Assistant
+# MistralHR — HR Assistant
 
-Internal HR portal for Worldline employees in **France** and **Belgium**, built for the hackathon. Powered by Mistral AI — no Azure, no Anthropic.
+Internal HR portal for employees in **France** and **Belgium**, built for the hackathon. Powered by Mistral AI — no Azure.
 
 ---
 
@@ -112,8 +112,8 @@ npm run dev
 
 | Email | Password | Country | Role |
 |---|---|---|---|
-| alice.martin@worldline.com | demo1234 | France | Employee |
-| jan.peeters@worldline.com | demo1234 | Belgium | HR Business Partner |
+| alice.martin@mistralhr.demo | demo1234 | France | Employee |
+| jan.peeters@mistralhr.demo | demo1234 | Belgium | HR Business Partner |
 
 ---
 

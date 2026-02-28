@@ -15,10 +15,10 @@ interface ChatRequest {
 const DEMO_RESPONSES: Record<string, string> = {
   "leave": `**Annual Leave Entitlement** 🏖️
 
-Based on the Worldline Annual Leave Policy (WL-HR-POL-2024-01), your entitlement depends on your country:
+Based on the Annual Leave Policy (HR-POL-2024-01), your entitlement depends on your country:
 
-| Country | Statutory | Worldline Extra | Total |
-|---------|-----------|-----------------|-------|
+| Country | Statutory | Company Extra | Total |
+|---------|-----------|---------------|-------|
 | Belgium | 20 days | 6 days | **26 days** |
 | France | 25 days | 3 RTT days | **28 days** |
 | Germany | 20 days | 10 days | **30 days** |
@@ -33,12 +33,12 @@ Based on the Worldline Annual Leave Policy (WL-HR-POL-2024-01), your entitlement
 
 📄 Source: Annual Leave Policy · Effective Jan 2024`,
 
-  "parental": `**Parental Leave at Worldline** 👶
+  "parental": `**Parental Leave** 👶
 
-Worldline provides parental leave entitlements across all regions:
+The company provides parental leave entitlements across all regions:
 
 **Maternity Leave:**
-- Belgium: 15 weeks (statutory) + 2 weeks Worldline top-up at full pay
+- Belgium: 15 weeks (statutory) + 2 weeks company top-up at full pay
 - France: 16 weeks at full pay
 - Germany: 14 weeks Mutterschutz + up to 3 years Elternzeit
 
@@ -59,7 +59,7 @@ Worldline provides parental leave entitlements across all regions:
 Use **SAP Concur** to submit all expense reports. Here's a quick guide:
 
 **Step-by-step:**
-1. Log in to SAP Concur (via HR Tools or concur.worldline.com)
+1. Log in to SAP Concur (via HR Tools)
 2. Click "Create New Report"
 3. Add each expense line with receipt photo
 4. Submit for manager approval
@@ -76,7 +76,7 @@ Use **SAP Concur** to submit all expense reports. Here's a quick guide:
 
   "remote": `**Remote & Hybrid Work Policy** 🏠
 
-Worldline supports hybrid working across all locations:
+The company supports hybrid working across all locations:
 
 **Standard arrangement:**
 - Up to **3 days remote** per week (team-dependent)
@@ -97,7 +97,7 @@ Worldline supports hybrid working across all locations:
 
   "healthcare": `**Healthcare & Medical Insurance** ⚕️
 
-Worldline provides comprehensive healthcare coverage:
+The company provides comprehensive healthcare coverage:
 
 **Belgium:**
 - Group hospitalisation insurance (DKV) — fully employer-paid

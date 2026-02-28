@@ -7,7 +7,7 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // ── Worldline Official Brand Colors ──────────────────
+      // ── Brand Colors ─────────────────────────────────────
       colors: {
         // Main colours
         mint: {

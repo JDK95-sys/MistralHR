@@ -6,8 +6,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Worldline People Portal",
-    template: "%s | Worldline People Portal",
+    default: "HR Assistant",
+    template: "%s | HR Assistant",
   },
   description:
     "Your intelligent HR hub — policies, jobs, analytics, and AI across 20+ countries.",

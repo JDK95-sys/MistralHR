@@ -45,7 +45,7 @@ Congé non pris : ne peut être payé en cours de contrat. La Loi du 22 avril 20
   {
     id: "fr-sick-leave",
     title: "Arrêt Maladie — France",
-    description: "Maintien de salaire 90 jours via subrogation. Zéro délai de carence chez Worldline.",
+    description: "Maintien de salaire 90 jours via subrogation. Zéro délai de carence.",
     countries: ["France"],
     topic: "leave",
     icon: "🏥",
@@ -54,16 +54,16 @@ Congé non pris : ne peut être payé en cours de contrat. La Loi du 22 avril 20
       "Code du Travail L1226-1",
       "Convention Collective Syntec",
     ],
-    content: `L1226-1 : maintien de salaire dès 1 an d'ancienneté. Worldline applique la CCN Syntec : maintien 100% salaire pendant 90 jours (subrogation — l'employeur avance le salaire et récupère les IJSS auprès de la CPAM).
+    content: `L1226-1 : maintien de salaire dès 1 an d'ancienneté. La CCN Syntec s'applique : maintien 100% salaire pendant 90 jours (subrogation — l'employeur avance le salaire et récupère les IJSS auprès de la CPAM).
 
 Délai de carence IJSS (3 jours) supprimé par accord d'entreprise : le salarié perçoit son salaire dès le 1er jour d'arrêt.
 
-Au-delà de 90 jours : indemnités IJSS + contrat prévoyance collectif Worldline (niveau de remplacement défini dans l'accord de prévoyance).`,
+Au-delà de 90 jours : indemnités IJSS + contrat prévoyance collectif (niveau de remplacement défini dans l'accord de prévoyance).`,
   },
   {
     id: "fr-holidays",
     title: "Jours Fériés — France",
-    description: "11 jours fériés légaux (L3133-1). Worldline les chôme tous.",
+    description: "11 jours fériés légaux (L3133-1). Tous chômés avec maintien de salaire.",
     countries: ["France"],
     topic: "leave",
     icon: "🗓️",
@@ -71,7 +71,7 @@ Au-delà de 90 jours : indemnités IJSS + contrat prévoyance collectif Worldlin
     legalRefs: ["Code du Travail L3133-1"],
     content: `11 jours fériés légaux : 1er jan, Lundi de Pâques, 1er mai (seul obligatoirement chômé), 8 mai, Ascension, Lundi de Pentecôte, 14 juillet, 15 août, 1er nov, 11 nov, 25 déc.
 
-Worldline France chôme l'ensemble des 11 jours fériés avec maintien de salaire. Si un jour férié coïncide avec un jour de RTT ou congé planifié, un jour de remplacement est accordé.`,
+La société chôme l'ensemble des 11 jours fériés avec maintien de salaire. Si un jour férié coïncide avec un jour de RTT ou congé planifié, un jour de remplacement est accordé.`,
   },
 
   // ── FRANCE — MOBILITY ─────────────────────────────────────
@@ -91,7 +91,7 @@ Worldline France chôme l'ensemble des 11 jours fériés avec maintien de salair
 
 Détachement international : pour les missions > 3 mois, un avenant de détachement précise la durée, le maintien du contrat français, les conditions de rémunération et la couverture sociale. La France reste compétente pour la sécurité sociale (règlement UE 883/2004 intra-UE).
 
-Comment démarrer : contacter HR Mobility (hr-mobility@worldline.com) → ouverture d'un dossier → validation manager + Finance → avenant signé → briefing RH destination → logistique relocation (si applicable, budget plafonné selon politique interne).`,
+Comment démarrer : contacter HR Mobility (hr-mobility@mistralhr.demo) → ouverture d'un dossier → validation manager + Finance → avenant signé → briefing RH destination → logistique relocation (si applicable, budget plafonné selon politique interne).`,
   },
 
   // ── FRANCE — TAX ──────────────────────────────────────────
@@ -126,7 +126,7 @@ Cotisations sociales salariales (approximatif) : ~22% du salaire brut (assurance
   {
     id: "fr-health",
     title: "Mutuelle & Prévoyance — France",
-    description: "Couverture santé complémentaire obligatoire et prévoyance collective Worldline.",
+    description: "Couverture santé complémentaire obligatoire et prévoyance collective.",
     countries: ["France"],
     topic: "health",
     icon: "🩺",
@@ -135,7 +135,7 @@ Cotisations sociales salariales (approximatif) : ~22% du salaire brut (assurance
       "ANI du 11 janvier 2013 (généralisation complémentaire santé)",
       "Code de la Sécurité Sociale L911-7",
     ],
-    content: `Mutuelle santé (complémentaire) : toute entreprise est tenue de proposer une couverture santé collective (ANI 2013, codifié à L911-7 CSS). Worldline France a souscrit un contrat collectif obligatoire.
+    content: `Mutuelle santé (complémentaire) : toute entreprise est tenue de proposer une couverture santé collective (ANI 2013, codifié à L911-7 CSS). La société a souscrit un contrat collectif obligatoire.
 
 Niveaux de couverture :
 - Base légale (panier de soins minimal) incluse pour tous
@@ -165,11 +165,11 @@ Portabilité : en cas de départ, la couverture santé et prévoyance est mainte
 
 Transport : prise en charge obligatoire de 50% de l'abonnement transport en commun (Navigo, TER, etc.). Forfait mobilités durables jusqu'à 700€/an net pour vélo, covoiturage.
 
-Intéressement / Participation : accord d'intéressement Worldline — versement annuel selon résultats. Participation légale obligatoire si >50 salariés (L3312-1). Versement possible sur PEE ou en numéraire.
+Intéressement / Participation : accord d'intéressement — versement annuel selon résultats. Participation légale obligatoire si >50 salariés (L3312-1). Versement possible sur PEE ou en numéraire.
 
-PEE / PERCO : Plan d'Épargne Entreprise (abondement employeur) et PERCO/PER Collectif pour la retraite supplémentaire. Fonds disponibles sur l'espace Amundi Worldline.
+PEE / PERCO : Plan d'Épargne Entreprise (abondement employeur) et PERCO/PER Collectif pour la retraite supplémentaire. Fonds disponibles sur l'espace Amundi dédié.
 
-Actions Worldline : plan d'actionnariat salarié annuel (conditions et prix préférentiel publiés lors de chaque ouverture).
+Actions société : plan d'actionnariat salarié annuel (conditions et prix préférentiel publiés lors de chaque ouverture).
 
 Prime home office : indemnité télétravail fixée par accord d'entreprise (montant exact sur intranet).`,
   },
@@ -178,7 +178,7 @@ Prime home office : indemnité télétravail fixée par accord d'entreprise (mon
   {
     id: "fr-worksite",
     title: "Télétravail & Conditions de Travail — France",
-    description: "Modalités remote/hybride/présentiel. Accord télétravail Worldline France.",
+    description: "Modalités remote/hybride/présentiel. Accord télétravail France.",
     countries: ["France"],
     topic: "worksite",
     icon: "🏠",
@@ -189,9 +189,9 @@ Prime home office : indemnité télétravail fixée par accord d'entreprise (mon
     ],
     content: `Cadre légal : le télétravail est régi par L1222-9 à L1222-11 (accord collectif ou charte employeur requise). L'ANI du 26 novembre 2020 fixe les principes (volontariat, réversibilité, droit à la déconnexion, prise en charge des équipements).
 
-Accord Worldline France : jusqu'à 3 jours de télétravail par semaine pour les postes éligibles (déterminé avec le manager). Les nouveaux embauchés suivent une période d'intégration sur site (min. 3 mois) avant accès au télétravail régulier.
+Accord télétravail : jusqu'à 3 jours de télétravail par semaine pour les postes éligibles (déterminé avec le manager). Les nouveaux embauchés suivent une période d'intégration sur site (min. 3 mois) avant accès au télétravail régulier.
 
-Équipement : PC portable fourni par Worldline IT. Écran supplémentaire et chaise ergonomique pris en charge via prime home office.
+Équipement : PC portable fourni par IT. Écran supplémentaire et chaise ergonomique pris en charge via prime home office.
 
 Durée du travail : 35h/semaine légale (L3121-27). Heures supplémentaires : +25% pour les 8 premières, +50% au-delà. Cadres au forfait jours : 218j/an max (L3121-64).
 
@@ -215,7 +215,7 @@ Sécurité informatique : connexion VPN obligatoire en télétravail.`,
     content: `Onboarding (J-1 à J+90) :
 - J-1 : accueil IT, remise PC, création comptes (AD, Microsoft 365, Slack, Jira, Workday)
 - J1 : Welcome Day France — présentation RH, politique sécurité, visite site
-- J7 : accès Worldline Academy (catalogue formations en ligne)
+- J7 : accès Learning Academy (catalogue formations en ligne)
 - J30 : point d'étonnement avec le manager
 - J90 : fin période d'intégration, bilan avec RH
 
@@ -296,7 +296,7 @@ Phase 2 — INAMI (à partir du 31ème jour) :
 - Incapacité primaire (an 1) : 60% du salaire plafonné via mutualité
 - Invalidité (> 1 an) : 65% (isolé/chef de famille) ou 40% (cohabitant)
 
-Prévoyance Worldline BE : complémentaire aux indemnités INAMI.`,
+Prévoyance complémentaire : complément aux indemnités INAMI.`,
   },
   {
     id: "be-holidays",
@@ -311,7 +311,7 @@ Prévoyance Worldline BE : complémentaire aux indemnités INAMI.`,
 
 Si un férié tombe un dimanche ou jour non travaillé : un jour de remplacement est accordé, à fixer par accord employeur/délégués.
 
-Tous les fériés sont rémunérés. Worldline Belgium octroie les 10 jours à tous les collaborateurs avec maintien de salaire.`,
+Tous les fériés sont rémunérés. La société octroie les 10 jours à tous les collaborateurs avec maintien de salaire.`,
   },
 
   // ── BELGIUM — MOBILITY ────────────────────────────────────
@@ -332,7 +332,7 @@ Tous les fériés sont rémunérés. Worldline Belgium octroie les 10 jours à t
 
 Détachement international : pour missions > 3 mois hors Belgique, avenant de détachement précisant durée, maintien du contrat belge, conditions salariales et protection sociale (formulaire A1 pour UE).
 
-Comment démarrer : contacter HR Mobility BE (hr-be@worldline.com) → dossier de mobilité → validation manager + Legal → avenant → brief destination → support relocation.
+Comment démarrer : contacter HR Mobility BE (hr-be@mistralhr.demo) → dossier de mobilité → validation manager + Legal → avenant → brief destination → support relocation.
 
 Split payroll (missions longues) : possible selon la durée et le pays d'accueil — à analyser avec le Payroll Manager.`,
   },
@@ -369,7 +369,7 @@ Avantages de toute nature (ATN) : voiture de société, GSM, PC privé imposés 
   {
     id: "be-health",
     title: "Assurance Santé & Hospitalisation — Belgique",
-    description: "Assurance hospitalisation collective + mutualité légale INAMI. Couverture Worldline.",
+    description: "Assurance hospitalisation collective + mutualité légale INAMI. Couverture collective.",
     countries: ["Belgium"],
     topic: "health",
     icon: "🩺",
@@ -380,7 +380,7 @@ Avantages de toute nature (ATN) : voiture de société, GSM, PC privé imposés 
     ],
     content: `Mutualité légale (INAMI) : tout salarié belge est affilié à une mutualité de son choix (Mutualité Chrétienne, Solidaris, Partenamut, etc.). Elle rembourse une partie des soins de santé ambulatoires sur base des tarifs INAMI.
 
-Assurance hospitalisation collective Worldline BE : couverture des frais hospitaliers (chambre individuelle ou double selon option), honoraires médecins au-delà des tarifs INAMI, soins avant/après hospitalisation (30/60 jours selon police).
+Assurance hospitalisation collective : couverture des frais hospitaliers (chambre individuelle ou double selon option), honoraires médecins au-delà des tarifs INAMI, soins avant/après hospitalisation (30/60 jours selon police).
 
 Portabilité : maintien de la couverture hospitalisation possible après départ (conversion en police individuelle, sans questionnaire médical, dans les 30 jours suivant la fin du contrat).`,
   },
@@ -403,11 +403,11 @@ Portabilité : maintien de la couverture hospitalisation possible après départ
 
 Intervention transport : remboursement abonnement train (100% SNCB 2e classe), ou forfait vélo 0,27€/km (exonéré ONSS jusqu'à 40km aller-retour). Voiture de société selon niveau de fonction.
 
-Participation bénéfices : plan de bonus annuel Worldline selon objectifs collectifs et individuels.
+Participation bénéfices : plan de bonus annuel selon objectifs collectifs et individuels.
 
-Pension complémentaire (2e pilier — LPC 2003) : plan de pension de groupe Worldline BE, cotisations employeur, capital disponible à la pension légale. Rendement légal garanti minimum.
+Pension complémentaire (2e pilier — LPC 2003) : plan de pension de groupe, cotisations employeur, capital disponible à la pension légale. Rendement légal garanti minimum.
 
-Actions Worldline : plan d'actionnariat salarié (même programme que FR).
+Actions société : plan d'actionnariat salarié (même programme que FR).
 
 Intervention home office : indemnité forfaitaire nette 151,70€/mois maximum (plafond ONSS 2024) pour les télétravailleurs structurels (> 5 jours/mois à domicile).`,
   },
@@ -416,7 +416,7 @@ Intervention home office : indemnité forfaitaire nette 151,70€/mois maximum (
   {
     id: "be-worksite",
     title: "Télétravail & Conditions de Travail — Belgique",
-    description: "Accord collectif télétravail, 38h/semaine, flexibilité et droit à la déconnexion.",
+    description: "Accord collectif télétravail, 38h/semaine, flexibilité et droit à la déconnexion (Belgique).",
     countries: ["Belgium"],
     topic: "worksite",
     icon: "🏠",
@@ -428,11 +428,11 @@ Intervention home office : indemnité forfaitaire nette 151,70€/mois maximum (
     ],
     content: `Durée du travail : 38h/semaine légale. Heures supplémentaires : +50% (semaine) ou +100% (dimanche/nuit). Contingent libre 143h/an.
 
-Télétravail (CCT n°85 + accord Worldline BE) : jusqu'à 3 jours/semaine pour postes éligibles, avec accord écrit. Matériel fourni par l'employeur.
+Télétravail (CCT n°85 + accord collectif BE) : jusqu'à 3 jours/semaine pour postes éligibles, avec accord écrit. Matériel fourni par l'employeur.
 
 Loi Travail Faisable (2017) : droit au crédit-temps, annualisation possible, travail de nuit et week-end encadré par CCT sectorielle.
 
-Droit à la déconnexion : obligation légale depuis 2022 pour entreprises >20 salariés — charte interne Worldline BE.
+Droit à la déconnexion : obligation légale depuis 2022 pour entreprises >20 salariés — charte interne.
 
 Intervention home office : 151,70€/mois max (plafond ONSS 2024) pour télétravailleurs structurels.`,
   },
@@ -453,7 +453,7 @@ Intervention home office : 151,70€/mois max (plafond ONSS 2024) pour télétra
     content: `Onboarding (J-1 à J+90) :
 - J-1 : remise PC, création comptes (AD, M365, Slack, Jira, Workday, ServiceNow)
 - J1 : Welcome Day Belgium — présentation RH, bien-être au travail, politique sécurité IT
-- J7 : accès Worldline Academy + enregistrement à la pension complémentaire
+- J7 : accès Learning Academy + enregistrement à la pension complémentaire
 - J30 : point d'étonnement manager
 - J90 : bilan RH (pas de période d'essai depuis 2014 — Loi Statut Unique)
 

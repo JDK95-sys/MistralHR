@@ -1,7 +1,6 @@
 -- ═══════════════════════════════════════════════════════════════
--- Worldline HR Portal — Database Schema
+-- HR Assistant — Database Schema
 -- PostgreSQL 15 + pgvector extension
--- Run this once against your Azure Database for PostgreSQL instance
 -- ═══════════════════════════════════════════════════════════════
 
 -- Enable pgvector extension (required once per database)
@@ -135,7 +134,7 @@ CREATE TABLE IF NOT EXISTS chat_messages (
   source_chunks   UUID[],                          -- Array of chunk IDs used
 
   -- Metadata
-  model           TEXT,                            -- e.g. 'claude-opus-4-5'
+  model           TEXT,                            -- e.g. 'open-mistral-nemo'
   tokens_used     INTEGER,
   created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

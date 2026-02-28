@@ -6,7 +6,7 @@ const DEMO_PASSWORD = process.env.AUTH_PASSWORD ?? "demo1234";
 const USERS = [
   {
     id: "user-fr-01",
-    email: "alice.martin@worldline.com",
+    email: "alice.martin@mistralhr.demo",
     password: DEMO_PASSWORD,
     name: "Alice Martin",
     jobTitle: "Software Engineer",
@@ -16,7 +16,7 @@ const USERS = [
   },
   {
     id: "user-be-01",
-    email: "jan.peeters@worldline.com",
+    email: "jan.peeters@mistralhr.demo",
     password: DEMO_PASSWORD,
     name: "Jan Peeters",
     jobTitle: "HR Business Partner",

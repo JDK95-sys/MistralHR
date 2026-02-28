@@ -49,7 +49,7 @@ export default function Sidebar() {
         </div>
         <div>
           <div className="sidebar-logo-text">People Portal</div>
-          <div className="sidebar-logo-sub">by Worldline</div>
+          <div className="sidebar-logo-sub">HR Assistant</div>
         </div>
       </div>
 

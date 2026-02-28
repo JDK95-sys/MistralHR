@@ -26,7 +26,7 @@ async function seed() {
     // Clear previously seeded policies so re-runs are idempotent
     await client.query(
       "DELETE FROM hr_documents WHERE uploaded_by = $1",
-      ["seed-script@worldline.com"]
+      ["seed-script@mistralhr.demo"]
     );
 
     for (const policy of policies) {
@@ -40,7 +40,7 @@ async function seed() {
             country_codes, topic, language, policy_ref, status, chunk_count,
             uploaded_by)
          VALUES ($1, $2, $3, 'txt', $4, $5, $6, $7, $8, 'ready', 1,
-                 'seed-script@worldline.com')
+                 'seed-script@mistralhr.demo')
          RETURNING id`,
         [
           policy.title,

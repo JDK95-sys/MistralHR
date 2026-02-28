@@ -31,7 +31,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex">
       {/* Left — branding */}
       <div className="hidden lg:flex flex-col justify-center px-16 bg-slate-900 text-white w-1/2">
-        <div className="text-3xl font-bold mb-4">Worldline HR Portal</div>
+        <div className="text-3xl font-bold mb-4">HR Assistant</div>
         <p className="text-slate-400 max-w-sm">
           Your internal HR assistant for France and Belgium — policies,
           leave rules, and legal references in one place.
@@ -73,7 +73,7 @@ export default function LoginPage() {
             {loading ? "Signing in…" : "Sign in"}
           </button>
           <p className="text-xs text-slate-500 mt-4">
-            Demo: alice.martin@worldline.com (FR) · jan.peeters@worldline.com (BE) · Password: demo1234
+            Demo: alice.martin@mistralhr.demo (FR) · jan.peeters@mistralhr.demo (BE) · Password: demo1234
           </p>
         </form>
       </div>

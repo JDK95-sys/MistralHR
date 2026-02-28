@@ -1,7 +1,7 @@
 {
-  "name": "worldline-hr-portal",
+  "name": "mistralhr-portal",
   "version": "1.0.0",
-  "description": "Worldline People Portal — Internal HR platform with Azure AD SSO",
+  "description": "mistralhr — Internal HR platform",
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
