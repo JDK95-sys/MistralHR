@@ -12,7 +12,10 @@ export const metadata: Metadata = {
   description:
     "MistralHR — AI-powered HR platform by Mistral AI. Policies, benefits and HR assistance across 20+ countries.",
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
   },
   robots: {
     index: false, // Internal tool — never index
