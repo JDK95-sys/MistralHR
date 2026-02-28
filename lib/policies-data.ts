@@ -546,3 +546,19 @@ Contrôle : Institut pour l'Égalité des Femmes et des Hommes + Inspection soci
     ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 ];
+
+export const francePolicies: Policy[] = policies.filter((p) =>
+  p.countries.includes("France")
+);
+
+export const belgiumPolicies: Policy[] = policies.filter((p) =>
+  p.countries.includes("Belgium")
+);
+
+export function getPoliciesForCountry(country: string): Policy[] {
+  const COUNTRY_POLICIES: Record<string, Policy[]> = {
+    France: francePolicies,
+    Belgium: belgiumPolicies,
+  };
+  return COUNTRY_POLICIES[country] ?? [];
+}

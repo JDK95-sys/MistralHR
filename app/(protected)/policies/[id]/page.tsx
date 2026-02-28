@@ -1,13 +1,23 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import Topbar from "@/components/Topbar";
 import { policies, timeAgo } from "@/lib/policies-data";
 
 export default function PolicyDetailPage() {
     const { id } = useParams();
     const router = useRouter();
+    const { data: session, status } = useSession();
     const policy = policies.find(p => p.id === id);
+    const country = session?.user?.country ?? "";
+
+    useEffect(() => {
+        if (status !== "loading" && country && policy && !policy.countries.includes(country)) {
+            router.push("/policies");
+        }
+    }, [status, country, policy, router]);
 
     if (!policy) {
         return (
@@ -27,6 +37,10 @@ export default function PolicyDetailPage() {
                 </button>
             </div>
         );
+    }
+
+    if (status !== "loading" && country && !policy.countries.includes(country)) {
+        return null;
     }
 
     return (

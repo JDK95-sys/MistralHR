@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Topbar from "@/components/Topbar";
 import { useRouter } from "next/navigation";
-import { policies, timeAgo } from "@/lib/policies-data";
+import { getPoliciesForCountry, timeAgo } from "@/lib/policies-data";
 
 // Display label → data topic value mapping
 const TOPIC_MAP: Record<string, string> = {
@@ -27,22 +27,13 @@ export default function PoliciesPage() {
     const [search, setSearch] = useState("");
     const country = session?.user?.country ?? "";
 
-    const filtered = policies.filter((p) => {
+    const sorted = getPoliciesForCountry(country).filter((p) => {
         const matchesTopic = activeTopic === "All" || p.topic === TOPIC_MAP[activeTopic];
         const matchesSearch =
             !search ||
             p.title.toLowerCase().includes(search.toLowerCase()) ||
             p.description.toLowerCase().includes(search.toLowerCase());
         return matchesTopic && matchesSearch;
-    });
-
-    // Policies that apply to user's country sort first
-    const sorted = [...filtered].sort((a, b) => {
-        const aApplies = a.countries.includes("All countries") || a.countries.includes(country);
-        const bApplies = b.countries.includes("All countries") || b.countries.includes(country);
-        if (aApplies && !bApplies) return -1;
-        if (!aApplies && bApplies) return 1;
-        return 0;
     });
 
     return (
