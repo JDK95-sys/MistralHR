@@ -236,7 +236,7 @@ function LoginForm() {
             border: "1px solid rgba(255, 130, 5, 0.20)",
           }}
         >
-          <p style={{ fontSize: 11.5, color: "#FA500F", fontWeight: 600, marginBottom: 4 }}>
+          <p style={{ fontSize: 11.5, color: "var(--mistral-orange)", fontWeight: 600, marginBottom: 4 }}>
             Demo credentials
           </p>
           <p style={{ fontSize: 11, color: "var(--text-secondary)", lineHeight: 1.6 }}>
