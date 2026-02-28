@@ -2,7 +2,7 @@
 
 > **🚀 Powered entirely by Mistral AI** — no Azure, no OpenAI, no compromise.
 
-MistralHR is an internal HR portal for employees in **France** and **Belgium**, built for the **Mistral AI Hackathon**. It leverages a fully Mistral-native RAG pipeline — `open-mistral-nemo` for chat and `mistral-embed` for semantic search — to answer HR questions grounded in 18 statutory policies. **100% Mistral. Zero Azure.**
+MistralHR is an internal HR portal for employees in **France** and **Belgium**, built for the **Mistral AI Hackathon**. It leverages a fully Mistral-native RAG pipeline — `open-mistral-nemo` for chat and `mistral-embed` for semantic search — to answer HR questions grounded in 18 statutory policies.
 
 ---
 
