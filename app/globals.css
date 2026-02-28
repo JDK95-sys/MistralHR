@@ -10,6 +10,11 @@
    ═══════════════════════════════════════════════════════ */
 
 :root {
+  /* ── Mistral Branding — Orange Gradient ───────────── */
+  --mistral-orange:   #FF7000;
+  --mistral-orange-hover: #E56300;
+  --mistral-gradient: linear-gradient(135deg, #FF7000, #FF9A40);
+
   /* ── Sidebar (dark panel) ─────────────────────────── */
   --sidebar-bg:       #1C1C1E;
   --sidebar-hover:    #2C2C2E;
@@ -18,23 +23,23 @@
   --sidebar-text-active: #FFFFFF;
 
   /* ── Content area (warm white) ────────────────────── */
-  --bg:               #FAFAF9;
-  --bg-deep:          #FAFAF9;
+  --bg:               #FFFFFF;
+  --bg-deep:          #F9F9F9;
   --card:             #FFFFFF;
-  --border:           #E8E8E6;
-  --border-strong:    #D0D0CE;
+  --border:           #E0E0E0;
+  --border-strong:    #D0D0D0;
 
   /* ── Text ─────────────────────────────────────────── */
   --text-primary:     #1A1A1A;
-  --text-secondary:   #6B6B6B;
-  --text-muted:       #9A9A9A;
+  --text-secondary:   #5A5A5A;
+  --text-muted:       #8A8A8A;
 
-  /* ── Orange accent — Mistral #FF7000 ──────────────── */
-  --orange:           #FF7000;
-  --orange-hover:     #E56300;
-  --orange-soft:      rgba(255, 112, 0, 0.08);
-  --orange-border:    rgba(255, 112, 0, 0.25);
-  --orange-shadow:    0 4px 14px rgba(255, 112, 0, 0.22);
+  /* ── Shadows ────────────────────────────────────── */
+  --shadow-sm:        0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:        0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg:        0 12px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.04);
+  --shadow-xl:        0 24px 60px rgba(0,0,0,0.12);
+  --mistral-shadow:   0 4px 14px rgba(255, 112, 0, 0.22);
 
   /* ── Legacy aliases (keep so existing JSX doesn't break) */
   --mint:             #FF7000;

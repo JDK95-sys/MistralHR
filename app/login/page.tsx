@@ -65,7 +65,7 @@ export default function LoginPage() {
           style={{
             background: "var(--card)",
             border: "1px solid var(--border)",
-            boxShadow: "var(--shadow-md)",
+            boxShadow: "var(--mistral-shadow)",
           }}
         >
           <h1

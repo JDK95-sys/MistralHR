@@ -1,23 +1,32 @@
-# MistralHR — HR Assistant
+# <img src="https://mistral.ai/favicon.ico" width="32" alt="Mistral AI" /> MistralHR — AI-Powered HR Assistant
 
-Internal HR portal for employees in **France** and **Belgium**, built for the hackathon. **Powered by Mistral AI** — no Azure.
+> **🚀 Powered entirely by Mistral AI** — no Azure, no OpenAI, no compromise.
+
+MistralHR is an internal HR portal for employees in **France** and **Belgium**, built for the **Mistral AI Hackathon**. It leverages a fully Mistral-native RAG pipeline — `open-mistral-nemo` for chat and `mistral-embed` for semantic search — to answer HR questions grounded in 18 statutory policies. **100% Mistral. Zero Azure.**
 
 ---
 
-## What It Does
+## 🌟 Features at a Glance
 
-| Route | Description |
+| Feature | Details |
 |---|---|
-| `/login` | Simple email/password sign-in (two demo accounts) |
-| `/chat` | RAG-powered HR assistant using `open-mistral-nemo` |
-| `/policies` | 18 FR/BE statutory HR policies with legal references |
+| 🤖 AI Chat | `open-mistral-nemo` with streaming responses |
+| 📚 Policy Library | 18 FR/BE statutory HR policies |
+| 🔐 Secure Login | NextAuth.js Credentials provider |
+| 📄 Document Parsing | PDF, DOCX, TXT, XLSX support |
+| ⚡ Streaming Responses | Server-Sent Events (SSE) |
+| 🎓 Guided Onboarding | In-app tutorial for new users |
+| 🌙 Modern UI | Dark theme, Tailwind CSS |
 
 **Policy domains covered:**
-- Leave (annual leave, sick leave, public holidays)
-- Global & local mobility
-- Local tax (IR/IPP barèmes, ONSS/cotisations)
-- Health insurance (mutuelle/hospitalisation)
-- Premiums & benefits (meal vouchers, transport, profit sharing, pension, shares, home office)
+- 🏖️ Leave (annual leave, sick leave, public holidays)
+- 🌍 Mobility (global & local mobility)
+- 🧾 Tax (IR/IPP barèmes, ONSS/cotisations)
+- 🏥 Health insurance (mutuelle/hospitalisation)
+- 💰 Premiums & benefits (meal vouchers, transport, profit sharing, pension, shares, home office)
+| 🏢 Work site terms (telework agreements, working time)
+| 🚀 Onboarding & offboarding (IT setup, PC/software policy, exit process)
+| ⚖️ Pay transparency (EU Dir. 2023/970)
 - Work site terms (telework agreements, working time)
 - Onboarding & offboarding (IT setup, PC/software policy, exit process)
 - Pay transparency (EU Dir. 2023/970)

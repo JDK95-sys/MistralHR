@@ -23,6 +23,7 @@ const nextConfig = {
   // Custom headers for security
   experimental: {
     optimizePackageImports: ['lucide-react'],
+    serverActions: true,
   },
   async headers() {
     return [
