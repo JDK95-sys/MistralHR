@@ -38,11 +38,11 @@ export default function Sidebar() {
     <aside className="sidebar">
       {/* ── Logo ──────────────────────────────────────────────── */}
       <div className="sidebar-logo">
-        <div className="sidebar-logo-icon">
+        <div className="sidebar-logo-icon" style={{ background: "var(--mistral-gradient)" }}>
           <MistralMark size={18} />
         </div>
         <div>
-          <div className="sidebar-logo-text">MistralHR</div>
+          <div className="sidebar-logo-text" style={{ color: "var(--mistral-orange)" }}>MistralHR</div>
           <div className="sidebar-logo-sub">Powered by Mistral AI</div>
         </div>
       </div>

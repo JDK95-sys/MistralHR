@@ -25,6 +25,7 @@ const nextConfig = {
   experimental: {
     instrumentationHook: true,
     optimizePackageImports: ['lucide-react'],
+    serverActions: true,
   },
   async redirects() {
     return [

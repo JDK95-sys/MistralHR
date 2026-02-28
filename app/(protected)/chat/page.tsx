@@ -341,14 +341,14 @@ export default function ChatPage() {
           <div className="flex-1 flex flex-col items-center justify-center px-6 py-10 animate-fade-in">
             {/* Editorial header */}
             <div className="chat-welcome-header">
-              <div className="chat-welcome-badge">
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.1em" }}>MISTRAL AI · ONLINE</span>
-                <span className="chat-status-dot" />
+              <div className="chat-welcome-badge" style={{ background: "var(--mistral-gradient)" }}>
+                <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.1em", color: "white" }}>MISTRAL AI · ONLINE</span>
+                <span className="chat-status-dot" style={{ background: "white" }} />
               </div>
-              <h2 className="chat-welcome-title">How can I help you today?</h2>
+              <h2 className="chat-welcome-title" style={{ color: "var(--mistral-orange)" }}>How can I help you today?</h2>
               <p className="chat-welcome-sub">
                 Powered by Mistral AI · Ask about leave, benefits, policies or internal opportunities.{": "}
-                <span style={{ color: "var(--sage)" }}>{country}</span> policies loaded.
+                <span style={{ color: "var(--mistral-orange)" }}>{country}</span> policies loaded.
               </p>
             </div>
 

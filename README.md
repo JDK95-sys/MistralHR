@@ -1,12 +1,12 @@
-# <img src="public/favicon.svg" width="32" alt="Mistral AI" /> MistralHR — AI-Powered HR Assistant
+# <img src="https://mistral.ai/favicon.ico" width="32" alt="Mistral AI" /> MistralHR — AI-Powered HR Assistant
 
-> **Powered entirely by Mistral AI** — no Azure, no OpenAI, no compromise.
+> **🚀 Powered entirely by Mistral AI** — no Azure, no OpenAI, no compromise.
 
-MistralHR is an internal HR portal for employees in **France** and **Belgium**, built for the **Mistral AI Hackathon**. It leverages a fully Mistral-native RAG pipeline — `open-mistral-nemo` for chat and `mistral-embed` for semantic search — to answer HR questions grounded in 18 statutory policies. 100% Mistral. Zero Azure.
+MistralHR is an internal HR portal for employees in **France** and **Belgium**, built for the **Mistral AI Hackathon**. It leverages a fully Mistral-native RAG pipeline — `open-mistral-nemo` for chat and `mistral-embed` for semantic search — to answer HR questions grounded in 18 statutory policies. **100% Mistral. Zero Azure.**
 
 ---
 
-## Features at a Glance
+## 🌟 Features at a Glance
 
 | Feature | Details |
 |---|---|
@@ -24,64 +24,12 @@ MistralHR is an internal HR portal for employees in **France** and **Belgium**, 
 - 🧾 Tax (IR/IPP barèmes, ONSS/cotisations)
 - 🏥 Health insurance (mutuelle/hospitalisation)
 - 💰 Premiums & benefits (meal vouchers, transport, profit sharing, pension, shares, home office)
-- 🏢 Work site terms (telework agreements, working time)
-- 🚀 Onboarding & offboarding (IT setup, PC/software policy, exit process)
-- ⚖️ Pay transparency (EU Dir. 2023/970)
-
----
-
-## Screenshots
-
-> **📸 Screenshots coming soon** — run the app and follow the [Adding Screenshots](#adding-screenshots) guide below to populate these images.
-
-### Login Page
-![Login Page](docs/screenshots/login.png)
-*Secure credential-based login — employees sign in with their demo account.*
-
-### AI Chat Interface
-![AI Chat](docs/screenshots/chat.png)
-*RAG-powered HR assistant answering questions grounded in policy documents, with source citations.*
-
-### Policy Library
-![Policy Library](docs/screenshots/policies.png)
-*Browse all 18 FR/BE statutory HR policies, filterable by country and topic.*
-
-### Guided Tutorial
-![Tutorial](docs/screenshots/tutorial.png)
-*In-app onboarding tutorial that walks new users through the assistant's capabilities.*
-
-> **📸 Adding screenshots:** Run the app (`npm run dev`), navigate to each page, take a screenshot, and save it to `docs/screenshots/` with the filename shown above. The README will automatically display them once committed.
-
----
-
-## Powered by Mistral AI
-
-| Capability | Mistral Model / Service |
-|---|---|
-| Chat & Reasoning | `open-mistral-nemo` |
-| Embeddings | `mistral-embed` (1024 dims) |
-| RAG Pipeline | Mistral Embed + pgvector |
-
-**RAG Pipeline Architecture:**
-
-```
-User Question
-     │
-     ▼
-mistral-embed
-     │
-     ▼
-pgvector similarity search
-     │
-     ▼
-Top-k policy chunks
-     │
-     ▼
-open-mistral-nemo (streaming chat)
-     │
-     ▼
-Grounded Answer + Source Citations
-```
+| 🏢 Work site terms (telework agreements, working time)
+| 🚀 Onboarding & offboarding (IT setup, PC/software policy, exit process)
+| ⚖️ Pay transparency (EU Dir. 2023/970)
+- Work site terms (telework agreements, working time)
+- Onboarding & offboarding (IT setup, PC/software policy, exit process)
+- Pay transparency (EU Dir. 2023/970)
 
 ---
 
