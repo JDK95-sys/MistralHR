@@ -2,6 +2,7 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import MistralMark from "@/components/icons/MistralMark";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -43,14 +44,7 @@ export default function LoginPage() {
               background: "var(--orange)",
             }}
           >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M10 3L3 7.5V12.5L10 17L17 12.5V7.5L10 3Z"
-                fill="white"
-                fillOpacity="0.9"
-              />
-              <circle cx="10" cy="10" r="2.5" fill="white" />
-            </svg>
+            <MistralMark size={20} strokeWidth={2.8} />
           </div>
           <div>
             <div

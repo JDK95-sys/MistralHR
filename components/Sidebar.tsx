@@ -7,8 +7,8 @@ import {
   MessageCircle,
   FileText,
   LogOut,
-  Globe,
 } from "lucide-react";
+import MistralMark from "@/components/icons/MistralMark";
 
 // ─── Nav structure ─────────────────────────────────────────────────
 const NAV_ITEMS = [
@@ -26,13 +26,7 @@ const ROLE_GRADIENTS: Record<string, string> = {
   "hr-admin": "linear-gradient(135deg, #F08791, #7850B4)",
   "hrbp": "linear-gradient(135deg, #41B4D2, #46BEAA)",
   "exec": "linear-gradient(135deg, #E15A46, #FFEB78)",
-  "employee": "linear-gradient(135deg, #46BEAA, #277777)",
-};
-
-const COUNTRY_FLAGS: Record<string, string> = {
-  Belgium: "🇧🇪", Germany: "🇩🇪", France: "🇫🇷", Netherlands: "🇳🇱",
-  Poland: "🇵🇱", Spain: "🇪🇸", Italy: "🇮🇹", Portugal: "🇵🇹",
-  UK: "🇬🇧", India: "🇮🇳", Australia: "🇦🇺", Singapore: "🇸🇬",
+  "employee": "linear-gradient(135deg, #FF7000, #FF9A40)",
 };
 
 export default function Sidebar() {
@@ -45,11 +39,11 @@ export default function Sidebar() {
       {/* ── Logo ──────────────────────────────────────────────── */}
       <div className="sidebar-logo">
         <div className="sidebar-logo-icon">
-          <Globe size={18} color="#fff" strokeWidth={2} />
+          <MistralMark size={18} />
         </div>
         <div>
-          <div className="sidebar-logo-text">People Portal</div>
-          <div className="sidebar-logo-sub">HR Assistant</div>
+          <div className="sidebar-logo-text">MistralHR</div>
+          <div className="sidebar-logo-sub">People Platform</div>
         </div>
       </div>
 
