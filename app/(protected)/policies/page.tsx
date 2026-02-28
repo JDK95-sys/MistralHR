@@ -41,7 +41,7 @@ export default function PoliciesPage() {
     const [search, setSearch] = useState("");
     const country = session?.user?.country ?? "";
 
-    const filtered = policies.filter((p) => {
+    const sorted = getPoliciesForCountry(country).filter((p) => {
         const matchesTopic = activeTopic === "All" || p.topic === TOPIC_MAP[activeTopic];
         const matchesSearch =
             !search ||

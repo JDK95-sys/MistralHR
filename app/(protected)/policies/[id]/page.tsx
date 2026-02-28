@@ -48,6 +48,10 @@ export default function PolicyDetailPage() {
         );
     }
 
+    if (status !== "loading" && country && !policy.countries.includes(country)) {
+        return null;
+    }
+
     return (
         <div className="flex flex-col h-full">
             <Topbar>

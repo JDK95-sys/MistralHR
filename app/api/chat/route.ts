@@ -16,44 +16,37 @@ interface ChatRequest {
 const DEMO_RESPONSES: Record<string, string> = {
   "leave": `**Annual Leave Entitlement** 🏖️
 
-Based on the Annual Leave Policy (HR-POL-2024-01), your entitlement depends on your country:
+Based on the Congés Payés Policy (fr-annual-leave), your entitlement:
 
-| Country | Statutory | Company Extra | Total |
-|---------|-----------|---------------|-------|
-| Belgium | 20 days | 6 days | **26 days** |
-| France | 25 days | 3 RTT days | **28 days** |
-| Germany | 20 days | 10 days | **30 days** |
-| Netherlands | 20 days | 5 days | **25 days** |
+| Statutory | Company (RTT) | Total |
+|-----------|---------------|-------|
+| 25 days | 3 RTT days | **28 days** |
 
 **Key rules:**
-- Leave accrues from your start date on a pro-rata basis
+- Leave accrues at 2.5 working days per month (2,5 jours ouvrables/mois)
 - Up to 5 unused days can carry over to Q1 of the next year
 - Requests of 3+ consecutive days need manager approval 5 business days in advance
 
 💡 *Book leave through Workday Self-Service → Time Off → Request Absence.*
 
-📄 Source: Annual Leave Policy · Effective Jan 2024`,
+📄 Source: Congés Payés — France · Effective Jan 2024`,
 
   "parental": `**Parental Leave** 👶
 
-The company provides parental leave entitlements across all regions:
+The company provides the following parental leave entitlements in France:
 
 **Maternity Leave:**
-- Belgium: 15 weeks (statutory) + 2 weeks company top-up at full pay
-- France: 16 weeks at full pay
-- Germany: 14 weeks Mutterschutz + up to 3 years Elternzeit
+- 16 weeks at full pay (congé maternité légal)
 
 **Paternity / Co-parent Leave:**
-- Belgium: 20 days at full pay
-- France: 25 days at full pay
-- Germany: 2 months paid Elternzeit (can extend to 12 months)
+- 25 days at full pay (congé paternité et d'accueil)
 
 **How to apply:**
 1. Notify your manager and HRBP at least 3 months before expected date
 2. Submit the Parental Leave form via Workday
 3. HR will confirm your dates and arrange cover
 
-📄 Source: Parental Leave Policy · Effective Jan 2024`,
+📄 Source: Parental Leave Policy — France · Effective Jan 2024`,
 
   "expense": `**Submitting Expense Claims** 💶
 
@@ -68,7 +61,7 @@ Use **SAP Concur** to submit all expense reports. Here's a quick guide:
 **Key limits:**
 - Meals: Up to €25/person for business meals (€50 for client dinners)
 - Travel: Economy class for flights under 6 hours
-- Hotels: Country-specific caps (e.g., €180/night in Paris, €150 in Brussels)
+- Hotels: Up to €180/night in Paris
 - Office supplies: Pre-approved up to €100
 
 **Timeline:** Submit within 30 days of the expense. Reimbursement typically processes in 5-7 business days after approval.
@@ -77,47 +70,156 @@ Use **SAP Concur** to submit all expense reports. Here's a quick guide:
 
   "remote": `**Remote & Hybrid Work Policy** 🏠
 
-The company supports hybrid working across all locations:
+The company supports hybrid working in France (accord télétravail):
 
 **Standard arrangement:**
-- Up to **3 days remote** per week (team-dependent)
+- Up to **3 days remote** per week for eligible roles
 - Minimum **2 days in office** for collaboration
-- Core hours: 10:00–15:00 in your local timezone
+- New hires: minimum 3 months on-site before regular remote access
 
 **Cross-border remote work:**
 - Up to 30 days/year from another EU country
 - Requires manager + HRBP approval for tax/social security reasons
-- Non-EU remote work: maximum 10 days/year, needs Legal sign-off
 
 **Equipment provided:**
-- Laptop + monitor for home office
+- Laptop + ergonomic chair via home office allowance
 - €500 one-time home office setup allowance
 - Ergonomic assessment available on request
 
-📄 Source: Remote & Hybrid Work Policy · Effective Nov 2024`,
+📄 Source: Télétravail & Conditions de Travail — France · Effective Jan 2024`,
 
   "healthcare": `**Healthcare & Medical Insurance** ⚕️
 
-The company provides comprehensive healthcare coverage:
-
-**Belgium:**
-- Group hospitalisation insurance (DKV) — fully employer-paid
-- Supplemental ambulatory care — 80% reimbursement
-- Dental plan — up to €500/year
-
 **France:**
-- Mutuelle complémentaire — 60% employer / 40% employee
+- Mutuelle complémentaire obligatoire — minimum 50% employer / employee contribution
 - 100% coverage for hospitalisation
-- Teleconsultation via Doctolib included
+- Options for enhanced dental, optical, and alternative medicine coverage
+- Teleconsultation via your mutuelle network
 
-**Germany:**
-- Employer contribution to statutory health insurance
-- Supplemental private insurance option (Zusatzversicherung)
-- Mental health sessions — 8 free sessions/year via EAP
+**Prévoyance (disability/death cover):**
+- Collective prévoyance agreement covering incapacity, invalidity, and death
+- Portability maintained up to 12 months after departure (L911-8 CSS)
 
 **How to enroll:** You're automatically enrolled at onboarding. Update dependents via Workday → Benefits → Life Events.
 
-📄 Source: Healthcare & Medical Insurance Policy · Effective Jan 2025`,
+📄 Source: Mutuelle & Prévoyance — France · Effective Jan 2024`,
+
+  "mobility": `**Mobility — France** ✈️
+
+Internal and international mobility for France-based employees:
+
+**Internal transfer:**
+- Requires a mobility clause in your contract or a signed amendment
+- Reasonable advance notice is required (L1231-5)
+
+**International assignment:**
+- Assignments > 3 months require a formal detachment amendment
+- French social security coverage maintained within EU (Regulation 883/2004)
+- Contact hr-mobility@mistralhr.demo to open a mobility file
+
+**Process:** HR Mobility → manager + Finance validation → signed amendment → destination HR briefing → relocation logistics (budget capped per internal policy).
+
+📄 Source: Mobilité Globale & Locale — France · Effective Mar 2024`,
+
+  "default": `I'd be happy to help with your HR question! As an AI HR Assistant, I can provide information about:
+
+- 🏖️ **Leave policies** — annual leave, parental leave, sick leave
+- 💶 **Expenses** — submitting claims, travel reimbursement
+- 🏠 **Remote work** — hybrid arrangements, cross-border rules
+- ⚕️ **Benefits** — healthcare, pension, wellness programs
+- 📋 **Company policies** — code of conduct, data protection
+- 💼 **Career** — internal jobs, learning & development
+- ✈️ **Mobility** — international assignments, relocation
+
+Try asking a specific question like *"What is my annual leave entitlement?"* or *"How do I submit an expense claim?"*
+
+*Note: This is a demo environment. For full AI-powered answers, connect the MISTRAL_API_KEY in your .env.local file.*`,
+};
+
+const DEMO_RESPONSES_BE: Record<string, string> = {
+  "leave": `**Annual Leave Entitlement** 🏖️
+
+Based on the Congé Annuel Policy (be-annual-leave), your entitlement:
+
+| Statutory | Company Extra | Total |
+|-----------|---------------|-------|
+| 20 days | 6 days | **26 days** |
+
+**Key rules:**
+- Rights calculated based on the reference year N-1
+- Pécule double (~92% of monthly gross salary) paid annually by employer
+- Up to 5 unused days can carry over to Q1 of the next year
+- Requests of 3+ consecutive days need manager approval 5 business days in advance
+
+💡 *Book leave through Workday Self-Service → Time Off → Request Absence.*
+
+📄 Source: Congé Annuel — Belgique · Effective Jan 2024`,
+
+  "parental": `**Parental Leave** 👶
+
+The company provides the following parental leave entitlements in Belgium:
+
+**Maternity Leave:**
+- 15 weeks statutory + 2 weeks company top-up at full pay
+
+**Paternity / Co-parent Leave:**
+- 20 days at full pay (congé de naissance/coparentalité)
+
+**How to apply:**
+1. Notify your manager and HRBP at least 3 months before expected date
+2. Submit the Parental Leave form via Workday
+3. HR will confirm your dates and arrange cover
+
+📄 Source: Parental Leave Policy — Belgique · Effective Jan 2024`,
+
+  "expense": `**Submitting Expense Claims** 💶
+
+Use **SAP Concur** to submit all expense reports. Here's a quick guide:
+
+**Step-by-step:**
+1. Log in to SAP Concur (via HR Tools)
+2. Click "Create New Report"
+3. Add each expense line with receipt photo
+4. Submit for manager approval
+
+**Key limits:**
+- Meals: Up to €20/person for business meals (€50 for client dinners)
+- Travel: Economy class for flights under 6 hours
+- Hotels: Up to €150/night in Brussels
+- Office supplies: Pre-approved up to €100
+
+**Timeline:** Submit within 30 days of the expense. Reimbursement typically processes in 5-7 business days after approval.
+
+📄 Source: Expense & Travel Policy · Effective Dec 2024`,
+
+  "remote": `**Remote & Hybrid Work Policy** 🏠
+
+The company supports hybrid working in Belgium (CCT n°85 + accord collectif BE):
+
+**Standard arrangement:**
+- Up to **3 days remote** per week for eligible roles
+- Minimum **2 days in office** for collaboration
+- Home office indemnity: up to €151.70/month (ONSS cap 2024) for structural teleworkers (>5 days/month)
+
+**Cross-border remote work:**
+- Up to 30 days/year from another EU country
+- Requires manager + HRBP approval for tax/social security reasons
+
+**Equipment provided:**
+- Laptop provided by IT; additional equipment via home office indemnity
+
+📄 Source: Télétravail & Conditions de Travail — Belgique · Effective Jan 2024`,
+
+  "healthcare": `**Healthcare & Medical Insurance** ⚕️
+
+**Belgium:**
+- Statutory mutualité (INAMI) — every employee must be affiliated to a mutuality of their choice
+- Group hospitalisation insurance (collective) — covers hospital room, doctor fees above INAMI tariffs, and pre/post-hospitalisation care
+- Portability: individual conversion available within 30 days of contract end (no medical questionnaire)
+
+**How to enroll:** You're automatically enrolled at onboarding. Update dependents via Workday → Benefits → Life Events.
+
+📄 Source: Assurance Santé & Hospitalisation — Belgique · Effective Jan 2024`,
 
   // ─── France-specific mobility/transportation response ───────────
   "mobility:France": `**Transport & Mobility Benefits — France** 🚆
@@ -234,6 +336,7 @@ const matchesKeywords = (lower: string, keywords: string[]) =>
 
 function matchDemoResponse(message: string, country: string = "Unknown"): string {
   const lower = message.toLowerCase();
+  const responses = country === "Belgium" ? DEMO_RESPONSES_BE : DEMO_RESPONSES_FR;
 
   if (lower.includes("leave") && matchesKeywords(lower, DEMO_KEYWORDS.leave)) {
     return DEMO_RESPONSES["leave"];
@@ -256,7 +359,7 @@ function matchDemoResponse(message: string, country: string = "Unknown"): string
     return DEMO_RESPONSES[countryKey] ?? DEMO_RESPONSES["mobility"];
   }
 
-  return DEMO_RESPONSES["default"];
+  return responses["default"];
 }
 
 // ─── Stream helper ─────────────────────────────────────────────────
@@ -307,6 +410,7 @@ async function streamText(text: string, send: (data: object) => void, delayMs = 
 }
 
 // ─── Send demo response (used as fallback) ─────────────────────────
+async function sendDemoResponse(message: string, country: string, send: (data: object) => void) {
 async function sendDemoResponse(message: string, send: (data: object) => void, country: string = "GLOBAL") {
   send({ type: "status", message: "Searching policy documents…" });
   await new Promise((resolve) => setTimeout(resolve, 400));
