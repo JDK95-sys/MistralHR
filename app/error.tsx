@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-export default function Error({
+export default function RootError({
   error,
   reset,
 }: {
@@ -10,38 +10,69 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("[AppError]", error);
+    console.error("[ErrorBoundary] Unhandled error:", {
+      message: error.message,
+      digest: error.digest,
+      stack: error.stack,
+    });
   }, [error]);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: "100vh", padding: 24, textAlign: "center" }}>
-      <div style={{ fontSize: 48, marginBottom: 16 }}>⚠️</div>
-      <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, letterSpacing: "-0.02em" }}>
-        Something went wrong
-      </h1>
-      <p style={{ fontSize: 14, color: "var(--text-muted, #8b8b96)", maxWidth: 420, lineHeight: 1.6, marginBottom: 24 }}>
-        An unexpected error occurred. Please try again or contact your administrator if the problem persists.
-      </p>
-      {error.digest && (
-        <p style={{ fontSize: 11, color: "var(--text-muted, #555)", fontFamily: "monospace", marginBottom: 16 }}>
-          Error reference: {error.digest}
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        fontFamily: "var(--font-sans)",
+        background: "var(--bg)",
+        padding: 24,
+      }}
+    >
+      <div style={{ textAlign: "center", maxWidth: 420 }}>
+        <div
+          style={{
+            width: 56,
+            height: 56,
+            borderRadius: 14,
+            background: "var(--orange)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "0 auto 20px",
+            fontSize: 24,
+            color: "#fff",
+          }}
+        >
+          ⚠️
+        </div>
+        <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, letterSpacing: "-0.02em" }}>
+          Something went wrong
+        </h2>
+        <p style={{ fontSize: 14, color: "var(--text-secondary)", marginBottom: 4, lineHeight: 1.6 }}>
+          An unexpected error occurred. Please try again or contact support if the problem persists.
         </p>
-      )}
-      <button
-        onClick={reset}
-        style={{
-          padding: "10px 24px",
-          borderRadius: 10,
-          border: "none",
-          background: "var(--orange, #FF7000)",
-          color: "#fff",
-          fontSize: 14,
-          fontWeight: 600,
-          cursor: "pointer",
-        }}
-      >
-        Try again
-      </button>
+        {error.digest && (
+          <p style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 20, fontFamily: "var(--font-mono)" }}>
+            Error ID: {error.digest}
+          </p>
+        )}
+        <button
+          onClick={reset}
+          style={{
+            padding: "10px 24px",
+            borderRadius: 9999,
+            border: "none",
+            background: "var(--orange)",
+            color: "#fff",
+            fontSize: 14,
+            fontWeight: 600,
+            cursor: "pointer",
+          }}
+        >
+          Try again
+        </button>
+      </div>
     </div>
   );
 }
