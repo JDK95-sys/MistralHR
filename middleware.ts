@@ -12,8 +12,7 @@
  * ✅ Matcher config: unchanged from original — same exclusion patterns
  */
 
-import { withAuth } from "next-auth/middleware";
-import type { NextRequestWithAuth } from "next-auth/middleware";
+import { withAuth, NextRequestWithAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
 
 const COUNTRY_PREFIX_MAP: Record<string, string> = {
@@ -25,31 +24,27 @@ export default withAuth(
   function middleware(req: NextRequestWithAuth) {
     const token = req.nextauth.token;
     const country = token?.country as string | undefined;
+    const { pathname } = req.nextUrl;
 
-    if (!country) {
-      return NextResponse.next();
-    }
-
-    const pathname = req.nextUrl.pathname;
-
-    if (pathname.startsWith("/policies/")) {
-      const policyId = pathname.slice("/policies/".length);
-
-      if (policyId) {
+    if (country) {
+      const policyMatch = pathname.match(/^\/policies\/([^/]+)/);
+      if (policyMatch) {
+        const policyId = policyMatch[1];
         const prefix = policyId.split("-")[0];
         const expectedCountry = COUNTRY_PREFIX_MAP[prefix];
-
         if (expectedCountry && expectedCountry !== country) {
           const url = req.nextUrl.clone();
           url.pathname = "/policies";
           return NextResponse.redirect(url);
         }
       }
+
+      const response = NextResponse.next();
+      response.headers.set("x-user-country", country);
+      return response;
     }
 
-    const response = NextResponse.next();
-    response.headers.set("x-user-country", country);
-    return response;
+    return NextResponse.next();
   },
   { pages: { signIn: "/login" } }
 );

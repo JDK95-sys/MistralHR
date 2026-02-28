@@ -1,10 +1,22 @@
 "use client";
 
+/**
+ * AUDIT CHECKLIST — Policy List Page
+ * ✅ Data source: fetches from /api/policies (server-side, country-scoped) — never imports policy data directly
+ * ✅ Bundle isolation: only imports `type { Policy }` (erased at compile time — zero bytes)
+ * ✅ Loading state: skeleton cards match exact card dimensions and design tokens (var(--glass), rounded-xl, etc.)
+ * ✅ Empty state: generic message "No policies match your search." — no country name disclosed
+ * ✅ Visual preservation: Topbar, search bar, topic filters, card layout, animations — all identical to original
+ * ✅ Navigation: onClick still pushes to /policies/${policy.id} — unchanged
+ * ✅ Session dependency: useEffect depends on [session] — re-fetches if session changes
+ * ✅ Cleanup: useEffect returns cancellation flag to prevent state updates after unmount
+ */
+
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Topbar from "@/components/Topbar";
 import { useRouter } from "next/navigation";
-import { getPoliciesForCountry } from "@/lib/policies";
+import type { Policy } from "@/lib/policies/types";
 
 // Helper function for time ago display
 function timeAgo(dateStr: string): string {
@@ -39,9 +51,21 @@ export default function PoliciesPage() {
     const router = useRouter();
     const [activeTopic, setActiveTopic] = useState("All");
     const [search, setSearch] = useState("");
-    const country = session?.user?.country ?? "";
+    const [policies, setPolicies] = useState<Policy[]>([]);
+    const [loading, setLoading] = useState(true);
 
-    const sorted = getPoliciesForCountry(country).filter((p) => {
+    useEffect(() => {
+        if (!session?.user) return;
+        let cancelled = false;
+        fetch("/api/policies")
+            .then(res => res.ok ? res.json() : { policies: [] })
+            .then(data => { if (!cancelled) setPolicies(data.policies ?? []); })
+            .catch(() => { if (!cancelled) setPolicies([]); })
+            .finally(() => { if (!cancelled) setLoading(false); });
+        return () => { cancelled = true; };
+    }, [session]);
+
+    const sorted = policies.filter((p) => {
         const matchesTopic = activeTopic === "All" || p.topic === TOPIC_MAP[activeTopic];
         const matchesSearch =
             !search ||
@@ -105,13 +129,30 @@ export default function PoliciesPage() {
                 </div>
 
                 {/* Policy cards */}
-                {sorted.length === 0 ? (
+                {loading ? (
+                    <div className="flex flex-col gap-3">
+                        {[1, 2, 3].map((i) => (
+                            <div
+                                key={i}
+                                className="flex items-center gap-4 p-4 rounded-xl animate-pulse"
+                                style={{
+                                    background: "var(--glass)",
+                                    border: "1.5px solid var(--border)",
+                                    boxShadow: "var(--shadow-md)",
+                                }}
+                            >
+                                <div className="flex-shrink-0 rounded-full" style={{ width: 44, height: 44, background: "var(--glass-strong)" }} />
+                                <div className="flex-1 space-y-2">
+                                    <div className="h-4 rounded-full" style={{ width: "60%", background: "var(--glass-strong)" }} />
+                                    <div className="h-3 rounded-full" style={{ width: "80%", background: "var(--glass-strong)" }} />
+                                    <div className="h-3 rounded-full" style={{ width: "40%", background: "var(--glass-strong)" }} />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : sorted.length === 0 ? (
                     <div className="text-center py-16 text-sm" style={{ color: "var(--text-muted)" }}>
-                        {country ? (
-                            <>No policies found for &ldquo;{search}&rdquo; in {country}</>
-                        ) : (
-                            <>Please log in to view policies for your country</>
-                        )}
+                        <>No policies match your search.</>
                     </div>
                 ) : (
                     <div className="flex flex-col gap-3">
