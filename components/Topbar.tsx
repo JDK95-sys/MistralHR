@@ -44,8 +44,7 @@ export default function Topbar({ children }: TopbarProps) {
         {/* Country context */}
         {country && (
           <div
-            className="topbar-pill"
-            aria-disabled="true"
+            className="topbar-pill topbar-pill--static"
             title="Current country context"
           >
             <span>{COUNTRY_FLAGS[country] ?? "🌍"}</span>
@@ -58,8 +57,7 @@ export default function Topbar({ children }: TopbarProps) {
 
         {/* AI status */}
         <div
-          className="topbar-pill"
-          aria-disabled="true"
+          className="topbar-pill topbar-pill--static"
           title="Mistral AI — connected"
           style={{ gap: 6, background: "var(--mistral-gradient)", borderColor: "transparent" }}
         >
@@ -72,7 +70,7 @@ export default function Topbar({ children }: TopbarProps) {
           className="topbar-pill"
           aria-label="Notifications"
           title="Notifications — coming soon"
-          aria-disabled="true"
+          disabled
           style={{ padding: "6px 10px", position: "relative" }}
         >
           <Bell size={15} />

@@ -521,7 +521,7 @@ html, body {
   border: 1px solid var(--border);
   color: var(--text-secondary);
   cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
 }
 
 .topbar-pill:hover {
@@ -539,17 +539,32 @@ html, body {
   transform: scale(0.97);
 }
 
-.topbar-pill[aria-disabled="true"] {
+.topbar-pill--static {
   cursor: default;
 }
 
-.topbar-pill[aria-disabled="true"]:hover {
+.topbar-pill--static:hover {
   border-color: var(--border);
   color: var(--text-secondary);
   background: var(--bg-deep);
 }
 
-.topbar-pill[aria-disabled="true"]:active {
+.topbar-pill--static:active {
+  transform: none;
+}
+
+.topbar-pill:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.topbar-pill:disabled:hover {
+  border-color: var(--border);
+  color: var(--text-secondary);
+  background: var(--bg-deep);
+}
+
+.topbar-pill:disabled:active {
   transform: none;
 }
 
