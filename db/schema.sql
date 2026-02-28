@@ -10,8 +10,6 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- ──────────────────────────────────────────────────────────────
 -- 1. HR DOCUMENTS
 --    Stores metadata about every uploaded policy document.
---    The original file lives in Azure Blob Storage;
---    only metadata + blob URL are stored here.
 -- ──────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS hr_documents (
   id              UUID        PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -20,8 +18,8 @@ CREATE TABLE IF NOT EXISTS hr_documents (
   file_name       TEXT        NOT NULL,
   file_type       TEXT        NOT NULL,           -- 'pdf' | 'docx' | 'txt' | 'xlsx'
   file_size_bytes INTEGER,
-  blob_url        TEXT        NOT NULL,            -- Azure Blob Storage URL
-  blob_path       TEXT        NOT NULL,            -- Internal blob path for deletion
+  blob_url        TEXT        DEFAULT '',           -- Storage URL (empty for seeded policies)
+  blob_path       TEXT        DEFAULT '',           -- Storage path (empty for seeded policies)
 
   -- Country scoping — which countries this document applies to.
   -- NULL or empty = global (applies to all countries).
@@ -62,8 +60,8 @@ CREATE INDEX IF NOT EXISTS idx_documents_topic
 -- ──────────────────────────────────────────────────────────────
 -- 2. DOCUMENT CHUNKS
 --    Each document is split into overlapping text chunks.
---    Each chunk has a 1536-dimensional embedding vector
---    (OpenAI text-embedding-3-small).
+--    Each chunk has a 1024-dimensional embedding vector
+--    (Mistral mistral-embed).
 -- ──────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS document_chunks (
   id              UUID        PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -84,7 +82,7 @@ CREATE TABLE IF NOT EXISTS document_chunks (
   doc_title       TEXT        NOT NULL,
   effective_date  DATE,
 
-  -- 1536-dimensional embedding (OpenAI text-embedding-3-small)
+  -- 1024-dimensional embedding (Mistral mistral-embed)
   embedding       vector(1024),
 
   created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()

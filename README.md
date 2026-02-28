@@ -6,6 +6,22 @@ MistralHR is an internal HR portal for employees in **France** and **Belgium**, 
 
 ---
 
+## 🎯 Hackathon Demo
+
+> **No setup required for hackathon judges and testers.**
+
+For the purpose of the **Mistral AI Hackathon**, the live demo has a **temporary Mistral API key already configured**. You can:
+
+1. Open the demo URL
+2. Log in with the demo credentials (see [Demo Accounts](#demo-accounts) below)
+3. Start chatting — no API key, no database, no installation needed
+
+The AI chat uses `open-mistral-nemo` for responses and `mistral-embed` for semantic search across **18 FR/BE statutory HR policies**.
+
+> ⚠️ The temporary API key will expire after the hackathon period. After expiry, the app falls back to static demo responses unless you supply your own key (see [Fork & Make It Your Own](#-fork--make-it-your-own) below).
+
+---
+
 ## 🌟 Features at a Glance
 
 | Feature | Details |
@@ -24,12 +40,9 @@ MistralHR is an internal HR portal for employees in **France** and **Belgium**, 
 - 🧾 Tax (IR/IPP barèmes, ONSS/cotisations)
 - 🏥 Health insurance (mutuelle/hospitalisation)
 - 💰 Premiums & benefits (meal vouchers, transport, profit sharing, pension, shares, home office)
-| 🏢 Work site terms (telework agreements, working time)
-| 🚀 Onboarding & offboarding (IT setup, PC/software policy, exit process)
-| ⚖️ Pay transparency (EU Dir. 2023/970)
-- Work site terms (telework agreements, working time)
-- Onboarding & offboarding (IT setup, PC/software policy, exit process)
-- Pay transparency (EU Dir. 2023/970)
+- 🏢 Work site terms (telework agreements, working time)
+- 🚀 Onboarding & offboarding (IT setup, PC/software policy, exit process)
+- ⚖️ Pay transparency (EU Dir. 2023/970)
 
 ---
 
@@ -106,6 +119,10 @@ psql $DATABASE_URL -c "CREATE EXTENSION IF NOT EXISTS vector;"
 
 # Create tables
 psql $DATABASE_URL -f db/schema.sql
+
+# Apply migrations
+psql $DATABASE_URL -f db/migrations/001-mistral-embeddings.sql
+psql $DATABASE_URL -f db/migrations/002-remove-blob-not-null.sql
 ```
 
 Expected output:
@@ -116,6 +133,8 @@ CREATE INDEX
 ```
 
 ### Step 4 — Seed Policies with Mistral Embeddings
+
+> ⚠️ `MISTRAL_API_KEY` must be set in `.env.local` before running this script, since `lib/rag/embeddings.ts` reads it at module load time.
 
 This generates `mistral-embed` embeddings for all 18 FR/BE policies and stores them in PostgreSQL for RAG chat.
 
@@ -151,6 +170,80 @@ Expected output:
 ```bash
 npm run dev
 # → http://localhost:3000
+```
+
+---
+
+## 🍴 Fork & Make It Your Own
+
+Want to adapt MistralHR for your own organisation? Follow these steps.
+
+### 1. Fork & Clone
+
+```bash
+# Fork the repo on GitHub, then:
+git clone https://github.com/<your-username>/MistralHR.git
+cd MistralHR
+npm install
+```
+
+### 2. Get your own Mistral API key
+
+Sign up at [console.mistral.ai](https://console.mistral.ai) and create an API key. You need it for both:
+- Chat completions: `open-mistral-nemo`
+- Embeddings: `mistral-embed`
+
+### 3. Set up environment variables
+
+Add your key to `.env.local` for local development:
+
+```env
+MISTRAL_API_KEY=<your key>
+DATABASE_URL=postgresql://user:password@host:5432/yourdb
+NEXTAUTH_SECRET=<run: openssl rand -base64 32>
+NEXTAUTH_URL=http://localhost:3000
+AUTH_PASSWORD=your-chosen-password
+```
+
+When deploying, set these in your hosting platform's environment variable settings (Vercel dashboard, Railway variables, etc.).
+
+> ⚠️ **Without `MISTRAL_API_KEY`**, the chat falls back to static demo responses. **Without `DATABASE_URL`**, there is no semantic search — the AI answers without policy context.
+
+### 4. Provision a PostgreSQL database with pgvector
+
+You'll need a PostgreSQL ≥ 15 instance with the `pgvector` extension. Free-tier options:
+- [Neon](https://neon.tech) — serverless Postgres, pgvector built-in
+- [Supabase](https://supabase.com) — Postgres with pgvector support
+- [Railway](https://railway.app) — simple Postgres hosting
+
+See the [pgvector install guide](https://github.com/pgvector/pgvector) if you're running Postgres locally.
+
+### 5. Run schema + migrations
+
+```bash
+psql $DATABASE_URL -f db/schema.sql
+psql $DATABASE_URL -f db/migrations/001-mistral-embeddings.sql
+psql $DATABASE_URL -f db/migrations/002-remove-blob-not-null.sql
+```
+
+### 6. Customize policies for your organization
+
+The 18 FR/BE policies live in `lib/policies-data.ts`. Edit or replace them with your own organisational policies. Each entry needs a `title`, `content`, `country_codes`, `topic`, and `language` field.
+
+After modifying, re-run the seed script to generate new embeddings (see step 7).
+
+### 7. Seed the database
+
+```bash
+npx ts-node --project tsconfig.json scripts/seed-policies.ts
+```
+
+### 8. Deploy
+
+See the [Deployment](#deployment) section below. After your first deploy, remember to seed the production database from your local machine:
+
+```bash
+MISTRAL_API_KEY=<key> DATABASE_URL=<production-db-url> npx ts-node --project tsconfig.json scripts/seed-policies.ts
 ```
 
 ---
@@ -227,7 +320,8 @@ MistralHR/
 ├── db/
 │   ├── schema.sql                  # PostgreSQL schema (pgvector 1024 dims)
 │   └── migrations/
-│       └── 001-mistral-embeddings.sql
+│       ├── 001-mistral-embeddings.sql
+│       └── 002-remove-blob-not-null.sql
 ├── scripts/
 │   └── seed-policies.ts            # Seed FR/BE policies with Mistral embeddings
 ├── docs/
@@ -249,6 +343,10 @@ MistralHR/
    - `MISTRAL_API_KEY`
    - `DATABASE_URL` (a hosted PostgreSQL instance with pgvector, e.g. Neon or Supabase)
 4. Click **Deploy**.
+5. **Post-deploy:** seed the production database from your local machine:
+   ```bash
+   MISTRAL_API_KEY=<key> DATABASE_URL=<production-db-url> npx ts-node --project tsconfig.json scripts/seed-policies.ts
+   ```
 
 ### Azure App Service
 
@@ -261,6 +359,11 @@ npm run build
 ```
 
 Set the same environment variables (`NEXTAUTH_SECRET`, `NEXTAUTH_URL`, `MISTRAL_API_KEY`, `DATABASE_URL`) in the Azure App Service configuration panel.
+
+**Post-deploy:** seed the production database from your local machine:
+```bash
+MISTRAL_API_KEY=<key> DATABASE_URL=<production-db-url> npx ts-node --project tsconfig.json scripts/seed-policies.ts
+```
 
 ---
 
