@@ -43,7 +43,10 @@ export default function Topbar({ children }: TopbarProps) {
       <div className="topbar-actions">
         {/* Country context */}
         {country && (
-          <div className="topbar-pill">
+          <div
+            className="topbar-pill topbar-pill--static"
+            title="Current country context"
+          >
             <span>{COUNTRY_FLAGS[country] ?? "🌍"}</span>
             {country}
           </div>
@@ -53,7 +56,11 @@ export default function Topbar({ children }: TopbarProps) {
         {children}
 
         {/* AI status */}
-        <div className="topbar-pill" style={{ gap: 6, cursor: "default", background: "var(--mistral-gradient)" }}>
+        <div
+          className="topbar-pill topbar-pill--static"
+          title="Mistral AI — connected"
+          style={{ gap: 6, background: "var(--mistral-gradient)", borderColor: "transparent" }}
+        >
           <span style={{ width: 6, height: 6, borderRadius: "50%", background: "white", boxShadow: "0 0 6px rgba(255, 112, 0, 0.3)", display: "inline-block" }} />
           <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.06em", color: "white" }}>MISTRAL AI</span>
         </div>
@@ -62,6 +69,8 @@ export default function Topbar({ children }: TopbarProps) {
         <button
           className="topbar-pill"
           aria-label="Notifications"
+          title="Notifications — coming soon"
+          disabled
           style={{ padding: "6px 10px", position: "relative" }}
         >
           <Bell size={15} />

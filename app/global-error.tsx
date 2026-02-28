@@ -14,9 +14,9 @@ export default function GlobalError({
       <body
         style={{
           margin: 0,
-          fontFamily: "var(--font-sans)",
-          background: "var(--bg)",
-          color: "var(--text-primary)",
+          fontFamily: "'DM Sans', system-ui, sans-serif",
+          background: "#1A1A1C",
+          color: "#F0F0F0",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -43,11 +43,11 @@ export default function GlobalError({
           <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, letterSpacing: "-0.02em" }}>
             Something went wrong
           </h1>
-          <p style={{ fontSize: 14, color: "var(--text-secondary)", marginBottom: 4, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 14, color: "#A0A0A5", marginBottom: 4, lineHeight: 1.6 }}>
             An unexpected error occurred. Our team has been notified.
           </p>
           {error.digest && (
-            <p style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 20, fontFamily: "var(--font-mono)" }}>
+            <p style={{ fontSize: 12, color: "#6A6A70", marginBottom: 20, fontFamily: "'DM Mono', monospace" }}>
               Error ID: {error.digest}
             </p>
           )}

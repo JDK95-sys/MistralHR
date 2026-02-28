@@ -119,7 +119,7 @@ export default function PoliciesPage() {
                             className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-150"
                             style={{
                                 background: activeTopic === topic ? "var(--orange)" : "var(--glass-strong)",
-                                color: activeTopic === topic ? "#FFFFFF" : "var(--text-muted)",
+                                color: activeTopic === topic ? "var(--sidebar-text-active)" : "var(--text-muted)",
                                 border: `1.5px solid ${activeTopic === topic ? "var(--orange)" : "var(--border)"}`,
                             }}
                         >
