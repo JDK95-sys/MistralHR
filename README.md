@@ -23,13 +23,16 @@ The live demo has a **temporary Mistral API key already configured** for the dur
 ## 📸 Screenshots
 
 ### HR Assistant — AI Chat
-![HR Assistant Chat](https://github.com/JDK95-sys/MistralHR/blob/main/docs/screenshots/chat.png?raw=true)
+<img width="1908" height="902" alt="image" src="https://github.com/user-attachments/assets/3542a2f3-bac0-43c1-add2-f1e6cd6a8167" />
+
 
 ### Policy Library — Browse & Filter Policies
-![Policy Library](https://github.com/JDK95-sys/MistralHR/blob/main/docs/screenshots/policies.png?raw=true)
+<img width="1907" height="881" alt="image" src="https://github.com/user-attachments/assets/651a9998-81e3-4352-966f-92268dda4171" />
+
 
 ### Policy Detail — Legal References & Full Content
-![Policy Detail](https://github.com/JDK95-sys/MistralHR/blob/main/docs/screenshots/policy-detail.png?raw=true)
+<img width="1917" height="898" alt="image" src="https://github.com/user-attachments/assets/4fb139a0-4d43-459b-b638-f4f73901a55b" />
+
 
 ---
 
