@@ -218,25 +218,38 @@ Try asking a specific question like *"What is my annual leave entitlement?"* or 
 *Note: This is a demo environment. For full AI-powered answers, connect the MISTRAL_API_KEY in your .env.local file.*`,
 };
 
-function matchDemoResponse(message: string, country: string = "GLOBAL"): string {
+// ─── Keyword groups for demo response matching ─────────────────────
+const DEMO_KEYWORDS = {
+  leave: ["leave", "annual", "holiday", "vacation", "entitlement", "days off"],
+  parental: ["parental", "maternity", "paternity", "baby"],
+  expense: ["expense", "concur", "reimburs", "receipt", "claim"],
+  remote: ["remote", "hybrid", "work from home", "wfh", "home office"],
+  healthcare: ["health", "medical", "insurance", "doctor", "hospital", "dental"],
+  mobility: ["mobility", "bike", "transport", "commut", "car", "train", "navigo", "vélo"],
+};
+
+function matchDemoResponse(message: string, country: string = "Unknown"): string {
   const lower = message.toLowerCase();
 
-  if (lower.includes("leave") && (lower.includes("annual") || lower.includes("holiday") || lower.includes("vacation") || lower.includes("entitlement") || lower.includes("days off"))) {
+  const matchesKeywords = (keywords: string[]) => 
+    keywords.some(keyword => lower.includes(keyword));
+
+  if (lower.includes("leave") && matchesKeywords(DEMO_KEYWORDS.leave)) {
     return DEMO_RESPONSES["leave"];
   }
-  if (lower.includes("parental") || lower.includes("maternity") || lower.includes("paternity") || lower.includes("baby")) {
+  if (matchesKeywords(DEMO_KEYWORDS.parental)) {
     return DEMO_RESPONSES["parental"];
   }
-  if (lower.includes("expense") || lower.includes("concur") || lower.includes("reimburs") || lower.includes("receipt") || lower.includes("claim")) {
+  if (matchesKeywords(DEMO_KEYWORDS.expense)) {
     return DEMO_RESPONSES["expense"];
   }
-  if (lower.includes("remote") || lower.includes("hybrid") || lower.includes("work from home") || lower.includes("wfh") || lower.includes("home office")) {
+  if (matchesKeywords(DEMO_KEYWORDS.remote)) {
     return DEMO_RESPONSES["remote"];
   }
-  if (lower.includes("health") || lower.includes("medical") || lower.includes("insurance") || lower.includes("doctor") || lower.includes("hospital") || lower.includes("dental")) {
+  if (matchesKeywords(DEMO_KEYWORDS.healthcare)) {
     return DEMO_RESPONSES["healthcare"];
   }
-  if (lower.includes("mobility") || lower.includes("bike") || lower.includes("transport") || lower.includes("commut") || lower.includes("car") || lower.includes("train") || lower.includes("navigo") || lower.includes("vélo")) {
+  if (matchesKeywords(DEMO_KEYWORDS.mobility)) {
     // Return country-specific mobility response if available, otherwise generic
     const countryKey = `mobility:${country}`;
     return DEMO_RESPONSES[countryKey] ?? DEMO_RESPONSES["mobility"];
