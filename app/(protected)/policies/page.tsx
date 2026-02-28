@@ -4,7 +4,21 @@ import { useSession } from "next-auth/react";
 import { useState } from "react";
 import Topbar from "@/components/Topbar";
 import { useRouter } from "next/navigation";
-import { policies, timeAgo } from "@/lib/policies-data";
+import { getPoliciesForCountry } from "@/lib/policies";
+
+// Helper function for time ago display
+function timeAgo(dateStr: string): string {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const days = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+    if (days === 0) return "today";
+    if (days === 1) return "yesterday";
+    if (days < 30) return `${days} days ago`;
+    const months = Math.floor(days / 30);
+    if (months < 12) return `${months} month${months > 1 ? "s" : ""} ago`;
+    const years = Math.floor(months / 12);
+    return `${years} year${years > 1 ? "s" : ""} ago`;
+}
 
 const TOPICS = ["All", "Leave", "Remote Work", "Expenses", "Health & Benefits", "Code of Conduct", "Data & Privacy", "Learning"];
 
@@ -17,22 +31,16 @@ export default function PoliciesPage() {
     const [search, setSearch] = useState("");
     const country = session?.user?.country ?? "";
 
-    const filtered = policies.filter((p) => {
+    // Get only policies for the user's country
+    const countryPolicies = getPoliciesForCountry(country);
+
+    const filtered = countryPolicies.filter((p) => {
         const matchesTopic = activeTopic === "All" || p.topic === activeTopic;
         const matchesSearch =
             !search ||
             p.title.toLowerCase().includes(search.toLowerCase()) ||
             p.description.toLowerCase().includes(search.toLowerCase());
         return matchesTopic && matchesSearch;
-    });
-
-    // Policies that apply to user's country sort first
-    const sorted = [...filtered].sort((a, b) => {
-        const aApplies = a.countries.includes("All countries") || a.countries.includes(country);
-        const bApplies = b.countries.includes("All countries") || b.countries.includes(country);
-        if (aApplies && !bApplies) return -1;
-        if (!aApplies && bApplies) return 1;
-        return 0;
     });
 
     return (
@@ -90,15 +98,17 @@ export default function PoliciesPage() {
                 </div>
 
                 {/* Policy cards */}
-                {sorted.length === 0 ? (
+                {filtered.length === 0 ? (
                     <div className="text-center py-16 text-sm" style={{ color: "var(--text-muted)" }}>
-                        No policies found for &ldquo;{search}&rdquo;
+                        {country ? (
+                            <>No policies found for &ldquo;{search}&rdquo; in {country}</>
+                        ) : (
+                            <>Please log in to view policies for your country</>
+                        )}
                     </div>
                 ) : (
                     <div className="flex flex-col gap-3">
-                        {sorted.map((policy) => {
-                            const appliesToUser =
-                                policy.countries.includes("All countries") || policy.countries.includes(country);
+                        {filtered.map((policy) => {
                             return (
                                 <div
                                     key={policy.id}
@@ -122,24 +132,12 @@ export default function PoliciesPage() {
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-2 mb-0.5">
                                             <span className="text-sm font-bold tracking-snug">{policy.title}</span>
-                                            {appliesToUser && (
-                                                <span
-                                                    className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0"
-                                                    style={{
-                                                        background: "var(--mint-10)",
-                                                        border: "1px solid rgba(70,190,170,0.2)",
-                                                        color: "var(--sage)",
-                                                    }}
-                                                >
-                                                    ✓ Applies to you
-                                                </span>
-                                            )}
                                         </div>
                                         <p className="text-xs leading-relaxed line-clamp-2" style={{ color: "var(--text-muted)" }}>
                                             {policy.description}
                                         </p>
                                         <div className="flex items-center gap-3 mt-1.5 text-xs" style={{ color: "var(--text-muted)" }}>
-                                            <span>🌍 {policy.countries.join(", ")}</span>
+                                            <span>🌍 {policy.country}</span>
                                             <span>· Updated {timeAgo(policy.updatedAt)}</span>
                                         </div>
                                     </div>

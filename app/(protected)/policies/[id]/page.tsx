@@ -1,13 +1,32 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import Topbar from "@/components/Topbar";
-import { policies, timeAgo } from "@/lib/policies-data";
+import { getPolicyByIdForCountry } from "@/lib/policies";
+
+// Helper function for time ago display
+function timeAgo(dateStr: string): string {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const days = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+    if (days === 0) return "today";
+    if (days === 1) return "yesterday";
+    if (days < 30) return `${days} days ago`;
+    const months = Math.floor(days / 30);
+    if (months < 12) return `${months} month${months > 1 ? "s" : ""} ago`;
+    const years = Math.floor(months / 12);
+    return `${years} year${years > 1 ? "s" : ""} ago`;
+}
 
 export default function PolicyDetailPage() {
     const { id } = useParams();
     const router = useRouter();
-    const policy = policies.find(p => p.id === id);
+    const { data: session } = useSession();
+    const country = session?.user?.country ?? "";
+    
+    // Get policy only if it belongs to the user's country
+    const policy = typeof id === "string" ? getPolicyByIdForCountry(id, country) : undefined;
 
     if (!policy) {
         return (
@@ -16,7 +35,7 @@ export default function PolicyDetailPage() {
                 <div className="text-5xl mb-4">📄</div>
                 <div className="text-xl font-bold mb-2">Policy not found</div>
                 <p className="text-sm mb-5" style={{ color: "var(--text-muted)" }}>
-                    This policy may have been removed or the link is incorrect.
+                    This policy may not exist or is not available for your country ({country || "unknown"}).
                 </p>
                 <button
                     onClick={() => router.push("/policies")}
@@ -84,7 +103,7 @@ export default function PolicyDetailPage() {
                                     >
                                         {policy.topic}
                                     </span>
-                                    <span>🌍 {policy.countries.join(", ")}</span>
+                                    <span>🌍 {policy.country}</span>
                                     <span>· Updated {timeAgo(policy.updatedAt)}</span>
                                 </div>
                             </div>
@@ -127,7 +146,7 @@ export default function PolicyDetailPage() {
 
                     {/* Policy content */}
                     <div className="space-y-8">
-                        <PolicyContent topic={policy.topic} countries={policy.countries} title={policy.title} />
+                        <PolicyContent topic={policy.topic} country={policy.country} title={policy.title} />
                     </div>
 
                     {/* Ask AI Footer */}
@@ -219,9 +238,9 @@ const POLICY_SECTIONS: Record<string, { heading: string; content: string }[]> = 
     ],
 };
 
-function PolicyContent({ topic, countries, title }: { topic: string; countries: string[]; title: string }) {
+function PolicyContent({ topic, country, title }: { topic: string; country: string; title: string }) {
     const sections = POLICY_SECTIONS[topic] ?? [
-        { heading: "1. Purpose & Scope", content: `This policy outlines the guidelines for ${title.toLowerCase()}. It applies to all employees in: ${countries.join(", ")}.` },
+        { heading: "1. Purpose & Scope", content: `This policy outlines the guidelines for ${title.toLowerCase()}. It applies to all employees in: ${country}.` },
         { heading: "2. Key Guidelines", content: "Employees must follow all applicable local regulations and internal procedures. Manager approval is required for most actions under this policy." },
         { heading: "3. Compliance", content: "Non-compliance with this policy may result in disciplinary action. Questions should be directed to your HR Business Partner or the Policy Helpdesk." },
     ];
