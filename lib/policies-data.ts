@@ -32,6 +32,7 @@ export interface Policy {
   updatedAt: string;
   legalRefs: string[];
   content: string;
+  ring?: string;
 }
 
 export const policies: Policy[] = [
@@ -54,6 +55,7 @@ export const policies: Policy[] = [
 Période légale de prise : 1er mai – 31 octobre. Le congé principal doit être d'au moins 12 jours ouvrables consécutifs sur cette période.
 
 Congé non pris : ne peut être payé en cours de contrat. La Loi du 22 avril 2024 permet le report des congés en cas d'arrêt maladie (transposition Dir. UE 2019/1158).`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
   {
     id: "fr-sick-leave",
@@ -72,6 +74,7 @@ Congé non pris : ne peut être payé en cours de contrat. La Loi du 22 avril 20
 Délai de carence IJSS (3 jours) supprimé par accord d'entreprise : le salarié perçoit son salaire dès le 1er jour d'arrêt.
 
 Au-delà de 90 jours : indemnités IJSS + contrat prévoyance collectif (niveau de remplacement défini dans l'accord de prévoyance).`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
   {
     id: "fr-holidays",
@@ -85,6 +88,7 @@ Au-delà de 90 jours : indemnités IJSS + contrat prévoyance collectif (niveau 
     content: `11 jours fériés légaux : 1er jan, Lundi de Pâques, 1er mai (seul obligatoirement chômé), 8 mai, Ascension, Lundi de Pentecôte, 14 juillet, 15 août, 1er nov, 11 nov, 25 déc.
 
 La société chôme l'ensemble des 11 jours fériés avec maintien de salaire. Si un jour férié coïncide avec un jour de RTT ou congé planifié, un jour de remplacement est accordé.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — MOBILITY ─────────────────────────────────────
@@ -105,6 +109,7 @@ La société chôme l'ensemble des 11 jours fériés avec maintien de salaire. S
 Détachement international : pour les missions > 3 mois, un avenant de détachement précise la durée, le maintien du contrat français, les conditions de rémunération et la couverture sociale. La France reste compétente pour la sécurité sociale (règlement UE 883/2004 intra-UE).
 
 Comment démarrer : contacter HR Mobility (hr-mobility@mistralhr.demo) → ouverture d'un dossier → validation manager + Finance → avenant signé → briefing RH destination → logistique relocation (si applicable, budget plafonné selon politique interne).`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — TAX ──────────────────────────────────────────
@@ -133,6 +138,7 @@ Barème IR 2024 (revenus 2023) :
 Cotisations sociales salariales (approximatif) : ~22% du salaire brut (assurance maladie, retraite de base CNAV, retraite complémentaire AGIRC-ARRCO, chômage, CSG/CRDS).
 
 À noter : la CSG (9,2%) et la CRDS (0,5%) s'appliquent sur 98,25% du salaire brut.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — HEALTH ───────────────────────────────────────
@@ -158,6 +164,7 @@ Niveaux de couverture :
 Prévoyance : accord de prévoyance collectif couvrant incapacité de travail, invalidité, décès. Taux de remplacement et délais de carence définis dans l'accord (disponible sur l'intranet RH).
 
 Portabilité : en cas de départ, la couverture santé et prévoyance est maintenue pendant la période de chômage (max 12 mois) via le mécanisme de portabilité (L911-8 CSS).`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — PREMIUMS ─────────────────────────────────────
@@ -185,6 +192,7 @@ PEE / PERCO : Plan d'Épargne Entreprise (abondement employeur) et PERCO/PER Col
 Actions société : plan d'actionnariat salarié annuel (conditions et prix préférentiel publiés lors de chaque ouverture).
 
 Prime home office : indemnité télétravail fixée par accord d'entreprise (montant exact sur intranet).`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — WORKSITE ─────────────────────────────────────
@@ -209,6 +217,7 @@ Accord télétravail : jusqu'à 3 jours de télétravail par semaine pour les po
 Durée du travail : 35h/semaine légale (L3121-27). Heures supplémentaires : +25% pour les 8 premières, +50% au-delà. Cadres au forfait jours : 218j/an max (L3121-64).
 
 Sécurité informatique : connexion VPN obligatoire en télétravail.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — ONBOARDING ───────────────────────────────────
@@ -244,6 +253,7 @@ Offboarding :
 - Restitution matériel sous 5 jours ouvrés après départ
 - Accès systèmes révoqués le jour du départ (automatique via AD)
 - Solde de tout compte remis lors du dernier jour`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── FRANCE — COMPENSATION ─────────────────────────────────
@@ -264,6 +274,7 @@ Offboarding :
 Index Égalité Professionnelle : publication annuelle avant le 1er mars pour toute entreprise ≥ 50 salariés.
 
 EU Dir. 2023/970 (applicable 2026) : droit individuel à l'information salariale, interdiction des clauses de confidentialité sur salaires, obligation de reporting public par genre et catégorie.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── BELGIUM — LEAVE ───────────────────────────────────────
@@ -288,6 +299,7 @@ Pécule double : ~92% du salaire mensuel brut, versé par l'employeur annuelleme
 Pour les ouvriers : pécule géré par les Caisses de Vacances (paiement direct au travailleur).
 
 Report en cas de maladie : autorisé par la Loi du 17 juillet 2023 (transposition Dir. UE 2019/1158) — report possible jusqu'à 24 mois.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
   {
     id: "be-sick-leave",
@@ -310,6 +322,7 @@ Phase 2 — INAMI (à partir du 31ème jour) :
 - Invalidité (> 1 an) : 65% (isolé/chef de famille) ou 40% (cohabitant)
 
 Prévoyance complémentaire : complément aux indemnités INAMI.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
   {
     id: "be-holidays",
@@ -325,6 +338,7 @@ Prévoyance complémentaire : complément aux indemnités INAMI.`,
 Si un férié tombe un dimanche ou jour non travaillé : un jour de remplacement est accordé, à fixer par accord employeur/délégués.
 
 Tous les fériés sont rémunérés. La société octroie les 10 jours à tous les collaborateurs avec maintien de salaire.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── BELGIUM — MOBILITY ────────────────────────────────────
@@ -348,6 +362,7 @@ Détachement international : pour missions > 3 mois hors Belgique, avenant de d�
 Comment démarrer : contacter HR Mobility BE (hr-be@mistralhr.demo) → dossier de mobilité → validation manager + Legal → avenant → brief destination → support relocation.
 
 Split payroll (missions longues) : possible selon la durée et le pays d'accueil — à analyser avec le Payroll Manager.`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── BELGIUM — TAX ─────────────────────────────────────────
@@ -376,6 +391,7 @@ Précompte professionnel : retenu mensuellement par l'employeur sur base des bar
 Cotisations ONSS salariales : 13,07% du salaire brut (sécurité sociale — pension, chômage, soins de santé, allocations familiales).
 
 Avantages de toute nature (ATN) : voiture de société, GSM, PC privé imposés sur base forfaitaire (barèmes SPF Finances).`,
+    ring: "linear-gradient(135deg, #FF7000, #FF9A40)",
   },
 
   // ── BELGIUM — HEALTH ──────────────────────────────────────
