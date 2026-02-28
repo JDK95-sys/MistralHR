@@ -5,7 +5,7 @@
 /* ═══════════════════════════════════════════════════════
    MISTRALHR — Le Chat design system
    Fully dark UI: dark sidebar + dark content
-   Accent: #FF7000 (Mistral orange) — used with precision
+   Accent: Mistral orange — used with precision
    ═══════════════════════════════════════════════════════ */
 
 :root {
@@ -71,7 +71,7 @@
   --grad-mint-sage:   linear-gradient(135deg, #FF8205, #FFAF00);
   --grad-grape-rhubarb: linear-gradient(135deg, #FF8205, #FFAF00);
 
-  /* ── Shadows (neon alias) ─────────────────────────── */
+  /* ── Shadow alias ───────────────────────────────────── */
   --shadow-neon:      var(--orange-shadow);
 
   /* ── Radius ───────────────────────────────────────── */
