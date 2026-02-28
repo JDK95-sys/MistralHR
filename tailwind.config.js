@@ -15,11 +15,11 @@ module.exports = {
           border: "rgba(255, 130, 5, 0.25)",
         },
         sidebar: {
-          DEFAULT: "#1E1E1E",
-          hover: "#2C2C2E",
-          border: "rgba(255,255,255,0.06)",
-          text: "#8A8A8E",
-          "text-active": "#FFFFFF",
+          DEFAULT: "var(--sidebar-bg)",
+          hover: "var(--sidebar-hover)",
+          border: "var(--sidebar-border)",
+          text: "var(--sidebar-text)",
+          "text-active": "var(--sidebar-text-active)",
         },
         content: {
           bg: "#1C1C1E",
