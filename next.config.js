@@ -26,6 +26,17 @@ const nextConfig = {
     instrumentationHook: true,
     optimizePackageImports: ['lucide-react'],
   },
+  async redirects() {
+    return [
+      // Browsers always request /favicon.ico; redirect to the SVG variant
+      // to avoid a 404 in the browser console.
+      {
+        source: "/favicon.ico",
+        destination: "/favicon.svg",
+        permanent: false,
+      },
+    ];
+  },
   async headers() {
     return [
       {

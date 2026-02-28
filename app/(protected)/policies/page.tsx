@@ -6,9 +6,19 @@ import Topbar from "@/components/Topbar";
 import { useRouter } from "next/navigation";
 import { policies, timeAgo } from "@/lib/policies-data";
 
-const TOPICS = ["All", "Leave", "Remote Work", "Expenses", "Health & Benefits", "Code of Conduct", "Data & Privacy", "Learning"];
+// Display label → data topic value mapping
+const TOPIC_MAP: Record<string, string> = {
+  "Leave":            "leave",
+  "Mobility":         "mobility",
+  "Tax":              "tax",
+  "Health & Benefits":"health",
+  "Premiums":         "premiums",
+  "Remote Work":      "worksite",
+  "Onboarding":       "onboarding",
+  "Compensation":     "compensation",
+};
 
-
+const TOPICS = ["All", ...Object.keys(TOPIC_MAP)];
 
 export default function PoliciesPage() {
     const { data: session } = useSession();
@@ -18,7 +28,7 @@ export default function PoliciesPage() {
     const country = session?.user?.country ?? "";
 
     const filtered = policies.filter((p) => {
-        const matchesTopic = activeTopic === "All" || p.topic === activeTopic;
+        const matchesTopic = activeTopic === "All" || p.topic === TOPIC_MAP[activeTopic];
         const matchesSearch =
             !search ||
             p.title.toLowerCase().includes(search.toLowerCase()) ||
