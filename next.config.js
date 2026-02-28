@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Output as standalone for Azure App Service Docker deployment
-  output: "standalone",
+  // Standalone output is only needed for Docker/Azure App Service.
+  // Vercel manages its own output format, so we skip it there.
+  ...(process.env.VERCEL ? {} : { output: "standalone" }),
 
   // Allow Azure AD profile images
   images: {
