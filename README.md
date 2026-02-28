@@ -1,6 +1,26 @@
-# Worldline People Portal
+# MistralHR — Worldline HR Assistant
 
-Internal HR platform for Worldline employees across 20+ countries. Built with Next.js 14, Azure AD SSO, and an AI-powered HR assistant (Phase 3).
+Internal HR portal for Worldline employees in **France** and **Belgium**, built for the hackathon. Powered by Mistral AI — no Azure, no Anthropic.
+
+---
+
+## What It Does
+
+| Route | Description |
+|---|---|
+| `/login` | Simple email/password sign-in (two demo accounts) |
+| `/chat` | RAG-powered HR assistant using `open-mistral-nemo` |
+| `/policies` | 18 FR/BE statutory HR policies with legal references |
+
+**Policy domains covered:**
+- Leave (annual leave, sick leave, public holidays)
+- Global & local mobility
+- Local tax (IR/IPP barèmes, ONSS/cotisations)
+- Health insurance (mutuelle/hospitalisation)
+- Premiums & benefits (meal vouchers, transport, profit sharing, pension, shares, home office)
+- Work site terms (telework agreements, working time)
+- Onboarding & offboarding (IT setup, PC/software policy, exit process)
+- Pay transparency (EU Dir. 2023/970)
 
 ---
 
@@ -9,37 +29,78 @@ Internal HR platform for Worldline employees across 20+ countries. Built with Ne
 | Layer | Technology |
 |---|---|
 | Framework | Next.js 14 (App Router) |
-| Auth | NextAuth.js + Azure AD |
-| Styling | Tailwind CSS + Worldline Design Tokens |
+| Auth | NextAuth.js — Credentials only (no Azure AD) |
+| AI — Chat | Mistral `open-mistral-nemo` |
+| AI — Embeddings | Mistral `mistral-embed` (1024 dims) |
+| Database | PostgreSQL + pgvector |
+| Styling | Tailwind CSS |
 | Language | TypeScript |
-| Hosting | Azure App Service |
-| CI/CD | GitHub Actions |
-| Database (Phase 3) | PostgreSQL + pgvector |
-| AI (Phase 3) | Anthropic API (Claude) + RAG |
-| Storage (Phase 3) | Azure Blob Storage |
 
 ---
 
-## Local Development
+## Getting Started
 
 ### Prerequisites
+
 - Node.js 18.17+
-- An Azure AD App Registration (see setup below)
+- PostgreSQL with the `pgvector` extension
+- A [Mistral API key](https://console.mistral.ai/)
 
 ### 1. Clone & install
+
 ```bash
-git clone https://github.com/worldline/hr-portal.git
-cd worldline-hr-portal
+git clone https://github.com/JDK95-sys/MistralHR.git
+cd MistralHR
 npm install
 ```
 
 ### 2. Configure environment
+
 ```bash
 cp .env.example .env.local
-# Fill in your Azure AD credentials (see Azure AD Setup below)
 ```
 
-### 3. Run locally
+Edit `.env.local`:
+
+```
+NEXTAUTH_SECRET=<run: openssl rand -base64 32>
+NEXTAUTH_URL=http://localhost:3000
+
+DATABASE_URL=postgresql://user:password@localhost:5432/mistralhr
+
+MISTRAL_API_KEY=<your Mistral API key>
+
+AUTH_PASSWORD=demo1234
+```
+
+### 3. Set up the database
+
+```bash
+# Enable pgvector
+psql $DATABASE_URL -c "CREATE EXTENSION IF NOT EXISTS vector;"
+
+# Create tables
+psql $DATABASE_URL -f db/schema.sql
+```
+
+### 4. Seed policies
+
+This generates Mistral embeddings for all 18 FR/BE policies and stores them in the database for RAG chat.
+
+```bash
+npx ts-node --project tsconfig.json scripts/seed-policies.ts
+```
+
+Expected output:
+```
+✓ Seeded: Congés Payés — France
+✓ Seeded: Arrêt Maladie — France
+...
+✅ All 18 policies seeded successfully.
+```
+
+### 5. Run
+
 ```bash
 npm run dev
 # → http://localhost:3000
@@ -47,113 +108,109 @@ npm run dev
 
 ---
 
-## Azure AD App Registration Setup
+## Demo Accounts
 
-1. Go to **Azure Portal** → **Azure Active Directory** → **App registrations** → **New registration**
-2. Name: `Worldline HR Portal`
-3. Supported account types: **Accounts in this organizational directory only**
-4. Redirect URI: `http://localhost:3000/api/auth/callback/azure-ad`
-5. After creation, note:
-   - **Application (client) ID** → `AZURE_AD_CLIENT_ID`
-   - **Directory (tenant) ID** → `AZURE_AD_TENANT_ID`
-6. Go to **Certificates & secrets** → **New client secret** → `AZURE_AD_CLIENT_SECRET`
-7. Go to **API permissions** → **Add permission** → **Microsoft Graph** → Add:
-   - `openid` (delegated)
-   - `profile` (delegated)
-   - `email` (delegated)
-   - `User.Read` (delegated)
-   - `User.ReadBasic.All` (delegated — for profile data)
-8. Click **Grant admin consent**
-9. For production, add redirect URI: `https://your-app.azurewebsites.net/api/auth/callback/azure-ad`
-
----
-
-## Azure App Service Deployment
-
-### Manual (first deploy)
-1. Create App Service in Azure Portal:
-   - **Runtime**: Node.js 20 LTS
-   - **OS**: Linux
-   - **Region**: West Europe (GDPR compliance)
-2. Set App Settings (Configuration → Application settings):
-   ```
-   NEXTAUTH_URL = https://your-app.azurewebsites.net
-   NEXTAUTH_SECRET = <generate with: openssl rand -base64 32>
-   AZURE_AD_CLIENT_ID = <from App Registration>
-   AZURE_AD_CLIENT_SECRET = <from App Registration>
-   AZURE_AD_TENANT_ID = <from App Registration>
-   NODE_ENV = production
-   ```
-3. Run locally: `npm run build` then deploy via ZIP or GitHub Actions
-
-### Automated (GitHub Actions)
-1. Add secrets to GitHub repo (Settings → Secrets → Actions):
-   - All the env vars above
-   - `AZURE_WEBAPP_PUBLISH_PROFILE` — download from Azure Portal → App Service → Get publish profile
-2. Update `AZURE_WEBAPP_NAME` in `.github/workflows/azure-deploy.yml`
-3. Push to `main` → auto-deploys
+| Email | Password | Country | Role |
+|---|---|---|---|
+| alice.martin@worldline.com | demo1234 | France | Employee |
+| jan.peeters@worldline.com | demo1234 | Belgium | HR Business Partner |
 
 ---
 
 ## Project Structure
 
 ```
-worldline-hr-portal/
+MistralHR/
 ├── app/
-│   ├── (protected)/          # All authenticated pages
-│   │   ├── layout.tsx        # Shell with Sidebar
-│   │   ├── chat/             # AI HR Assistant (homepage)
-│   │   ├── analytics/        # HR Analytics dashboard
-│   │   ├── jobs/             # Internal Job Board
-│   │   ├── performance/      # Performance Goals
-│   │   └── admin/            # HR Admin tools (role-gated)
-│   ├── login/                # Login page (Azure AD SSO)
-│   ├── api/auth/             # NextAuth API routes
-│   ├── globals.css           # Design tokens + Tailwind
-│   └── layout.tsx            # Root layout
+│   ├── (protected)/
+│   │   ├── layout.tsx          # Authenticated shell with sidebar
+│   │   ├── chat/               # Mistral RAG chat interface
+│   │   └── policies/
+│   │       ├── page.tsx        # Policy library (filter by country/topic)
+│   │       └── [id]/page.tsx   # Policy detail with legal references
+│   ├── api/
+│   │   ├── auth/               # NextAuth endpoints
+│   │   └── chat/route.ts       # Mistral streaming chat API
+│   └── login/page.tsx          # Credentials login form
 ├── components/
-│   ├── Sidebar.tsx           # Navigation sidebar
-│   ├── Topbar.tsx            # Page header
-│   └── providers/            # React context providers
+│   ├── Sidebar.tsx             # Nav: Chat + Policies only
+│   └── Topbar.tsx              # Page header
 ├── lib/
-│   └── auth.ts               # NextAuth config + Azure AD
-├── middleware.ts             # Route protection
-├── tailwind.config.js        # Worldline brand tokens
-├── web.config                # Azure App Service IIS config
-└── .github/workflows/        # CI/CD pipeline
+│   ├── auth.ts                 # NextAuth credentials config
+│   ├── db.ts                   # PostgreSQL pool
+│   ├── policies-data.ts        # 18 FR/BE statutory policies
+│   └── rag/
+│       ├── embeddings.ts       # Mistral mistral-embed
+│       ├── vectorSearch.ts     # pgvector similarity search
+│       ├── systemPrompt.ts     # Chat system prompt
+│       ├── chunker.ts          # Document text splitting
+│       └── ingest.ts           # Document ingestion pipeline
+├── db/
+│   ├── schema.sql              # PostgreSQL schema (pgvector 1024 dims)
+│   └── migrations/
+│       └── 001-mistral-embeddings.sql  # Migrate from 1536 → 1024 dims
+├── scripts/
+│   └── seed-policies.ts        # Seed FR/BE policies with Mistral embeddings
+├── docs/plans/
+│   └── 2026-02-28-stripped-hr-portal.md  # Implementation plan
+└── middleware.ts               # Route protection (NextAuth)
 ```
 
 ---
 
-## Role-Based Access
+## How the RAG Chat Works
 
-Roles are derived from **Azure AD group memberships** on sign-in:
+```
+User question
+     │
+     ▼
+Generate embedding (mistral-embed)
+     │
+     ▼
+Vector search in PostgreSQL (pgvector cosine similarity)
+Returns top 6 most relevant policy chunks for the user's country
+     │
+     ▼
+Build context from chunks + user profile (country, department, role)
+     │
+     ▼
+Stream response from open-mistral-nemo
+     │
+     ▼
+Citations surfaced from source chunks
+```
 
-| Role | Access |
+The assistant answers **only from retrieved documents** — it will not hallucinate policy details not in the database.
+
+---
+
+## Policy Legal References
+
+All policies reference real statutory sources:
+
+**France:** Code du Travail (L1221-19, L1226-1, L3121-27, L3133-1, L3141-3, L3221-1+), EU Directive 2023/970, ANI Télétravail 2020, CCN Syntec
+
+**Belgium:** Loi du 26 déc. 2013 (Statut Unique), Loi du 22 avril 2012, Loi du 3 juillet 1978, Loi du 28 juin 1971, CCT n°85, EU Directive 2023/970, ONSS/INAMI regulations
+
+---
+
+## If You Already Have a Database with OpenAI Embeddings
+
+Run the migration to switch from 1536 → 1024 dimensions, then re-seed:
+
+```bash
+psql $DATABASE_URL -f db/migrations/001-mistral-embeddings.sql
+npx ts-node --project tsconfig.json scripts/seed-policies.ts
+```
+
+---
+
+## Environment Variables
+
+| Variable | Description |
 |---|---|
-| `employee` | Chat, Jobs, My Goals, My Performance |
-| `hrbp` | + Analytics, team views |
-| `hr-admin` | + Document management, user management |
-| `exec` | + All analytics, org-wide views |
-
-Update group IDs in `lib/auth.ts` to match your Azure AD groups.
-
----
-
-## Roadmap
-
-- **Phase 2** ✅ Next.js + Azure AD SSO (this branch)
-- **Phase 3** — RAG AI Chatbot (Anthropic API + pgvector)
-- **Phase 4** — Document Management System (Azure Blob + admin UI)
-- **Phase 5** — Performance, Jobs, Analytics (live data)
-- **Phase 6** — HR Tools section
-
----
-
-## GDPR & EU AI Act Compliance
-
-- All data processed in **Azure West Europe** region
-- AI assistant discloses AI-generated nature on every response
-- No personal data stored in vector database — only document chunks
-- Session tokens stored in JWT (no server-side session storage)
-- Token lifetime: 8 hours (working day)
+| `NEXTAUTH_SECRET` | Random secret for JWT signing (`openssl rand -base64 32`) |
+| `NEXTAUTH_URL` | Base URL of the app (e.g. `http://localhost:3000`) |
+| `DATABASE_URL` | PostgreSQL connection string |
+| `MISTRAL_API_KEY` | Mistral API key from console.mistral.ai |
+| `AUTH_PASSWORD` | Shared password for demo accounts (default: `demo1234`) |
