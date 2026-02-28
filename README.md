@@ -1,4 +1,4 @@
-# <img src="https://mistral.ai/images/logo.svg" width="32" alt="Mistral AI" /> MistralHR — AI-Powered HR Assistant
+# <img src="public/favicon.svg" width="32" alt="Mistral AI" /> MistralHR — AI-Powered HR Assistant
 
 > **Powered entirely by Mistral AI** — no Azure, no OpenAI, no compromise.
 
@@ -89,8 +89,8 @@ Grounded Answer + Source Citations
 
 | Layer | Technology |
 |---|---|
-| AI — Chat | [![Mistral](https://img.shields.io/badge/Mistral-open--mistral--nemo-FF7000?logo=mistral&logoColor=white)](https://mistral.ai) |
-| AI — Embeddings | [![Mistral](https://img.shields.io/badge/Mistral-mistral--embed-FF7000?logo=mistral&logoColor=white)](https://mistral.ai) |
+| AI — Chat | [![Mistral](https://img.shields.io/badge/Mistral-open--mistral--nemo-FF7000?logo=mistralai&logoColor=white)](https://mistral.ai) |
+| AI — Embeddings | [![Mistral](https://img.shields.io/badge/Mistral-mistral--embed-FF7000?logo=mistralai&logoColor=white)](https://mistral.ai) |
 | Framework | [![Next.js](https://img.shields.io/badge/Next.js-14_App_Router-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org) |
 | Auth | [![NextAuth](https://img.shields.io/badge/NextAuth.js-Credentials-purple)](https://next-auth.js.org) |
 | Database | [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-pgvector-4169E1?logo=postgresql&logoColor=white)](https://github.com/pgvector/pgvector) |
