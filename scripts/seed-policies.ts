@@ -13,6 +13,24 @@ import { Pool } from "pg";
 import { getPoliciesForCountry, SUPPORTED_COUNTRIES } from "../lib/policies";
 import { generateEmbedding, formatEmbedding } from "../lib/rag/embeddings";
 
+if (!process.env.MISTRAL_API_KEY) {
+  console.error(
+    "❌ MISTRAL_API_KEY is not set. Cannot generate embeddings without it.\n" +
+    "   Set it in .env.local or pass it inline:\n" +
+    "   MISTRAL_API_KEY=<key> DATABASE_URL=<url> npx ts-node --project tsconfig.json scripts/seed-policies.ts"
+  );
+  process.exit(1);
+}
+
+if (!process.env.DATABASE_URL) {
+  console.error(
+    "❌ DATABASE_URL is not set. Cannot seed the database without it.\n" +
+    "   Set it in .env.local or pass it inline:\n" +
+    "   MISTRAL_API_KEY=<key> DATABASE_URL=<url> npx ts-node --project tsconfig.json scripts/seed-policies.ts"
+  );
+  process.exit(1);
+}
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : false,

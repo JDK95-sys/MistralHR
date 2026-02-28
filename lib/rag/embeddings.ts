@@ -1,6 +1,13 @@
 import { Mistral } from "@mistralai/mistralai";
 
-const mistral = new Mistral({ apiKey: process.env.MISTRAL_API_KEY! });
+const apiKey = process.env.MISTRAL_API_KEY;
+if (!apiKey) {
+  throw new Error(
+    "[MistralHR] MISTRAL_API_KEY is not set. " +
+    "Set it in .env.local for local development or in your hosting platform's environment variables."
+  );
+}
+const mistral = new Mistral({ apiKey });
 
 export async function generateEmbedding(text: string): Promise<number[]> {
   const response = await mistral.embeddings.create({
