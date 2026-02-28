@@ -140,7 +140,7 @@ export default function PoliciesPage() {
                                         </p>
                                         <div className="flex items-center gap-3 mt-1.5 text-xs" style={{ color: "var(--text-muted)" }}>
                                             <span>🌍 {policy.countries.join(", ")}</span>
-                                            <span>· Updated {timeAgo(policy.updated)}</span>
+                                            <span>· Updated {timeAgo(policy.updatedAt)}</span>
                                         </div>
                                     </div>
 

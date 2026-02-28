@@ -85,7 +85,7 @@ export default function PolicyDetailPage() {
                                         {policy.topic}
                                     </span>
                                     <span>🌍 {policy.countries.join(", ")}</span>
-                                    <span>· Updated {timeAgo(policy.updated)}</span>
+                                    <span>· Updated {timeAgo(policy.updatedAt)}</span>
                                 </div>
                             </div>
                         </div>

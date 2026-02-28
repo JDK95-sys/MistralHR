@@ -20,7 +20,7 @@ export default async function ProtectedLayout({
   }
 
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: "var(--bg-deep)", position: "relative" }}>
+    <div className="flex h-screen overflow-hidden" style={{ background: "var(--sidebar-bg)", position: "relative" }}>
       {/* Animated background mesh */}
       <div className="app-bg" />
       <div className="bg-orb-2" />
