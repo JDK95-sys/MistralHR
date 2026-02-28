@@ -4,7 +4,7 @@
 
 /* ═══════════════════════════════════════════════════════
    MISTRALHR — Le Chat design system
-   Full dark mode UI
+   Unified dark theme: dark sidebar + dark content
    Accent: #FF8205 (Mistral orange) — used with precision
    ═══════════════════════════════════════════════════════ */
 
@@ -22,22 +22,22 @@
   --sidebar-text-active: #FFFFFF;
 
   /* ── Content area (dark) ──────────────────────────── */
-  --bg:               #1A1A1C;
-  --bg-deep:          #141416;
-  --card:             #2A2A2E;
-  --border:           #3A3A3E;
-  --border-strong:    #4A4A4E;
+  --bg:               #1C1C1E;
+  --bg-deep:          #161618;
+  --card:             #2C2C2E;
+  --border:           rgba(255, 255, 255, 0.08);
+  --border-strong:    rgba(255, 255, 255, 0.15);
 
   /* ── Text ─────────────────────────────────────────── */
-  --text-primary:     #F0F0F0;
-  --text-secondary:   #A0A0A5;
-  --text-muted:       #6A6A70;
+  --text-primary:     #F5F5F5;
+  --text-secondary:   #A0A0A0;
+  --text-muted:       #6A6A6E;
 
   /* ── Shadows ────────────────────────────────────── */
   --shadow-sm:        0 1px 3px rgba(0,0,0,0.20), 0 1px 2px rgba(0,0,0,0.14);
-  --shadow-md:        0 4px 12px rgba(0,0,0,0.24), 0 2px 4px rgba(0,0,0,0.14);
+  --shadow-md:        0 4px 12px rgba(0,0,0,0.25), 0 2px 4px rgba(0,0,0,0.14);
   --shadow-lg:        0 12px 32px rgba(0,0,0,0.30), 0 4px 8px rgba(0,0,0,0.14);
-  --shadow-xl:        0 24px 60px rgba(0,0,0,0.36);
+  --shadow-xl:        0 24px 60px rgba(0,0,0,0.35);
   --mistral-shadow:   0 4px 14px rgba(255, 112, 0, 0.22);
 
   /* ── Legacy aliases (keep so existing JSX doesn't break) */
@@ -47,24 +47,24 @@
   --mint-10:          rgba(255, 130, 5, 0.06);
   --sage:             #FF8205;
   --glass-border-glow: rgba(255, 130, 5, 0.20);
-  --text-muted:       #6A6A70;
-  --surface-elevated: #2A2A2E;
-  --surface-solid:    #2A2A2E;
-  --glass:            #2A2A2E;
+  --surface-elevated: #2C2C2E;
+  --surface-solid:    #2C2C2E;
+  --glass:            #2C2C2E;
   --glass-light:      rgba(255,255,255,0.03);
-  --glass-border:     #3A3A3E;
-  --glass-strong:     #333338;
-  --bg-card:          #2A2A2E;
-  --bg-card-hover:    #333338;
+  --glass-border:     rgba(255, 255, 255, 0.10);
+  --glass-strong:     #3A3A3C;
+  --bg-card:          #2C2C2E;
+  --bg-card-hover:    #3A3A3C;
   --shadow-glow-mint: 0 4px 14px rgba(255, 130, 5, 0.18);
   --shadow-glow-grape:#00000010;
-  --pepper:           #1A1A1C;
+  --pepper:           #F5F5F5;
   --rhubarb:          #EF4444;
 
   /* ── Gradients ────────────────────────────────────── */
   --grad-mint-sage:   linear-gradient(135deg, #FF8205, #FFAF00);
   --grad-grape-rhubarb: linear-gradient(135deg, #FF8205, #FFAF00);
 
+  /* ── Shadows (cont.) ────────────────────────────────── */
   --shadow-neon:      var(--orange-shadow);
 
   /* ── Radius ───────────────────────────────────────── */
@@ -113,7 +113,7 @@ html, body {
   background: var(--border-strong);
   border-radius: 4px;
 }
-::-webkit-scrollbar-thumb:hover { background: #5A5A5E; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
 
 :focus-visible {
   outline: 2px solid var(--orange);
@@ -126,7 +126,7 @@ html, body {
 .bg-orb-2 { display: none; }
 
 /* ═══════════════════════════════════════════════════════
-   CARD — Clean white card, no glass
+   CARD — Dark elevated card
    ═══════════════════════════════════════════════════════ */
 .glass-card {
   background: var(--card);
@@ -447,7 +447,7 @@ html, body {
 }
 
 /* ═══════════════════════════════════════════════════════
-   TOPBAR — Clean white bar on content side
+   TOPBAR — Dark bar on content side
    ═══════════════════════════════════════════════════════ */
 .topbar {
   display: flex;
@@ -607,8 +607,8 @@ html, body {
   gap: 10px;
   padding: 13px 15px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  background: var(--card);
+  border: 1px solid rgba(255, 130, 5, 0.20);
+  background: rgba(255, 130, 5, 0.08);
   cursor: pointer;
   text-align: left;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
