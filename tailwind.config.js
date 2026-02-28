@@ -22,15 +22,15 @@ module.exports = {
           "text-active": "#FFFFFF",
         },
         content: {
-          bg: "#FFFAEB",
-          card: "#FFFFFF",
-          border: "#E9E2CB",
-          "border-strong": "#D5CCAC",
+          bg: "#1A1A1C",
+          card: "#2A2A2E",
+          border: "#3A3A3E",
+          "border-strong": "#4A4A4E",
         },
         text: {
-          primary: "#1A1A1A",
-          secondary: "#6B6B6B",
-          muted: "#9A9A9A",
+          primary: "#F0F0F0",
+          secondary: "#A0A0A5",
+          muted: "#6A6A70",
         },
       },
       fontFamily: {
