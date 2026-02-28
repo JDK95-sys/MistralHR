@@ -223,3 +223,37 @@ npx ts-node --project tsconfig.json scripts/seed-policies.ts
 | `DATABASE_URL` | PostgreSQL connection string |
 | `MISTRAL_API_KEY` | Mistral API key from console.mistral.ai |
 | `AUTH_PASSWORD` | Shared password for demo accounts (default: `hackathon2025`) |
+
+---
+
+## Deploying to Vercel
+
+### Setting Up Environment Variables in Vercel
+
+For the AI chat to work properly in production, you need to configure environment variables in Vercel:
+
+1. Go to your [Vercel Dashboard](https://vercel.com/dashboard)
+2. Select your MistralHR project
+3. Go to **Settings** → **Environment Variables**
+4. Add the following variables:
+
+| Variable | Value | Environment |
+|---|---|---|
+| `NEXTAUTH_SECRET` | Run `openssl rand -base64 32` and paste the output | Production, Preview, Development |
+| `NEXTAUTH_URL` | Your Vercel deployment URL (e.g., `https://mistralhr.vercel.app`) | Production |
+| `MISTRAL_API_KEY` | Your Mistral API key from [console.mistral.ai](https://console.mistral.ai/) | Production, Preview |
+| `DATABASE_URL` | Your PostgreSQL connection string (with pgvector) | Production |
+| `AUTH_PASSWORD` | Password for demo accounts | Production |
+
+### Important Notes
+
+- **Without `MISTRAL_API_KEY`**: The app runs in demo mode with pre-written responses. These responses are country-aware but limited in scope.
+- **With `MISTRAL_API_KEY` but without `DATABASE_URL`**: The app uses Mistral AI for chat but without RAG (no policy document retrieval).
+- **With both `MISTRAL_API_KEY` and `DATABASE_URL`**: Full RAG-powered chat with policy retrieval from your seeded documents.
+
+### Getting a Mistral API Key
+
+1. Create an account at [console.mistral.ai](https://console.mistral.ai/)
+2. Navigate to **API Keys**
+3. Create a new API key
+4. Copy and paste into Vercel's environment variables

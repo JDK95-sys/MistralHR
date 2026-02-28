@@ -11,7 +11,8 @@ export function buildSystemPrompt(
 ): string {
   const user = session.user;
   const country = user.country ?? "Unknown";
-  const language = user.preferredLanguage ?? "en";
+  // Derive language from country (no preferredLanguage field in session)
+  const language = country === "France" ? "fr" : country === "Belgium" ? "fr/nl" : "en";
   const today = new Date().toLocaleDateString("en-GB", {
     day: "numeric",
     month: "long",

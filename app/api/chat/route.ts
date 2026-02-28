@@ -12,6 +12,7 @@ interface ChatRequest {
 
 // ─── Canned demo responses ─────────────────────────────────────────
 // Used when both DATABASE_URL and MISTRAL_API_KEY are missing.
+// Country-specific responses are keyed with country suffix (e.g., "mobility:France")
 const DEMO_RESPONSES: Record<string, string> = {
   "leave": `**Annual Leave Entitlement** 🏖️
 
@@ -118,9 +119,40 @@ The company provides comprehensive healthcare coverage:
 
 📄 Source: Healthcare & Medical Insurance Policy · Effective Jan 2025`,
 
-  "mobility": `**Mobility Budget** 🚲
+  // ─── France-specific mobility/transportation response ───────────
+  "mobility:France": `**Transport & Mobility Benefits — France** 🚆
 
-Available to employees in **Belgium** under the federal mobility budget scheme:
+As a French employee, you benefit from several statutory and company mobility advantages:
+
+**Transport en commun (Public Transit):**
+- **50% reimbursement** of your Navigo/transport subscription (mandatory under Code du Travail L3261-2)
+- Submit your monthly pass via SAP Concur or Workday for automatic payroll reimbursement
+
+**Forfait Mobilités Durables (Sustainable Mobility Allowance):**
+- Up to **€700/year tax-free** for eco-friendly commuting
+- Covers: bicycle, electric bike, carpooling, scooter sharing
+- Can be combined with public transit reimbursement (up to €900/year total)
+
+**Vélo (Company Bike Program):**
+- Bike leasing available through our provider (€30-80/month deducted pre-tax)
+- Maintenance and insurance included
+- Option to purchase at end of lease
+
+**Remote Work Allowance:**
+- Home office equipment allowance as per our télétravail agreement (ANI 2020)
+- Indemnité télétravail for structural remote workers
+
+**How to apply:**
+1. Transport: Upload your Navigo pass in SAP Concur monthly
+2. Forfait Mobilités: Declare your eco-mobility use annually via Workday → Benefits
+3. Bike leasing: Contact HR-France@mistralhr.demo
+
+📄 Source: Primes & Avantages — France · Code du Travail L3261-2, L3261-3 · Effective Jan 2024`,
+
+  // ─── Belgium-specific mobility/transportation response ──────────
+  "mobility:Belgium": `**Mobility Budget — Belgium** 🚲
+
+As a Belgian employee, you can benefit from the federal mobility budget scheme:
 
 **How it works:**
 You trade your company car (or right to one) for a flexible budget that can be spent on:
@@ -138,9 +170,38 @@ You trade your company car (or right to one) for a flexible budget that can be s
 - NMBS/SNCB annual rail pass
 - Combination of e-bike + public transport
 
+**Train Reimbursement:**
+- 100% reimbursement of SNCB 2nd class season tickets
+- Or bike allowance: €0.27/km (tax-free up to 40km round trip)
+
+**Home Office Allowance:**
+- Up to €151.70/month for structural teleworkers (>5 days/month at home)
+
 Apply via Workday → Benefits → Mobility Budget. Changes take effect the month after approval.
 
-📄 Source: Flexible Benefits & Mobility Budget Policy · Effective Jan 2025`,
+📄 Source: Primes & Avantages — Belgique · Loi mobilité budget fédéral · Effective Jan 2025`,
+
+  // ─── Generic mobility response (fallback for other countries) ───
+  "mobility": `**Mobility & Transport Benefits** 🚲
+
+Transport benefits vary by country. Here's an overview:
+
+**France:**
+- 50% public transport reimbursement (Navigo, TER)
+- Forfait Mobilités Durables: up to €700/year for eco-mobility (bike, carpool)
+
+**Belgium:**
+- Mobility Budget: flexible scheme to trade company car for alternatives
+- 100% train reimbursement (SNCB 2nd class)
+- Bike allowance: €0.27/km
+
+**Germany:**
+- Job ticket subsidies
+- Deutschlandticket reimbursement where applicable
+
+For detailed information specific to your country, please check the policy library or contact your local HRBP.
+
+📄 Source: Mobility & Transport Policies · Effective Jan 2025`,
 
   "default": `I'd be happy to help with your HR question! As an AI HR Assistant, I can provide information about:
 
@@ -157,7 +218,7 @@ Try asking a specific question like *"What is my annual leave entitlement?"* or 
 *Note: This is a demo environment. For full AI-powered answers, connect the MISTRAL_API_KEY in your .env.local file.*`,
 };
 
-function matchDemoResponse(message: string): string {
+function matchDemoResponse(message: string, country: string = "GLOBAL"): string {
   const lower = message.toLowerCase();
 
   if (lower.includes("leave") && (lower.includes("annual") || lower.includes("holiday") || lower.includes("vacation") || lower.includes("entitlement") || lower.includes("days off"))) {
@@ -175,8 +236,10 @@ function matchDemoResponse(message: string): string {
   if (lower.includes("health") || lower.includes("medical") || lower.includes("insurance") || lower.includes("doctor") || lower.includes("hospital") || lower.includes("dental")) {
     return DEMO_RESPONSES["healthcare"];
   }
-  if (lower.includes("mobility") || lower.includes("bike") || lower.includes("transport") || lower.includes("commut") || lower.includes("car")) {
-    return DEMO_RESPONSES["mobility"];
+  if (lower.includes("mobility") || lower.includes("bike") || lower.includes("transport") || lower.includes("commut") || lower.includes("car") || lower.includes("train") || lower.includes("navigo") || lower.includes("vélo")) {
+    // Return country-specific mobility response if available, otherwise generic
+    const countryKey = `mobility:${country}`;
+    return DEMO_RESPONSES[countryKey] ?? DEMO_RESPONSES["mobility"];
   }
 
   return DEMO_RESPONSES["default"];
@@ -230,12 +293,12 @@ async function streamText(text: string, send: (data: object) => void, delayMs = 
 }
 
 // ─── Send demo response (used as fallback) ─────────────────────────
-async function sendDemoResponse(message: string, send: (data: object) => void) {
+async function sendDemoResponse(message: string, send: (data: object) => void, country: string = "GLOBAL") {
   send({ type: "status", message: "Searching policy documents…" });
   await new Promise((resolve) => setTimeout(resolve, 400));
   send({ type: "status", message: "Generating response…" });
   await new Promise((resolve) => setTimeout(resolve, 300));
-  const response = matchDemoResponse(message);
+  const response = matchDemoResponse(message, country);
   await streamText(response, send);
   send({ type: "done", sessionId: null });
 }
@@ -272,12 +335,12 @@ export async function POST(req: NextRequest) {
           { db },
           { searchDocuments, buildContext, buildCitations },
           { buildSystemPrompt },
-          Mistral,
+          { Mistral },
         ] = await Promise.all([
           import("@/lib/db"),
           import("@/lib/rag/vectorSearch"),
           import("@/lib/rag/systemPrompt"),
-          import("@mistralai/mistralai").then((m) => m.default),
+          import("@mistralai/mistralai"),
         ]);
 
         const mistral = new Mistral({ apiKey: process.env.MISTRAL_API_KEY! });
@@ -345,7 +408,7 @@ export async function POST(req: NextRequest) {
         send({ type: "done", sessionId: activeSessionId });
       } catch (err) {
         console.warn("[Chat API] Full-stack mode failed, falling back to demo:", err);
-        await sendDemoResponse(message, send);
+        await sendDemoResponse(message, send, country);
       }
     });
   }
@@ -354,9 +417,9 @@ export async function POST(req: NextRequest) {
   if (hasMistralKey && !hasDb) {
     return createSSEStream(async (send) => {
       try {
-        const [{ buildSystemPrompt }, Mistral] = await Promise.all([
+        const [{ buildSystemPrompt }, { Mistral }] = await Promise.all([
           import("@/lib/rag/systemPrompt"),
-          import("@mistralai/mistralai").then((m) => m.default),
+          import("@mistralai/mistralai"),
         ]);
 
         const mistral = new Mistral({ apiKey: process.env.MISTRAL_API_KEY! });
@@ -387,13 +450,13 @@ export async function POST(req: NextRequest) {
         console.error("[Chat API] Mistral Mode 2 failed:", errMsg, err);
         // Send warn to client so user knows what happened
         send({ type: "status", message: `Mistral API error: ${errMsg.slice(0, 100)} — using demo mode` });
-        await sendDemoResponse(message, send);
+        await sendDemoResponse(message, send, country);
       }
     });
   }
 
   // ─── Mode 3: Demo mode (no API key, no DB) — canned responses ─
   return createSSEStream(async (send) => {
-    await sendDemoResponse(message, send);
+    await sendDemoResponse(message, send, country);
   });
 }

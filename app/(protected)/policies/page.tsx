@@ -22,7 +22,7 @@ export default function PoliciesPage() {
         const matchesSearch =
             !search ||
             p.title.toLowerCase().includes(search.toLowerCase()) ||
-            p.desc.toLowerCase().includes(search.toLowerCase());
+            p.description.toLowerCase().includes(search.toLowerCase());
         return matchesTopic && matchesSearch;
     });
 
@@ -136,7 +136,7 @@ export default function PoliciesPage() {
                                             )}
                                         </div>
                                         <p className="text-xs leading-relaxed line-clamp-2" style={{ color: "var(--text-muted)" }}>
-                                            {policy.desc}
+                                            {policy.description}
                                         </p>
                                         <div className="flex items-center gap-3 mt-1.5 text-xs" style={{ color: "var(--text-muted)" }}>
                                             <span>🌍 {policy.countries.join(", ")}</span>

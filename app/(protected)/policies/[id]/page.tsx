@@ -100,7 +100,7 @@ export default function PolicyDetailPage() {
                         >
                             <h3 className="text-sm font-bold mb-2">Policy Summary</h3>
                             <p className="text-sm leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-                                {policy.desc}
+                                {policy.description}
                             </p>
                         </div>
 
