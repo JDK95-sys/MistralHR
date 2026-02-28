@@ -1,5 +1,7 @@
 "use client";
 
+import "./globals.css";
+
 export default function GlobalError({
   error,
   reset,
@@ -12,9 +14,9 @@ export default function GlobalError({
       <body
         style={{
           margin: 0,
-          fontFamily: "'DM Sans', system-ui, sans-serif",
-          background: "#FAFAF9",
-          color: "#1A1A1A",
+          fontFamily: "var(--font-sans)",
+          background: "var(--bg)",
+          color: "var(--text-primary)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -27,7 +29,7 @@ export default function GlobalError({
               width: 56,
               height: 56,
               borderRadius: 14,
-              background: "#FF7000",
+              background: "var(--orange)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -41,11 +43,11 @@ export default function GlobalError({
           <h1 style={{ fontSize: 22, fontWeight: 700, marginBottom: 8, letterSpacing: "-0.02em" }}>
             Something went wrong
           </h1>
-          <p style={{ fontSize: 14, color: "#6B6B6B", marginBottom: 4, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 14, color: "var(--text-secondary)", marginBottom: 4, lineHeight: 1.6 }}>
             An unexpected error occurred. Our team has been notified.
           </p>
           {error.digest && (
-            <p style={{ fontSize: 12, color: "#9A9A9A", marginBottom: 20, fontFamily: "'DM Mono', monospace" }}>
+            <p style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 20, fontFamily: "var(--font-mono)" }}>
               Error ID: {error.digest}
             </p>
           )}
@@ -55,7 +57,7 @@ export default function GlobalError({
               padding: "10px 24px",
               borderRadius: 9999,
               border: "none",
-              background: "#FF7000",
+              background: "var(--orange)",
               color: "#fff",
               fontSize: 14,
               fontWeight: 600,
