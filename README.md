@@ -20,6 +20,19 @@ The live demo has a **temporary Mistral API key already configured** for the dur
 
 ---
 
+## 📸 Screenshots
+
+### HR Assistant — AI Chat
+![HR Assistant Chat](https://github.com/JDK95-sys/MistralHR/blob/main/docs/screenshots/chat.png?raw=true)
+
+### Policy Library — Browse & Filter Policies
+![Policy Library](https://github.com/JDK95-sys/MistralHR/blob/main/docs/screenshots/policies.png?raw=true)
+
+### Policy Detail — Legal References & Full Content
+![Policy Detail](https://github.com/JDK95-sys/MistralHR/blob/main/docs/screenshots/policy-detail.png?raw=true)
+
+---
+
 ## 🌟 Features at a Glance
 
 | Feature | Details |
@@ -251,33 +264,6 @@ npm run dev
 |---|---|---|---|
 | alice.martin@mistralhr.demo | `hackathon2025` | 🇫🇷 France | Employee |
 | jan.peeters@mistralhr.demo | `hackathon2025` | 🇧🇪 Belgium | HR Business Partner |
-
----
-
-## Adding Screenshots
-
-1. Run the app with `npm run dev`
-2. Take screenshots of the following pages:
-   - **Login** — `http://localhost:3000/login`
-   - **Chat** — `http://localhost:3000/chat`
-   - **Policies** — `http://localhost:3000/policies`
-   - **Tutorial** — `http://localhost:3000/tutorial`
-3. Save them to the `docs/screenshots/` directory:
-
-```bash
-mkdir -p docs/screenshots
-# Copy your screenshots here:
-#   docs/screenshots/login.png
-#   docs/screenshots/chat.png
-#   docs/screenshots/policies.png
-#   docs/screenshots/tutorial.png
-
-git add docs/screenshots/
-git commit -m "docs: add app screenshots"
-git push
-```
-
-The README screenshot references will automatically display once the images are committed.
 
 ---
 
