@@ -3,6 +3,17 @@ import { authOptions } from "@/lib/auth";
 import { isDbAvailable } from "@/lib/db";
 import { NextRequest } from "next/server";
 
+/**
+ * AUDIT CHECKLIST — Chat API Route (Demo Mode)
+ * ✅ Country source: session.user.country from signed JWT — never from request body
+ * ✅ Response sets: DEMO_RESPONSES_FR (France) and DEMO_RESPONSES_BE (Belgium) — clearly named
+ * ✅ matchDemoResponse: uses `responses` variable (country-scoped) for ALL keyword branches
+ * ✅ No fallthrough to wrong country: every return statement uses `responses[key]`, not a hardcoded set
+ * ✅ Belgian completeness: DEMO_RESPONSES_BE has entries for all keys (leave, parental, expense, remote, healthcare, mobility, default)
+ * ✅ No cross-country data in any individual response string
+ * ✅ Mobility: simplified to responses["mobility"] — each country set has its own mobility entry
+ */
+
 // ─── Request schema ────────────────────────────────────────────────
 interface ChatRequest {
   message: string;
@@ -12,8 +23,7 @@ interface ChatRequest {
 
 // ─── Canned demo responses ─────────────────────────────────────────
 // Used when both DATABASE_URL and MISTRAL_API_KEY are missing.
-// Country-specific responses are keyed with country suffix (e.g., "mobility:France")
-const DEMO_RESPONSES: Record<string, string> = {
+const DEMO_RESPONSES_FR: Record<string, string> = {
   "leave": `**Annual Leave Entitlement** 🏖️
 
 Based on the Congés Payés Policy (fr-annual-leave), your entitlement:
@@ -336,27 +346,25 @@ const matchesKeywords = (lower: string, keywords: string[]) =>
 
 function matchDemoResponse(message: string, country: string = "Unknown"): string {
   const lower = message.toLowerCase();
-  const responses = country === "Belgium" ? DEMO_RESPONSES_BE : DEMO_RESPONSES;
+  const responses = country === "Belgium" ? DEMO_RESPONSES_BE : DEMO_RESPONSES_FR;
 
   if (lower.includes("leave") && matchesKeywords(lower, DEMO_KEYWORDS.leave)) {
-    return DEMO_RESPONSES["leave"];
+    return responses["leave"];
   }
   if (matchesKeywords(lower, DEMO_KEYWORDS.parental)) {
-    return DEMO_RESPONSES["parental"];
+    return responses["parental"];
   }
   if (matchesKeywords(lower, DEMO_KEYWORDS.expense)) {
-    return DEMO_RESPONSES["expense"];
+    return responses["expense"];
   }
   if (matchesKeywords(lower, DEMO_KEYWORDS.remote)) {
-    return DEMO_RESPONSES["remote"];
+    return responses["remote"];
   }
   if (matchesKeywords(lower, DEMO_KEYWORDS.healthcare)) {
-    return DEMO_RESPONSES["healthcare"];
+    return responses["healthcare"];
   }
   if (matchesKeywords(lower, DEMO_KEYWORDS.mobility)) {
-    // Return country-specific mobility response if available, otherwise generic
-    const countryKey = `mobility:${country}`;
-    return DEMO_RESPONSES[countryKey] ?? DEMO_RESPONSES["mobility"];
+    return responses["mobility"];
   }
 
   return responses["default"];
@@ -450,6 +458,9 @@ export async function POST(req: NextRequest) {
 
   const hasMistralKey = !!process.env.MISTRAL_API_KEY;
   const hasDb = isDbAvailable();
+  // SECURITY: Country is derived from the signed JWT session.
+  // Never read country from the request body, query params, or headers.
+  // The ChatRequest schema must never include a country field — country is always session-bound.
   const country = session.user.country ?? "GLOBAL";
 
   // ─── Mode 1: Full stack (Mistral + DB) ───────────────────────
