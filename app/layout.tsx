@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     "MistralHR — AI-powered HR platform by Mistral AI. Policies, benefits and HR assistance across 20+ countries.",
   icons: {
     icon: "/favicon.svg",
+    shortcut: "/favicon.ico",
   },
   robots: {
     index: false, // Internal tool — never index
@@ -27,7 +28,12 @@ export default async function RootLayout({
 }) {
   // Fetch session server-side and pass to provider
   // This avoids the loading flash on initial render
-  const session = await getServerSession(authOptions);
+  let session = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch (error) {
+    console.error("[RootLayout] Failed to fetch server session:", error);
+  }
 
   return (
     <html lang="en" suppressHydrationWarning>
