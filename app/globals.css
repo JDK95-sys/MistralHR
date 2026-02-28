@@ -89,6 +89,36 @@
   --blur-light:       none;
 }
 
+/* ─── Dark mode overrides ─────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:               #1A1A1C;
+    --bg-deep:          #141416;
+    --card:             #232326;
+    --border:           #3A3A3D;
+    --border-strong:    #4A4A4E;
+
+    --text-primary:     #F0F0F0;
+    --text-secondary:   #B0B0B4;
+    --text-muted:       #78787C;
+
+    --shadow-sm:        0 1px 3px rgba(0,0,0,0.24), 0 1px 2px rgba(0,0,0,0.16);
+    --shadow-md:        0 4px 12px rgba(0,0,0,0.28), 0 2px 4px rgba(0,0,0,0.16);
+    --shadow-lg:        0 12px 32px rgba(0,0,0,0.32), 0 4px 8px rgba(0,0,0,0.16);
+    --shadow-xl:        0 24px 60px rgba(0,0,0,0.40);
+
+    --surface-elevated: #232326;
+    --surface-solid:    #232326;
+    --glass:            #232326;
+    --glass-light:      rgba(255,255,255,0.04);
+    --glass-border:     #3A3A3D;
+    --glass-strong:     #2A2A2E;
+    --bg-card:          #232326;
+    --bg-card-hover:    #2A2A2E;
+    --pepper:           #232326;
+  }
+}
+
 /* ─── Base ────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -483,16 +513,55 @@ html, body {
   border-radius: var(--radius-full);
   font-size: 12px;
   font-weight: 500;
-  background: var(--bg);
+  background: var(--bg-deep);
   border: 1px solid var(--border);
   color: var(--text-secondary);
   cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
 }
 
 .topbar-pill:hover {
   border-color: var(--border-strong);
   color: var(--text-primary);
+  background: var(--bg);
+}
+
+.topbar-pill:focus-visible {
+  outline: 2px solid var(--mistral-orange);
+  outline-offset: 2px;
+}
+
+.topbar-pill:active {
+  transform: scale(0.97);
+}
+
+.topbar-pill--static {
+  cursor: default;
+}
+
+.topbar-pill--static:hover {
+  border-color: var(--border);
+  color: var(--text-secondary);
+  background: var(--bg-deep);
+}
+
+.topbar-pill--static:active {
+  transform: none;
+}
+
+.topbar-pill:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.topbar-pill:disabled:hover {
+  border-color: var(--border);
+  color: var(--text-secondary);
+  background: var(--bg-deep);
+}
+
+.topbar-pill:disabled:active {
+  transform: none;
 }
 
 /* ═══════════════════════════════════════════════════════
