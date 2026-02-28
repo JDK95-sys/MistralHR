@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { Bell } from "lucide-react";
 
 // ─── Page title map ────────────────────────────────────────────────
@@ -35,6 +36,12 @@ export default function Topbar({ children }: TopbarProps) {
   const pathname = usePathname();
   const title = getPageTitle(pathname);
   const country = session?.user?.country;
+  const [notifToast, setNotifToast] = useState(false);
+
+  const handleNotifClick = () => {
+    setNotifToast(true);
+    setTimeout(() => setNotifToast(false), 2500);
+  };
 
   return (
     <header className="topbar">
