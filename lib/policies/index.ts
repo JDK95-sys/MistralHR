@@ -39,13 +39,20 @@ export function isSupportedCountry(country: string): country is SupportedCountry
   return country in COUNTRY_POLICIES;
 }
 
+// ──────────────────────────────────────────────────────────────────
+// NOTE: getAllPolicies() was intentionally removed to enforce country
+// isolation. Any future admin feature requiring cross-country access
+// must implement a dedicated admin API route with explicit role-based
+// authorization checks — never a blanket "return everything" export.
+// ──────────────────────────────────────────────────────────────────
+
 /**
- * Get all policies (for admin/global access only).
- * Note: This should only be used for administrative purposes, not for user-facing features.
+ * AUDIT CHECKLIST — Policy Index
+ * ✅ getAllPolicies() removed — no function returns cross-country data
+ * ✅ Exports: only getPoliciesForCountry, getPolicyByIdForCountry, isSupportedCountry
+ * ✅ Grep verified: no file in the codebase imports getAllPolicies
+ * ✅ Type exports preserved: Policy, PolicyTopic, SupportedCountry, SUPPORTED_COUNTRIES
  */
-export function getAllPolicies(): Policy[] {
-  return [...francePolicies, ...belgiumPolicies];
-}
 
 // Re-export types
 export type { Policy, PolicyTopic, SupportedCountry } from "./types";

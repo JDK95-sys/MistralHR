@@ -10,7 +10,7 @@
  */
 
 import { Pool } from "pg";
-import { getAllPolicies } from "../lib/policies";
+import { getPoliciesForCountry, SUPPORTED_COUNTRIES } from "../lib/policies";
 import { generateEmbedding, formatEmbedding } from "../lib/rag/embeddings";
 
 const pool = new Pool({
@@ -20,7 +20,7 @@ const pool = new Pool({
 
 async function seed() {
   const client = await pool.connect();
-  const policies = getAllPolicies();
+  const policies = SUPPORTED_COUNTRIES.flatMap(c => getPoliciesForCountry(c));
   
   try {
     await client.query("BEGIN");
