@@ -12,6 +12,17 @@ declare module "next-auth" {
       department?: string | null;
       jobTitle?: string | null;
       portalRole?: string | null;
+      preferredLanguage?: string | null;
     };
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id?: string;
+    country?: string;
+    department?: string;
+    jobTitle?: string;
+    portalRole?: string;
   }
 }
