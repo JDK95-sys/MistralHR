@@ -6,6 +6,20 @@ MistralHR is an internal HR portal for employees in **France** and **Belgium**, 
 
 ---
 
+## 🎯 Hackathon Demo
+
+> **No setup required for hackathon judges and testers.**
+
+The live demo has a **temporary Mistral API key already configured** for the duration of the hackathon. To try it:
+
+1. Open the demo URL
+2. Log in with one of the [demo accounts](#demo-accounts) below
+3. Start chatting — the AI answers HR questions using `open-mistral-nemo` and performs semantic search across 18 FR/BE statutory policies with `mistral-embed`
+
+> ⚠️ The temporary API key will expire after the hackathon period. See the [Fork & Make It Your Own](#-fork--make-it-your-own) section to set up your own key.
+
+---
+
 ## 🌟 Features at a Glance
 
 | Feature | Details |
@@ -24,12 +38,9 @@ MistralHR is an internal HR portal for employees in **France** and **Belgium**, 
 - 🧾 Tax (IR/IPP barèmes, ONSS/cotisations)
 - 🏥 Health insurance (mutuelle/hospitalisation)
 - 💰 Premiums & benefits (meal vouchers, transport, profit sharing, pension, shares, home office)
-| 🏢 Work site terms (telework agreements, working time)
-| 🚀 Onboarding & offboarding (IT setup, PC/software policy, exit process)
-| ⚖️ Pay transparency (EU Dir. 2023/970)
-- Work site terms (telework agreements, working time)
-- Onboarding & offboarding (IT setup, PC/software policy, exit process)
-- Pay transparency (EU Dir. 2023/970)
+- 🏢 Work site terms (telework agreements, working time)
+- 🚀 Onboarding & offboarding (IT setup, PC/software policy, exit process)
+- ⚖️ Pay transparency (EU Dir. 2023/970)
 
 ---
 
@@ -47,6 +58,80 @@ MistralHR is an internal HR portal for employees in **France** and **Belgium**, 
 | Icons | Lucide React |
 | Doc Parsing | pdf-parse, mammoth, xlsx |
 | Markdown | react-markdown + remark-gfm |
+
+---
+
+## 🍴 Fork & Make It Your Own
+
+Want to adapt MistralHR for your own organization? Here's how:
+
+### 1. Fork & Clone
+
+```bash
+# Fork this repo on GitHub, then:
+git clone https://github.com/<your-username>/MistralHR.git
+cd MistralHR
+npm install
+```
+
+### 2. Get Your Own Mistral API Key
+
+Visit [console.mistral.ai](https://console.mistral.ai) and create an API key. You'll need it for both:
+- **Chat** — `open-mistral-nemo`
+- **Embeddings** — `mistral-embed`
+
+### 3. Set Up Environment Variables
+
+Copy the example file and fill in your values:
+
+```bash
+cp .env.example .env.local
+```
+
+Add your key to `.env.local` for local development, or set it in your hosting platform's environment variable settings (Vercel dashboard, Railway, etc.):
+
+```env
+MISTRAL_API_KEY=<your Mistral API key>
+DATABASE_URL=postgresql://user:password@host:5432/mistralhr
+```
+
+> ⚠️ **Without `MISTRAL_API_KEY`**, the chat falls back to static demo responses. **Without `DATABASE_URL`**, there is no semantic search — the AI answers without policy context.
+
+### 4. Provision a PostgreSQL Database with pgvector
+
+Free-tier options:
+- [Neon](https://neon.tech) — serverless PostgreSQL, pgvector built-in
+- [Supabase](https://supabase.com) — managed PostgreSQL with pgvector support
+- [Railway](https://railway.app) — simple hosted PostgreSQL
+
+See the [pgvector install guide](https://github.com/pgvector/pgvector) if self-hosting.
+
+### 5. Run Schema + Migrations
+
+```bash
+psql $DATABASE_URL -f db/schema.sql
+psql $DATABASE_URL -f db/migrations/001-mistral-embeddings.sql
+```
+
+### 6. Customize Policies for Your Organization
+
+The 18 FR/BE statutory policies live in `lib/policies-data.ts`. Edit or replace them with your own organizational policies. After modifying, re-run the seed script to generate new embeddings.
+
+### 7. Seed the Database
+
+Make sure `MISTRAL_API_KEY` is set in `.env.local` before running the seed script (it is read at module load time):
+
+```bash
+npx ts-node --project tsconfig.json scripts/seed-policies.ts
+```
+
+### 8. Deploy
+
+See the [Deployment](#deployment) section below. After your first deploy, remember to seed the production database from your local machine:
+
+```bash
+MISTRAL_API_KEY=<key> DATABASE_URL=<production-db-url> npx ts-node --project tsconfig.json scripts/seed-policies.ts
+```
 
 ---
 
@@ -106,6 +191,9 @@ psql $DATABASE_URL -c "CREATE EXTENSION IF NOT EXISTS vector;"
 
 # Create tables
 psql $DATABASE_URL -f db/schema.sql
+
+# Apply migrations
+psql $DATABASE_URL -f db/migrations/001-mistral-embeddings.sql
 ```
 
 Expected output:
@@ -116,6 +204,8 @@ CREATE INDEX
 ```
 
 ### Step 4 — Seed Policies with Mistral Embeddings
+
+> **Note:** `MISTRAL_API_KEY` must be set in `.env.local` before running the seed script, since `lib/rag/embeddings.ts` reads it at module load time.
 
 This generates `mistral-embed` embeddings for all 18 FR/BE policies and stores them in PostgreSQL for RAG chat.
 
@@ -249,6 +339,10 @@ MistralHR/
    - `MISTRAL_API_KEY`
    - `DATABASE_URL` (a hosted PostgreSQL instance with pgvector, e.g. Neon or Supabase)
 4. Click **Deploy**.
+5. **Post-deploy:** Seed the production database from your local machine:
+   ```bash
+   MISTRAL_API_KEY=<key> DATABASE_URL=<production-db-url> npx ts-node --project tsconfig.json scripts/seed-policies.ts
+   ```
 
 ### Azure App Service
 
@@ -261,6 +355,11 @@ npm run build
 ```
 
 Set the same environment variables (`NEXTAUTH_SECRET`, `NEXTAUTH_URL`, `MISTRAL_API_KEY`, `DATABASE_URL`) in the Azure App Service configuration panel.
+
+**Post-deploy:** Seed the production database from your local machine:
+```bash
+MISTRAL_API_KEY=<key> DATABASE_URL=<production-db-url> npx ts-node --project tsconfig.json scripts/seed-policies.ts
+```
 
 ---
 
