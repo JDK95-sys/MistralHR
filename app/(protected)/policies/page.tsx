@@ -41,9 +41,9 @@ export default function PoliciesPage() {
                 <div
                     className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold"
                     style={{
-                        background: "var(--mint-10)",
-                        border: "1px solid rgba(70,190,170,0.2)",
-                        color: "var(--sage)",
+                        background: "var(--orange-soft)",
+                        border: "1px solid var(--orange-border)",
+                        color: "var(--orange)",
                     }}
                 >
                     💡 Ask the AI for answers
@@ -79,9 +79,9 @@ export default function PoliciesPage() {
                             onClick={() => setActiveTopic(topic)}
                             className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-150"
                             style={{
-                                background: activeTopic === topic ? "var(--mint)" : "var(--glass-strong)",
-                                color: activeTopic === topic ? "var(--pepper)" : "var(--text-muted)",
-                                border: `1.5px solid ${activeTopic === topic ? "var(--mint)" : "var(--border)"}`,
+                                background: activeTopic === topic ? "var(--orange)" : "var(--glass-strong)",
+                                color: activeTopic === topic ? "#FFFFFF" : "var(--text-muted)",
+                                border: `1.5px solid ${activeTopic === topic ? "var(--orange)" : "var(--border)"}`,
                             }}
                         >
                             {topic}
@@ -126,9 +126,9 @@ export default function PoliciesPage() {
                                                 <span
                                                     className="text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0"
                                                     style={{
-                                                        background: "var(--mint-10)",
-                                                        border: "1px solid rgba(70,190,170,0.2)",
-                                                        color: "var(--sage)",
+                                                        background: "var(--orange-soft)",
+                                                        border: "1px solid var(--orange-border)",
+                                                        color: "var(--orange)",
                                                     }}
                                                 >
                                                     ✓ Applies to you
@@ -159,7 +159,7 @@ export default function PoliciesPage() {
                                         >
                                             {policy.topic.toUpperCase()}
                                         </span>
-                                        <span className="text-xs font-bold" style={{ color: "var(--mint)" }}>
+                                        <span className="text-xs font-bold" style={{ color: "var(--orange)" }}>
                                             View Policy →
                                         </span>
                                     </div>

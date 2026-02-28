@@ -30,37 +30,63 @@ export default function LoginPage() {
   return (
     <div
       className="min-h-screen flex items-center justify-center p-4"
-      style={{ background: "var(--bg)", fontFamily: "var(--font-sans)" }}
+      style={{ background: "#FFFAEB", fontFamily: "var(--font-sans)", position: "relative", overflow: "hidden" }}
     >
-      <div className="w-full max-w-sm">
+      {/* Decorative radial-gradient orb — top right */}
+      <div
+        style={{
+          position: "absolute",
+          top: -80,
+          right: -80,
+          width: 400,
+          height: 400,
+          background: "radial-gradient(circle, rgba(255,130,5,0.15) 0%, rgba(255,175,0,0.08) 40%, transparent 70%)",
+          borderRadius: "50%",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      />
+
+      <div className="w-full max-w-sm" style={{ position: "relative", zIndex: 1 }}>
         {/* Logo / wordmark */}
         <div className="flex items-center gap-3 mb-8 justify-center">
-          <div
-            className="flex items-center justify-center rounded-xl flex-shrink-0"
-            style={{
-              width: 40,
-              height: 40,
-              background: "var(--orange)",
-            }}
-          >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M10 3L3 7.5V12.5L10 17L17 12.5V7.5L10 3Z"
-                fill="white"
-                fillOpacity="0.9"
-              />
-              <circle cx="10" cy="10" r="2.5" fill="white" />
-            </svg>
-          </div>
+          {/* Mistral pixel-M SVG */}
+          <svg width="48" height="36" viewBox="0 0 48 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Row 1: cols 1,2 and 6,7 */}
+            <rect x="0"  y="0"  width="5" height="5" fill="#FFD800" />
+            <rect x="6"  y="0"  width="5" height="5" fill="#FFD800" />
+            <rect x="33" y="0"  width="5" height="5" fill="#FA500F" />
+            <rect x="39" y="0"  width="5" height="5" fill="#E10500" />
+            {/* Row 2: cols 1,2,3 and 5,6,7 */}
+            <rect x="0"  y="6"  width="5" height="5" fill="#FFD800" />
+            <rect x="6"  y="6"  width="5" height="5" fill="#FFD800" />
+            <rect x="13" y="6"  width="5" height="5" fill="#FF8205" />
+            <rect x="26" y="6"  width="5" height="5" fill="#FA500F" />
+            <rect x="33" y="6"  width="5" height="5" fill="#FA500F" />
+            <rect x="39" y="6"  width="5" height="5" fill="#E10500" />
+            {/* Row 3: cols 1,3,4,5,7 */}
+            <rect x="0"  y="13" width="5" height="5" fill="#FFD800" />
+            <rect x="13" y="13" width="5" height="5" fill="#FF8205" />
+            <rect x="20" y="13" width="5" height="5" fill="#FF8205" />
+            <rect x="26" y="13" width="5" height="5" fill="#FA500F" />
+            <rect x="39" y="13" width="5" height="5" fill="#E10500" />
+            {/* Row 4: cols 1,4,7 */}
+            <rect x="0"  y="20" width="5" height="5" fill="#FFD800" />
+            <rect x="20" y="20" width="5" height="5" fill="#FF8205" />
+            <rect x="39" y="20" width="5" height="5" fill="#E10500" />
+            {/* Row 5: cols 1,7 */}
+            <rect x="0"  y="27" width="5" height="5" fill="#FFD800" />
+            <rect x="39" y="27" width="5" height="5" fill="#E10500" />
+          </svg>
           <div>
             <div
               className="font-bold leading-tight"
-              style={{ fontSize: 17, letterSpacing: "-0.025em", color: "var(--text-primary)" }}
+              style={{ fontSize: 20, letterSpacing: "-0.03em", color: "var(--text-primary)" }}
             >
               MistralHR
             </div>
             <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 1 }}>
-              HR Assistant · FR &amp; BE
+              HR Policy Assistant · France &amp; Belgium
             </div>
           </div>
         </div>
@@ -69,8 +95,8 @@ export default function LoginPage() {
         <div
           className="rounded-2xl p-8"
           style={{
-            background: "var(--card)",
-            border: "1px solid var(--border)",
+            background: "linear-gradient(180deg, #FFFFFF 0%, #FFFDF5 100%)",
+            border: "1px solid #E9E2CB",
             boxShadow: "var(--shadow-md)",
           }}
         >
@@ -176,6 +202,12 @@ export default function LoginPage() {
                 fontFamily: "var(--font-sans)",
                 letterSpacing: "-0.01em",
               }}
+              onMouseEnter={(e) => {
+                if (!loading) e.currentTarget.style.background = "linear-gradient(90deg, #FF8205, #FFAF00)";
+              }}
+              onMouseLeave={(e) => {
+                if (!loading) e.currentTarget.style.background = "var(--orange)";
+              }}
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -202,11 +234,11 @@ export default function LoginPage() {
         <div
           className="mt-4 px-4 py-3 rounded-xl text-center"
           style={{
-            background: "var(--orange-soft)",
-            border: "1px solid var(--orange-border)",
+            background: "#FFF0C3",
+            border: "1px solid #E9E2CB",
           }}
         >
-          <p style={{ fontSize: 11.5, color: "var(--orange)", fontWeight: 600, marginBottom: 4 }}>
+          <p style={{ fontSize: 11.5, color: "#FA500F", fontWeight: 600, marginBottom: 4 }}>
             Demo credentials
           </p>
           <p style={{ fontSize: 11, color: "var(--text-secondary)", lineHeight: 1.6 }}>

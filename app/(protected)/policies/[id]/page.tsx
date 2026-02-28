@@ -21,7 +21,7 @@ export default function PolicyDetailPage() {
                 <button
                     onClick={() => router.push("/policies")}
                     className="px-5 py-2.5 rounded-full text-sm font-bold"
-                    style={{ background: "var(--mint)", color: "white" }}
+                    style={{ background: "var(--orange)", color: "white" }}
                 >
                     ← Back to Policy Library
                 </button>
@@ -105,12 +105,12 @@ export default function PolicyDetailPage() {
                         </div>
 
                         {policy.legalRefs && policy.legalRefs.length > 0 && (
-                            <div className="mt-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
-                                <h3 className="text-sm font-semibold text-slate-700 mb-2">Legal References</h3>
+                            <div className="mt-4 p-4 rounded-lg" style={{ background: "var(--bg-deep)", border: "1px solid var(--border)" }}>
+                                <h3 className="text-sm font-semibold mb-2" style={{ color: "var(--text-primary)" }}>Legal References</h3>
                                 <ul className="space-y-1">
                                     {policy.legalRefs.map((ref) => (
-                                        <li key={ref} className="text-sm text-slate-600 flex items-start gap-2">
-                                            <span className="text-slate-400 mt-0.5">•</span>
+                                        <li key={ref} className="text-sm flex items-start gap-2" style={{ color: "var(--text-secondary)" }}>
+                                            <span className="mt-0.5" style={{ color: "var(--text-muted)" }}>•</span>
                                             <span>{ref}</span>
                                         </li>
                                     ))}
@@ -119,7 +119,7 @@ export default function PolicyDetailPage() {
                         )}
 
                         {policy.content && (
-                            <div className="mt-6 prose prose-sm max-w-none text-slate-700 whitespace-pre-line">
+                            <div className="mt-6 text-sm leading-relaxed whitespace-pre-line" style={{ color: "var(--text-secondary)" }}>
                                 {policy.content}
                             </div>
                         )}
@@ -135,15 +135,15 @@ export default function PolicyDetailPage() {
                         <div
                             className="flex flex-col sm:flex-row items-center justify-between p-6 rounded-2xl gap-4"
                             style={{
-                                background: "var(--mint-10)",
-                                border: "1px solid rgba(70,190,170,0.2)"
+                                background: "var(--orange-soft)",
+                                border: "1px solid var(--orange-border)"
                             }}
                         >
                             <div>
                                 <h3 className="text-lg font-bold mb-1" style={{ color: "var(--text-primary)" }}>
                                     Have specific questions?
                                 </h3>
-                                <p className="text-sm" style={{ color: "var(--sage)" }}>
+                                <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
                                     Our HR Assistant can answer questions directly from this policy document.
                                 </p>
                             </div>
@@ -151,9 +151,9 @@ export default function PolicyDetailPage() {
                                 onClick={() => router.push(`/chat?q=Tell me about the ${policy.title}`)}
                                 className="px-6 py-3 rounded-xl font-bold text-sm whitespace-nowrap transition-transform active:scale-95"
                                 style={{
-                                    background: "var(--mint)",
+                                    background: "var(--orange)",
                                     color: "white",
-                                    boxShadow: "0 4px 12px rgba(70,190,170,0.3)"
+                                    boxShadow: "0 4px 12px rgba(255,130,5,0.3)"
                                 }}
                             >
                                 Ask AI about this policy
