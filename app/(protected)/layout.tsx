@@ -16,9 +16,9 @@ export default async function ProtectedLayout({
   let session = null;
   try {
     session = await getServerSession(authOptions);
-  } catch {
+  } catch (error) {
     // If session check fails, redirect to login as a safety measure
-    console.error("[ProtectedLayout] Failed to fetch server session");
+    console.error("[ProtectedLayout] Failed to fetch server session:", error);
   }
 
   if (!session) {

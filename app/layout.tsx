@@ -30,11 +30,11 @@ export default async function RootLayout({
   let session = null;
   try {
     session = await getServerSession(authOptions);
-  } catch {
+  } catch (error) {
     // Auth may fail if NEXTAUTH_SECRET is missing or misconfigured.
     // Gracefully fall back to no session — downstream pages/layouts
     // will redirect to /login when they see session === null.
-    console.error("[RootLayout] Failed to fetch server session");
+    console.error("[RootLayout] Failed to fetch server session:", error);
   }
 
   return (

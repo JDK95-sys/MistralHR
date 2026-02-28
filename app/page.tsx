@@ -9,9 +9,9 @@ export default async function RootPage() {
   let session = null;
   try {
     session = await getServerSession(authOptions);
-  } catch {
+  } catch (error) {
     // If session check fails, treat as unauthenticated
-    console.error("[RootPage] Failed to fetch server session");
+    console.error("[RootPage] Failed to fetch server session:", error);
   }
 
   if (session) {
