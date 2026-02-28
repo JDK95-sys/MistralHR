@@ -20,7 +20,7 @@ export async function onRequestError(
   context: { routerKind: string; routePath: string; routeType: string; renderSource: string },
 ) {
   // Log with structured data so log aggregators (Azure Monitor, Datadog, etc.) can parse it.
-  console.error(JSON.stringify({
+  const logEntry: Record<string, string | undefined> = {
     level: "error",
     timestamp: new Date().toISOString(),
     digest: error.digest,
@@ -31,7 +31,14 @@ export async function onRequestError(
     routePath: context.routePath,
     routeType: context.routeType,
     renderSource: context.renderSource,
-  }));
+  };
+
+  // Include stack traces only in development to avoid leaking internals in production logs.
+  if (process.env.NODE_ENV === "development") {
+    logEntry.stack = error.stack;
+  }
+
+  console.error(JSON.stringify(logEntry));
 
   // Future: forward to an external error-tracking service.
   // Example with Sentry:

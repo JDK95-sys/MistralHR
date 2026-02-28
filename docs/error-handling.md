@@ -92,7 +92,7 @@ This is an example of component-level error handling that supplements the error 
 To integrate a service like Sentry:
 
 1. Install the SDK: `npm install @sentry/nextjs`
-2. Update `instrumentation.ts` to initialise Sentry in the `register()` function
+2. Update `instrumentation.ts` to initialize Sentry in the `register()` function
 3. Forward errors in `onRequestError()`:
    ```ts
    const Sentry = await import("@sentry/nextjs");

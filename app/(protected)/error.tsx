@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function ProtectedError({
   error,
@@ -73,7 +74,7 @@ export default function ProtectedError({
           >
             Try again
           </button>
-          <a
+          <Link
             href="/chat"
             style={{
               padding: "10px 24px",
@@ -89,7 +90,7 @@ export default function ProtectedError({
             }}
           >
             Go to Chat
-          </a>
+          </Link>
         </div>
       </div>
     </div>
