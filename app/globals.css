@@ -18,6 +18,7 @@
   --sidebar-bg:       #1C1C1E;
   --sidebar-hover:    #2C2C2E;
   --sidebar-border:   rgba(255, 255, 255, 0.06);
+  --sidebar-border-light: rgba(255, 255, 255, 0.10);
   --sidebar-text:     #8A8A8E;
   --sidebar-text-active: #FFFFFF;
 
@@ -511,7 +512,7 @@ html, body {
   font-size: 12.5px;
   font-weight: 500;
   color: var(--sidebar-text);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid var(--sidebar-border-light);
   background: var(--sidebar-hover);
   cursor: pointer;
   transition: all 0.15s ease;
@@ -849,7 +850,7 @@ html, body {
   gap: 10px;
   padding: 12px 14px 12px 18px;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  border: 1px solid var(--sidebar-border-light);
   background: var(--sidebar-hover);
   box-shadow: var(--shadow-sm);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -868,7 +869,7 @@ html, body {
   font-size: 14px;
   line-height: 1.5;
   letter-spacing: -0.008em;
-  color: #FFFFFF;
+  color: var(--sidebar-text-active);
   resize: none;
   max-height: 120px;
   font-family: var(--font-sans);
@@ -929,7 +930,7 @@ html, body {
 
 .chat-page .topbar-pill {
   background: var(--sidebar-hover);
-  border-color: rgba(255, 255, 255, 0.10);
+  border-color: var(--sidebar-border-light);
   color: var(--sidebar-text);
 }
 
