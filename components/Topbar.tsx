@@ -2,6 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { Bell } from "lucide-react";
 import { useState, useRef, useEffect, useCallback } from "react";
 
@@ -48,6 +49,12 @@ export default function Topbar({ children }: TopbarProps) {
   const pathname = usePathname();
   const title = getPageTitle(pathname);
   const country = session?.user?.country;
+  const [notifToast, setNotifToast] = useState(false);
+
+  const handleNotifClick = () => {
+    setNotifToast(true);
+    setTimeout(() => setNotifToast(false), 2500);
+  };
 
   const [openPopover, setOpenPopover] = useState<string | null>(null);
   const topbarRef = useRef<HTMLElement>(null);
@@ -85,20 +92,12 @@ export default function Topbar({ children }: TopbarProps) {
       <div className="topbar-actions">
         {/* Country context */}
         {country && (
-          <div style={{ position: "relative" }}>
-            <button
-              className="topbar-pill"
-              aria-label={`Country: ${country}`}
-              aria-expanded={openPopover === "country"}
-              aria-haspopup="true"
-              onClick={() => toggle("country")}
-            >
-              <span>{COUNTRY_FLAGS[country] ?? "🌍"}</span>
-              {country}
-            </button>
-            {openPopover === "country" && (
-              <ComingSoonPopover label="Country Selector" />
-            )}
+          <div
+            className="topbar-pill topbar-pill--static"
+            title="Current country context"
+          >
+            <span>{COUNTRY_FLAGS[country] ?? "🌍"}</span>
+            {country}
           </div>
         )}
 
@@ -106,49 +105,35 @@ export default function Topbar({ children }: TopbarProps) {
         {children}
 
         {/* AI status */}
-        <div style={{ position: "relative" }}>
-          <button
-            className="topbar-pill"
-            aria-label="Mistral AI status"
-            aria-expanded={openPopover === "mistral"}
-            aria-haspopup="true"
-            onClick={() => toggle("mistral")}
-            style={{ gap: 6, background: "var(--mistral-gradient)" }}
-          >
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "white", boxShadow: "0 0 6px rgba(255, 112, 0, 0.3)", display: "inline-block" }} />
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.06em", color: "white" }}>MISTRAL AI</span>
-          </button>
-          {openPopover === "mistral" && (
-            <ComingSoonPopover label="Mistral AI" />
-          )}
+        <div
+          className="topbar-pill topbar-pill--static"
+          title="Mistral AI — connected"
+          style={{ gap: 6, background: "var(--mistral-gradient)", borderColor: "transparent" }}
+        >
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "white", boxShadow: "0 0 6px rgba(255, 112, 0, 0.3)", display: "inline-block" }} />
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.06em", color: "white" }}>MISTRAL AI</span>
         </div>
 
         {/* Notifications */}
-        <div style={{ position: "relative" }}>
-          <button
-            className="topbar-pill"
-            aria-label="Notifications"
-            aria-expanded={openPopover === "notifications"}
-            aria-haspopup="true"
-            onClick={() => toggle("notifications")}
-            style={{ padding: "6px 10px" }}
-          >
-            <Bell size={15} />
-            <span
-              style={{
-                position: "absolute",
-                top: 5, right: 6,
-                width: 6, height: 6,
-                borderRadius: "50%",
-                background: "#E10500",
-                border: "1.5px solid var(--surface-solid)",
-              }}
-            />
-          </button>
-          {openPopover === "notifications" && (
-            <ComingSoonPopover label="Notifications" />
-          )}
-        </div>
+        <button
+          className="topbar-pill"
+          aria-label="Notifications"
+          title="Notifications — coming soon"
+          disabled
+          style={{ padding: "6px 10px", position: "relative" }}
+        >
+          <Bell size={15} />
+          <span
+            style={{
+              position: "absolute",
+              top: 5, right: 6,
+              width: 6, height: 6,
+              borderRadius: "50%",
+              background: "#E10500",
+              border: "1.5px solid var(--surface-solid)",
+            }}
+          />
+        </button>
       </div>
     </header>
   );

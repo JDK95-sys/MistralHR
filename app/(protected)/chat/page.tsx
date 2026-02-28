@@ -323,7 +323,7 @@ export default function ChatPage() {
     d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
   return (
-    <div className="flex flex-col h-full" style={{ background: "transparent" }}>
+    <div className="chat-page flex flex-col h-full" style={{ background: "transparent" }}>
       <Topbar>
         {hasMessages && (
           <button
