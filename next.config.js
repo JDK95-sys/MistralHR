@@ -21,8 +21,9 @@ const nextConfig = {
   // Strict mode for better dev experience
   reactStrictMode: true,
 
-  // Custom headers for security
+  // Custom headers for security & instrumentation
   experimental: {
+    instrumentationHook: true,
     optimizePackageImports: ['lucide-react'],
   },
   async headers() {
