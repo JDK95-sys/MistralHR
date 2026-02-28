@@ -60,12 +60,12 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
-        (session.user as any).id = token.id;
-        (session.user as any).country = token.country;
-        (session.user as any).department = token.department;
-        (session.user as any).jobTitle = token.jobTitle;
-        (session.user as any).portalRole = token.portalRole;
+      if (session.user && token.id) {
+        session.user.id = token.id;
+        session.user.country = token.country ?? null;
+        session.user.department = token.department ?? null;
+        session.user.jobTitle = token.jobTitle ?? null;
+        session.user.portalRole = token.portalRole ?? null;
       }
       return session;
     },

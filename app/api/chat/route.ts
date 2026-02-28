@@ -251,10 +251,18 @@ export async function POST(req: NextRequest) {
   }
 
   const body: ChatRequest = await req.json();
-  const { message, sessionId, topic } = body;
+  const { message: rawMessage, sessionId, topic } = body;
+  const message = rawMessage?.trim() ?? "";
 
-  if (!message?.trim()) {
+  if (!message) {
     return new Response(JSON.stringify({ error: "Message is required" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  if (message.length > 4000) {
+    return new Response(JSON.stringify({ error: "Message too long. Please keep it under 4000 characters." }), {
       status: 400,
       headers: { "Content-Type": "application/json" },
     });
