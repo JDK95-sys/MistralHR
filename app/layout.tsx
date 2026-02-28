@@ -26,8 +26,16 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   // Fetch session server-side and pass to provider
-  // This avoids the loading flash on initial render
-  const session = await getServerSession(authOptions);
+  // This avoids the loading flash on initial render.
+  // Wrapped in try-catch: if NEXTAUTH_SECRET is not configured the call
+  // throws in production — we fall back to an unauthenticated session
+  // so the app renders (middleware/layout will redirect to /login).
+  let session = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch (err) {
+    console.error("[RootLayout] getServerSession failed:", err);
+  }
 
   return (
     <html lang="en" suppressHydrationWarning>

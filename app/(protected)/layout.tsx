@@ -13,7 +13,15 @@ export default async function ProtectedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(authOptions);
+  // Wrapped in try-catch: a missing NEXTAUTH_SECRET in production causes
+  // getServerSession to throw; we treat that as "no session" and redirect
+  // to login so the user sees the login page rather than a crash.
+  let session = null;
+  try {
+    session = await getServerSession(authOptions);
+  } catch (err) {
+    console.error("[ProtectedLayout] getServerSession failed:", err);
+  }
 
   if (!session) {
     redirect("/login");
