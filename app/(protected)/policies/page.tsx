@@ -105,7 +105,7 @@ export default function PoliciesPage() {
                 </div>
 
                 {/* Policy cards */}
-                {filtered.length === 0 ? (
+                {sorted.length === 0 ? (
                     <div className="text-center py-16 text-sm" style={{ color: "var(--text-muted)" }}>
                         {country ? (
                             <>No policies found for &ldquo;{search}&rdquo; in {country}</>
@@ -115,7 +115,7 @@ export default function PoliciesPage() {
                     </div>
                 ) : (
                     <div className="flex flex-col gap-3">
-                        {filtered.map((policy) => {
+                        {sorted.map((policy) => {
                             return (
                                 <div
                                     key={policy.id}

@@ -336,7 +336,7 @@ const matchesKeywords = (lower: string, keywords: string[]) =>
 
 function matchDemoResponse(message: string, country: string = "Unknown"): string {
   const lower = message.toLowerCase();
-  const responses = country === "Belgium" ? DEMO_RESPONSES_BE : DEMO_RESPONSES_FR;
+  const responses = country === "Belgium" ? DEMO_RESPONSES_BE : DEMO_RESPONSES;
 
   if (lower.includes("leave") && matchesKeywords(lower, DEMO_KEYWORDS.leave)) {
     return DEMO_RESPONSES["leave"];
@@ -410,7 +410,6 @@ async function streamText(text: string, send: (data: object) => void, delayMs = 
 }
 
 // ─── Send demo response (used as fallback) ─────────────────────────
-async function sendDemoResponse(message: string, country: string, send: (data: object) => void) {
 async function sendDemoResponse(message: string, send: (data: object) => void, country: string = "GLOBAL") {
   send({ type: "status", message: "Searching policy documents…" });
   await new Promise((resolve) => setTimeout(resolve, 400));
@@ -466,7 +465,7 @@ export async function POST(req: NextRequest) {
           import("@/lib/db"),
           import("@/lib/rag/vectorSearch"),
           import("@/lib/rag/systemPrompt"),
-          import("@mistralai/mistralai").then((m) => m.Mistral),
+          import("@mistralai/mistralai"),
         ]);
 
         const mistral = new Mistral({ apiKey: process.env.MISTRAL_API_KEY! });
@@ -545,7 +544,7 @@ export async function POST(req: NextRequest) {
       try {
         const [{ buildSystemPrompt }, { Mistral }] = await Promise.all([
           import("@/lib/rag/systemPrompt"),
-          import("@mistralai/mistralai").then((m) => m.Mistral),
+          import("@mistralai/mistralai"),
         ]);
 
         const mistral = new Mistral({ apiKey: process.env.MISTRAL_API_KEY! });
