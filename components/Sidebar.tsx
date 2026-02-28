@@ -43,7 +43,7 @@ export default function Sidebar() {
         </div>
         <div>
           <div className="sidebar-logo-text">MistralHR</div>
-          <div className="sidebar-logo-sub">People Platform</div>
+          <div className="sidebar-logo-sub">Powered by Mistral AI</div>
         </div>
       </div>
 

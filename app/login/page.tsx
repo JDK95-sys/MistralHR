@@ -41,7 +41,7 @@ export default function LoginPage() {
             style={{
               width: 40,
               height: 40,
-              background: "var(--orange)",
+              background: "linear-gradient(135deg, #FF7000, #FF9A40)",
             }}
           >
             <MistralMark size={20} strokeWidth={2.8} />
@@ -54,7 +54,7 @@ export default function LoginPage() {
               MistralHR
             </div>
             <div style={{ fontSize: 11, color: "var(--text-muted)", marginTop: 1 }}>
-              HR Assistant · FR &amp; BE
+              Powered by Mistral AI · FR &amp; BE
             </div>
           </div>
         </div>
@@ -72,10 +72,10 @@ export default function LoginPage() {
             className="font-bold mb-1"
             style={{ fontSize: 20, letterSpacing: "-0.025em", color: "var(--text-primary)" }}
           >
-            Sign in
+            Sign in to MistralHR
           </h1>
           <p className="mb-6" style={{ fontSize: 13, color: "var(--text-muted)" }}>
-            Access your HR policy assistant
+            Powered by Mistral AI · Secure and compliant
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -208,7 +208,9 @@ export default function LoginPage() {
             <br />
             jan.peeters@mistralhr.demo <span style={{ color: "var(--text-muted)" }}>(Belgium)</span>
             <br />
-            Password: <span style={{ fontFamily: "var(--font-mono)" }}>demo1234</span>
+            Password: <span style={{ fontFamily: "var(--font-mono)" }}>hackathon2025</span>
+            <br />
+            <span style={{ fontSize: 10, color: "var(--text-muted)" }}>Powered by Mistral AI</span>
           </p>
         </div>
       </div>

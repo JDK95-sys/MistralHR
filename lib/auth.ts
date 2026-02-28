@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const DEMO_PASSWORD = process.env.AUTH_PASSWORD ?? "demo1234";
+const DEMO_PASSWORD = process.env.AUTH_PASSWORD ?? "hackathon2025";
 
 const USERS = [
   {

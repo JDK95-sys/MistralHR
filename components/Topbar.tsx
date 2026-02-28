@@ -55,7 +55,7 @@ export default function Topbar({ children }: TopbarProps) {
         {/* AI status */}
         <div className="topbar-pill" style={{ gap: 6, cursor: "default" }}>
           <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--mint)", boxShadow: "0 0 6px var(--mint-glow)", display: "inline-block" }} />
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.06em" }}>AI ONLINE</span>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.06em" }}>MISTRAL AI</span>
         </div>
 
         {/* Notifications */}

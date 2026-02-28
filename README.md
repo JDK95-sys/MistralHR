@@ -1,6 +1,6 @@
 # MistralHR — HR Assistant
 
-Internal HR portal for employees in **France** and **Belgium**, built for the hackathon. Powered by Mistral AI — no Azure.
+Internal HR portal for employees in **France** and **Belgium**, built for the hackathon. **Powered by Mistral AI** — no Azure.
 
 ---
 
@@ -30,8 +30,8 @@ Internal HR portal for employees in **France** and **Belgium**, built for the ha
 |---|---|
 | Framework | Next.js 14 (App Router) |
 | Auth | NextAuth.js — Credentials only (no Azure AD) |
-| AI — Chat | Mistral `open-mistral-nemo` |
-| AI — Embeddings | Mistral `mistral-embed` (1024 dims) |
+| AI — Chat | **Mistral `open-mistral-nemo`** |
+| AI — Embeddings | **Mistral `mistral-embed` (1024 dims)** |
 | Database | PostgreSQL + pgvector |
 | Styling | Tailwind CSS |
 | Language | TypeScript |
@@ -112,8 +112,8 @@ npm run dev
 
 | Email | Password | Country | Role |
 |---|---|---|---|
-| alice.martin@mistralhr.demo | demo1234 | France | Employee |
-| jan.peeters@mistralhr.demo | demo1234 | Belgium | HR Business Partner |
+| alice.martin@mistralhr.demo | hackathon2025 | France | Employee |
+| jan.peeters@mistralhr.demo | hackathon2025 | Belgium | HR Business Partner |
 
 ---
 
@@ -180,7 +180,7 @@ Stream response from open-mistral-nemo
 Citations surfaced from source chunks
 ```
 
-The assistant answers **only from retrieved documents** — it will not hallucinate policy details not in the database.
+The assistant answers **only from retrieved documents** — it will not hallucinate policy details not in the database. **Powered by Mistral AI**.
 
 ---
 
@@ -213,4 +213,4 @@ npx ts-node --project tsconfig.json scripts/seed-policies.ts
 | `NEXTAUTH_URL` | Base URL of the app (e.g. `http://localhost:3000`) |
 | `DATABASE_URL` | PostgreSQL connection string |
 | `MISTRAL_API_KEY` | Mistral API key from console.mistral.ai |
-| `AUTH_PASSWORD` | Shared password for demo accounts (default: `demo1234`) |
+| `AUTH_PASSWORD` | Shared password for demo accounts (default: `hackathon2025`) |
