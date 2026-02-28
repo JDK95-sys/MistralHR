@@ -277,7 +277,7 @@ export async function POST(req: NextRequest) {
           import("@/lib/db"),
           import("@/lib/rag/vectorSearch"),
           import("@/lib/rag/systemPrompt"),
-          import("@mistralai/mistralai").then((m) => m.default),
+          import("@mistralai/mistralai").then((m) => m.Mistral),
         ]);
 
         const mistral = new Mistral({ apiKey: process.env.MISTRAL_API_KEY! });
@@ -356,7 +356,7 @@ export async function POST(req: NextRequest) {
       try {
         const [{ buildSystemPrompt }, Mistral] = await Promise.all([
           import("@/lib/rag/systemPrompt"),
-          import("@mistralai/mistralai").then((m) => m.default),
+          import("@mistralai/mistralai").then((m) => m.Mistral),
         ]);
 
         const mistral = new Mistral({ apiKey: process.env.MISTRAL_API_KEY! });

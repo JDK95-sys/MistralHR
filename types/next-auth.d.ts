@@ -12,6 +12,7 @@ declare module "next-auth" {
       department?: string | null;
       jobTitle?: string | null;
       portalRole?: string | null;
+      preferredLanguage?: string | null;
     };
   }
 }
