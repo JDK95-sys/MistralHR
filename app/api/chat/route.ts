@@ -228,28 +228,29 @@ const DEMO_KEYWORDS = {
   mobility: ["mobility", "bike", "transport", "commut", "car", "train", "navigo", "vélo"],
 };
 
+// Helper function to check if message contains any of the keywords
+const matchesKeywords = (lower: string, keywords: string[]) =>
+  keywords.some(keyword => lower.includes(keyword));
+
 function matchDemoResponse(message: string, country: string = "Unknown"): string {
   const lower = message.toLowerCase();
 
-  const matchesKeywords = (keywords: string[]) => 
-    keywords.some(keyword => lower.includes(keyword));
-
-  if (lower.includes("leave") && matchesKeywords(DEMO_KEYWORDS.leave)) {
+  if (lower.includes("leave") && matchesKeywords(lower, DEMO_KEYWORDS.leave)) {
     return DEMO_RESPONSES["leave"];
   }
-  if (matchesKeywords(DEMO_KEYWORDS.parental)) {
+  if (matchesKeywords(lower, DEMO_KEYWORDS.parental)) {
     return DEMO_RESPONSES["parental"];
   }
-  if (matchesKeywords(DEMO_KEYWORDS.expense)) {
+  if (matchesKeywords(lower, DEMO_KEYWORDS.expense)) {
     return DEMO_RESPONSES["expense"];
   }
-  if (matchesKeywords(DEMO_KEYWORDS.remote)) {
+  if (matchesKeywords(lower, DEMO_KEYWORDS.remote)) {
     return DEMO_RESPONSES["remote"];
   }
-  if (matchesKeywords(DEMO_KEYWORDS.healthcare)) {
+  if (matchesKeywords(lower, DEMO_KEYWORDS.healthcare)) {
     return DEMO_RESPONSES["healthcare"];
   }
-  if (matchesKeywords(DEMO_KEYWORDS.mobility)) {
+  if (matchesKeywords(lower, DEMO_KEYWORDS.mobility)) {
     // Return country-specific mobility response if available, otherwise generic
     const countryKey = `mobility:${country}`;
     return DEMO_RESPONSES[countryKey] ?? DEMO_RESPONSES["mobility"];

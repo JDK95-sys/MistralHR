@@ -34,12 +34,13 @@ export default function PoliciesPage() {
     // Get only policies for the user's country
     const countryPolicies = getPoliciesForCountry(country);
 
+    const searchLower = search.toLowerCase();
     const filtered = countryPolicies.filter((p) => {
         const matchesTopic = activeTopic === "All" || p.topic === activeTopic;
         const matchesSearch =
             !search ||
-            p.title.toLowerCase().includes(search.toLowerCase()) ||
-            p.description.toLowerCase().includes(search.toLowerCase());
+            p.title.toLowerCase().includes(searchLower) ||
+            p.description.toLowerCase().includes(searchLower);
         return matchesTopic && matchesSearch;
     });
 
